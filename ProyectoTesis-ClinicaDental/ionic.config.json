@@ -1,0 +1,7 @@
+{
+  "name": "ProyectoTesis-ClinicaDental",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
