@@ -1,0 +1,100 @@
+﻿<ion-content [fullscreen]="true">
+  <div class="header-container">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="9" class="brand-section">
+          <ion-avatar class="user-avatar" (click)="viewProfile()">
+            <img [src]="profileImage" alt="Perfil">
+          </ion-avatar>
+          <h1 class="business-title">DentalClinic</h1>
+        </ion-col>
+        <ion-col size="3" class="ion-text-end">
+          <ion-button fill="clear" (click)="toggleNotification()" [color]="notifActive ? 'primary' : 'inverted'">
+            <ion-icon slot="icon-only" name="notifications"></ion-icon>
+          </ion-button>
+
+          <ion-popover trigger="click-trigger" triggerAction="click" dismissOnSelect="true">
+            <ng-template>
+              <div class="popover-menu-content">
+                <button class="popover-item-btn" (click)="createNewChat()">
+                  <ion-icon name="chatbox-plus-outline"></ion-icon>
+                  Historial
+                </button>
+                <button class="popover-item-btn" (click)="createNewChat()">
+                  <ion-icon name="chatbox-ellipses-outline"></ion-icon>
+                  Nuevo chat
+                </button>
+              </div>
+            </ng-template>
+          </ion-popover>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="chat-container">
+    <div class="chat-messages">
+      <div *ngFor="let msg of messages" class="message-row" [ngClass]="msg.sender === 'ia' ? 'ia-message' : 'user-message'">
+        <div class="bubble">
+          <p>{{ msg.text }}</p>
+          <span class="message-time">{{ msg.time }}</span>
+        </div>
+      </div>
+
+      <div class="typing-container" *ngIf="isTyping">
+        <div class="typing-indicator">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <span class="typing-text">La IA está procesando...</span>
+      </div>
+    </div>
+
+    <div class="fixed-bottom-bar">
+      <div class="suggestions-container">
+        <div class="suggestions-scroll">
+          <button class="suggestion-btn" (click)="selectSuggestion('¿Dolor de muelas?')">
+            <ion-icon name="medical-outline"></ion-icon>
+            ¿Dolor de muelas?
+          </button>
+          <button class="suggestion-btn" (click)="selectSuggestion('Cuidado de brackets')">
+            <ion-icon name="options-outline"></ion-icon>
+            Cuidado de brackets
+          </button>
+          <button class="suggestion-btn" (click)="selectSuggestion('Limpieza general')">
+            <ion-icon name="water-outline"></ion-icon>
+            Limpieza general
+          </button>
+        </div>
+      </div>
+
+      <div class="chat-input-bar">
+        <ion-button fill="clear" class="emoji-btn" (click)="toggleEmojiPicker()">
+          <ion-icon slot="icon-only" name="happy-outline"></ion-icon>
+        </ion-button>
+
+        <div class="input-wrapper">
+          <input
+            type="text"
+            placeholder="Escribe un mensaje..."
+            [(ngModel)]="chatMessage"
+            (keyup.enter)="sendMessage()"
+            (focus)="closeEmojiPickerOnFocus()">
+        </div>
+
+        <button class="send-btn-round" [disabled]="!chatMessage?.trim()" (click)="sendMessage()">
+          <ion-icon name="paper-plane"></ion-icon>
+        </button>
+      </div>
+
+      <div class="emoji-picker-container" *ngIf="showEmojiPicker">
+        <div class="emoji-category">
+          <span *ngFor="let emoji of emojiList" (click)="addEmoji(emoji)" class="emoji-item">
+            {{ emoji }}
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

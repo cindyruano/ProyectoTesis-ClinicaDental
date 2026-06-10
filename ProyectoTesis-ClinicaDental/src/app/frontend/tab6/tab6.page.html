@@ -1,0 +1,72 @@
+<ion-content [fullscreen]="true">
+  <input type="file" #fileInput style="display: none" accept="image/*" (change)="onFileSelected($event)">
+
+  <div class="profile-header-container">
+    <div class="top-nav">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon slot="icon-only" name="chevron-back" color="dark"></ion-icon>
+      </ion-button>
+      <h2 class="nav-title">Mi Cuenta</h2>
+      <div style="width: 48px;"></div>
+    </div>
+
+    <div class="avatar-section">
+      <div class="avatar-wrapper">
+        <img [src]="profileImage" alt="Foto de perfil">
+        <button class="edit-badge" (click)="triggerFilePicker()">
+          <ion-icon name="pencil-sharp"></ion-icon>
+        </button>
+      </div>
+      <h1 class="user-welcome">¡Hola, Alex!</h1>
+      <p class="user-subtitle">Gestión de tu salud dental</p>
+    </div>
+
+    <div class="completion-card">
+      <div class="completion-text">
+        <span>Perfil completado</span>
+        <div class="percentage-group">
+          <strong>85%</strong>
+          <ion-icon name="shield-checkmark-outline" color="primary"></ion-icon>
+        </div>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-fill" style="width: 85%;"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="settings-list-container">
+    <p class="section-label">AJUSTES DE USUARIO</p>
+
+    <ion-list lines="none">
+      <ion-item button [detail]="false" (click)="goToPersonalData()" class="setting-item">
+        <div class="icon-box unified-grey-bg" slot="start">
+          <ion-icon name="person" color="medium"></ion-icon>
+        </div>
+        <ion-label>Información Personal</ion-label>
+        <ion-icon name="chevron-forward" slot="end" class="single-arrow"></ion-icon>
+      </ion-item>
+
+      <ion-item button [detail]="false" (click)="goToSettings()" class="setting-item">
+        <div class="icon-box unified-grey-bg" slot="start">
+          <ion-icon name="settings" color="medium"></ion-icon>
+        </div>
+        <ion-label>Configuración de la Cuenta</ion-label>
+        <ion-icon name="chevron-forward" slot="end" class="single-arrow"></ion-icon>
+      </ion-item>
+
+      <ion-item button [detail]="false" (click)="logout()" class="setting-item logout-item">
+        <div class="icon-box logout-bg" slot="start">
+          <ion-icon name="log-out" color="danger"></ion-icon>
+        </div>
+        <ion-label color="danger">Cerrar Sesión</ion-label>
+        <ion-icon name="chevron-forward" slot="end" class="single-arrow" color="danger"></ion-icon>
+      </ion-item>
+    </ion-list>
+
+    <div class="app-footer">
+      <p>Versión 2.4.0 (Build 88291)</p>
+      <p>BrightSmile Dental Systems © 2024</p>
+    </div>
+  </div>
+</ion-content>

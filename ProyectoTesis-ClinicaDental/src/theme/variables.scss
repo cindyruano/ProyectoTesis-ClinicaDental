@@ -1,0 +1,120 @@
+:root {
+  /* =========================================================================
+     PARÁMETROS DE DISEÑO DENTALCLINIC
+     ========================================================================= */
+  --clinic-blue-primary: #003366;
+  --clinic-blue-dark-selected: #001b3d;
+  --clinic-blue-highlight: #2b8ff7;
+  --clinic-blue-confirm-btn: #001229;
+  --clinic-blue-sync-bg: #e5f1ff;
+  --clinic-text-muted: #556b82;
+  --clinic-text-light: #6b7c93;
+  --clinic-text-muted-alt: #8e9aa7;
+  --clinic-text-dark-gray: #4a5568;
+  --clinic-text-disabled: #a3aab2;
+  --clinic-gold: #ffd700;
+
+  --clinic-bg-main: #edeff3;
+  --clinic-bg-white: #ffffff;
+  --clinic-bg-light-blue: #f1f6fb;
+  --clinic-bg-header: #fffcfc;
+  --clinic-bg-disabled: #e9ecef;
+
+  --clinic-shadow-header: 0 2px 10px rgba(0, 0, 0, 0.01);
+  --clinic-shadow-avatar: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================================================================
+   ESTRUCTURAS COMPARTIDAS PARA LOS 7 TABS (AHORRO DE CÓDIGO)
+   ========================================================================= */
+
+ion-content {
+  --background: var(--clinic-bg-main);
+}
+
+.header-container {
+  background-color: var(--clinic-bg-header);
+  padding: 12px 18px;
+  box-shadow: var(--clinic-shadow-header);
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  overflow: hidden;
+  cursor: pointer;
+  box-shadow: var(--clinic-shadow-avatar);
+}
+
+.business-title {
+  margin: 0;
+  color: var(--clinic-blue-primary);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+ion-button[color="inverted"] {
+  --color: var(--clinic-blue-primary) !important;
+  opacity: 1 !important;
+  visibility: visible !important;
+
+  ion-icon {
+    color: var(--clinic-blue-primary) !important;
+  }
+
+  &:active {
+    --color: var(--clinic-blue-highlight) !important;
+    transform: scale(0.95);
+
+    ion-icon {
+      color: var(--clinic-blue-highlight) !important;
+    }
+  }
+}
+
+.actions-container {
+  margin-top: 30px;
+  margin-bottom: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  background: transparent;
+  box-sizing: border-box;
+
+  ion-button {
+    margin: 0;
+    width: 100%;
+    height: 52px;
+    text-transform: none;
+    letter-spacing: 0.2px;
+    background: transparent !important;
+    box-shadow: none !important;
+    transition: transform 0.15s ease;
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+}
+
+:root {
+  /* =========================================================================
+     MÁS PARÁMETROS GLOBALES (Añadidos por Tab3 - Mapa)
+     ========================================================================= */
+  --clinic-map-btn-active: #f4f7f9;
+  --clinic-map-btn-dark-active: #000c1c;
+  --clinic-shadow-floating-header: 0 4px 15px rgba(0, 51, 102, 0.08);
+  --clinic-shadow-map-controls: 0 4px 12px rgba(0, 27, 61, 0.08);
+  --clinic-shadow-info-card: 0 10px 30px rgba(0, 27, 61, 0.1);
+  --clinic-shadow-directions-btn: 0 8px 20px rgba(0, 27, 61, 0.25);
+}

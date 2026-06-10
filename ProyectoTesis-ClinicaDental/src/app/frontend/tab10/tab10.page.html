@@ -1,0 +1,63 @@
+<ion-content [fullscreen]="true">
+  <div class="header-container-shop">
+    <ion-grid class="ion-no-padding">
+      <ion-row class="ion-align-items-center">
+        <ion-col size="9" class="brand-section">
+          <ion-avatar class="user-avatar" (click)="viewProfile()">
+            <img [src]="profileImage || 'assets/avatar-placeholder.png'" alt="Perfil">
+          </ion-avatar>
+          <h1 class="business-title">DentalShop</h1>
+        </ion-col>
+        <ion-col size="3" class="ion-text-end">
+          <ion-button fill="clear" (click)="goToPagos()" class="receipt-icon-btn">
+            <ion-icon slot="icon-only" name="receipt-outline"></ion-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <div class="shop-welcome-container">
+    <h2 class="welcome-main-title">Productos para tu Sonrisa</h2>
+    <p class="welcome-subtitle">Cuidado profesional recomendado por nuestros dentistas.</p>
+  </div>
+
+  <div class="products-vertical-list">
+    <div class="product-item-row" *ngFor="let producto of productos">
+      <div class="product-image-box">
+        <img [src]="producto.img" [alt]="producto.nombre">
+      </div>
+
+      <div class="product-details-box">
+        <h3 class="product-item-title">{{ producto.nombre }}</h3>
+        <p class="product-item-desc">{{ producto.descripcion }}</p>
+        <span class="product-item-price">${{ producto.precio | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="product-action-box">
+        <button class="product-add-action-btn" (click)="agregarAlCarrito(producto)">
+          Añadir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="special-promo-section" *ngIf="ofertaEspecial">
+    <h3 class="section-promo-title">✨ Oferta Especial</h3>
+
+    <div class="featured-offer-card" (click)="comprarOferta(ofertaEspecial)">
+      <div class="featured-image-box">
+        <img [src]="ofertaEspecial.img" [alt]="ofertaEspecial.nombre">
+      </div>
+      <div class="featured-info-box">
+        <span class="featured-badge">MÁS VENDIDO</span>
+        <h4 class="featured-title">{{ ofertaEspecial.nombre }}</h4>
+        <p class="featured-desc">{{ ofertaEspecial.descripcion }}</p>
+        <div class="featured-card-footer">
+          <span class="featured-price">${{ ofertaEspecial.precio | number:'1.2-2' }}</span>
+          <button class="featured-buy-btn">Comprar Oferta</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
