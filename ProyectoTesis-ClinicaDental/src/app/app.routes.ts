@@ -35,10 +35,13 @@ export const routes: Routes = [
         loadComponent: () => import('./frontend/tab7/tab7.page').then(m => m.Tab7Page)
       },
       {
+<<<<<<< HEAD
         path: 'tab10', // Chat con IA
         loadComponent: () => import('./frontend/tab10/tab10.page').then(m => m.Tab10Page)
       },
       {
+=======
+>>>>>>> 04f1a18723a5160002746670429ac5df86220c13
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full'
