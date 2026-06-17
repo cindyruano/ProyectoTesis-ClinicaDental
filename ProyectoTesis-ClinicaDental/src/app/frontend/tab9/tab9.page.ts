@@ -7,9 +7,9 @@ import { notifications, sparkles } from 'ionicons/icons';
 import { ProfileService } from '../profile.service';
 
 @Component({
-  selector: 'app-tab4',
-  templateUrl: 'tab4.page.html',
-  styleUrls: ['tab4.page.scss'],
+  selector: 'app-tab9',
+  templateUrl: 'tab9.page.html',
+  styleUrls: ['tab9.page.scss'],
   standalone: true,
   imports: [
     CommonModule, IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton
