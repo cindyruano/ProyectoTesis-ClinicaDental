@@ -47,6 +47,24 @@ export const routes: Routes = [
       },
 
       {
+        path: 'tab8',
+        loadComponent: () =>
+          import('../tab8/tab8.page').then((m) => m.Tab8Page),
+      },
+
+      {
+        path: 'tab9',
+        loadComponent: () =>
+          import('../tab9/tab9.page').then((m) => m.Tab9Page),
+      },
+
+      {
+        path: 'tab10',
+        loadComponent: () =>
+          import('../tab10/tab10.page').then((m) => m.Tab10Page),
+      },
+
+      {
         path: '',
         redirectTo: '/tabs/tab1',
         pathMatch: 'full',

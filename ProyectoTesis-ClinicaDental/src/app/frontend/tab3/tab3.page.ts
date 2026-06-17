@@ -4,19 +4,9 @@ import { IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton } fr
 import { ToastController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
-import {
-  arrowBackOutline,
-  locateOutline,
-  layersOutline,
-  checkmarkCircle,
-  location,
-  call,
-  time,
-  navigateCircleOutline
-} from 'ionicons/icons';
+import { arrowBackOutline, locateOutline, layersOutline, checkmarkCircle, location, call, time, navigateCircleOutline } from 'ionicons/icons';
 import * as L from 'leaflet';
-// Se usará import dinámico de Capacitor Geolocation o fallback al geolocation del navegador
-
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-tab3',
@@ -32,15 +22,19 @@ export class Tab3Page implements OnInit, OnDestroy {
   private clinicaCoords: [number, number] = [14.6349, -90.5069];
   private userMarker?: L.Marker;
 
-  // Variable de control para la tarjeta
+  profileImage: string = '';
+
   isCardHidden: boolean = false;
 
-  // Definición de las Capas de Mapa
   private lightLayer!: L.TileLayer;
   private satelliteLayer!: L.TileLayer;
   private isSatelliteActive: boolean = false;
 
-  constructor(private router: Router, private toastController: ToastController) {
+  constructor(
+    private router: Router,
+    private toastController: ToastController,
+    private profileService: ProfileService
+  ) {
     addIcons({
       arrowBackOutline,
       locateOutline,
@@ -59,6 +53,10 @@ export class Tab3Page implements OnInit, OnDestroy {
     link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
     link.id = 'leaflet-css';
     document.head.appendChild(link);
+
+    this.profileService.profileImage$.subscribe(img => {
+      this.profileImage = img;
+    });
   }
 
   ionViewDidEnter() {
@@ -81,7 +79,7 @@ export class Tab3Page implements OnInit, OnDestroy {
       layers: [this.lightLayer]
     });
 
-    // 3. Crear marcador personalizado de la clínica
+    // Crear marcador personalizado de la clínica
     const customIcon = L.divIcon({
       html: `
         <div style="
@@ -106,135 +104,108 @@ export class Tab3Page implements OnInit, OnDestroy {
 
     const clinicMarker = L.marker(this.clinicaCoords, { icon: customIcon }).addTo(this.map);
 
-
-  // =========================================================
     // EVENTOS DEL MAPA PARA OCULTAR/MOSTRAR LA TARJETA
-    // =========================================================
-
-    // A. Detectar cuando el usuario arrastra o mueve el mapa
     this.map.on('dragstart', () => {
-      // Usamos setTimeout para que Angular detecte el cambio de estado correctamente
       setTimeout(() => {
         this.isCardHidden = true;
       }, 0);
     });
 
-    // B. Detectar cuando el usuario hace clic en el marcador de la clínica
     clinicMarker.on('click', () => {
       setTimeout(() => {
         this.isCardHidden = false;
-        // Centrar suavemente el mapa en la clínica al tocar el marcador
         this.map.setView(this.clinicaCoords, 15, { animate: true });
       }, 0);
     });
   }
-  // ==========================================
-  // FUNCIONALIDAD 1: GEOLOCALIZACIÓN DEL USUARIO
-  // ==========================================
-  // ==========================================
-  // GEOLOCALIZACIÓN DEL USUARIO (Ajustada)
-  // ==========================================
+
+  // GEOLOCALIZACIÓN DEL USUARIO
   async recenterToUser() {
     try {
-        // Intentar usar el plugin Capacitor Geolocation si está instalado
-        try {
-          const module = await import('@capacitor/geolocation');
-          if (module && module.Geolocation && module.Geolocation.getCurrentPosition) {
-            const coordinates = await module.Geolocation.getCurrentPosition({ enableHighAccuracy: true });
-            const userLat = coordinates.coords.latitude;
-            const userLng = coordinates.coords.longitude;
-            await this.handleUserPosition(userLat, userLng);
-            return;
-          }
-        } catch (e) {
-          // No está disponible el plugin de Capacitor; caer al navegador
-          console.warn('Capacitor Geolocation no disponible, usando navigator.geolocation', e);
-      }
-
-        // Fallback: Geolocation del navegador
-        if ('geolocation' in navigator) {
-          await new Promise<void>((resolve, reject) => {
-            navigator.geolocation.getCurrentPosition(async (pos) => {
-              try {
-                const userLat = pos.coords.latitude;
-                const userLng = pos.coords.longitude;
-                await this.handleUserPosition(userLat, userLng);
-                resolve();
-              } catch (err) {
-                reject(err);
-              }
-            }, (err) => reject(err), { enableHighAccuracy: true });
-          });
+      try {
+        const module = await import('@capacitor/geolocation');
+        if (module && module.Geolocation && module.Geolocation.getCurrentPosition) {
+          const coordinates = await module.Geolocation.getCurrentPosition({ enableHighAccuracy: true });
+          const userLat = coordinates.coords.latitude;
+          const userLng = coordinates.coords.longitude;
+          await this.handleUserPosition(userLat, userLng);
           return;
         }
-
-        throw new Error('No geolocation available');
-      } catch (error) {
-        console.error('Error al obtener la ubicación', error);
-        this.presentToast('Activa el GPS para ver tu ubicación actual.');
-      }
-    }
-
-    // Maneja la posición del usuario: centrar mapa y mostrar marcador
-    private async handleUserPosition(userLat: number, userLng: number) {
-      const userLatLng: [number, number] = [userLat, userLng];
-
-      // 1. Centrar mapa en el usuario
-      this.map.setView(userLatLng, 16, { animate: true, duration: 1.5 });
-
-      if (this.userMarker) {
-        this.userMarker.remove();
+      } catch (e) {
+        console.warn('Capacitor Geolocation no disponible, usando navigator.geolocation', e);
       }
 
-      const userIcon = L.divIcon({
-        html: `
-          <div style="
-            background-color: #3880ff;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            border: 3px solid white;
-            box-shadow: 0 0 10px rgba(56, 128, 255, 0.8);
-          "></div>
-        `,
-        className: '',
-        iconSize: [18, 18],
-        iconAnchor: [9, 9]
-      });
+      if ('geolocation' in navigator) {
+        await new Promise<void>((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(async (pos) => {
+            try {
+              const userLat = pos.coords.latitude;
+              const userLng = pos.coords.longitude;
+              await this.handleUserPosition(userLat, userLng);
+              resolve();
+            } catch (err) {
+              reject(err);
+            }
+          }, (err) => reject(err), { enableHighAccuracy: true });
+        });
+        return;
+      }
 
-      this.userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(this.map);
+      throw new Error('No geolocation available');
+    } catch (error) {
+      console.error('Error al obtener la ubicación', error);
+      this.presentToast('Activa el GPS para ver tu ubicación actual.');
+    }
+  }
 
-      // Volver a mostrar la tarjeta de información
-      setTimeout(() => {
-        this.isCardHidden = false;
-      }, 500);
+  private async handleUserPosition(userLat: number, userLng: number) {
+    const userLatLng: [number, number] = [userLat, userLng];
 
-      this.presentToast('Ubicación encontrada');
+    this.map.setView(userLatLng, 16, { animate: true, duration: 1.5 });
+
+    if (this.userMarker) {
+      this.userMarker.remove();
     }
 
-  // =========================================================
-  // FUNCIÓN NUEVA: REGRESAR DE INMEDIATO A LA CLÍNICA
-  // =========================================================
+    const userIcon = L.divIcon({
+      html: `
+        <div style="
+          background-color: #3880ff;
+          width: 18px;
+          height: 18px;
+          border-radius: 50%;
+          border: 3px solid white;
+          box-shadow: 0 0 10px rgba(56, 128, 255, 0.8);
+        "></div>
+      `,
+      className: '',
+      iconSize: [18, 18],
+      iconAnchor: [9, 9]
+    });
+
+    this.userMarker = L.marker(userLatLng, { icon: userIcon }).addTo(this.map);
+
+    setTimeout(() => {
+      this.isCardHidden = false;
+    }, 500);
+
+    this.presentToast('Ubicación encontrada');
+  }
+
   recenterToClinic() {
-    // Hace un paneo suave de regreso a la clínica y abre su información
     this.map.setView(this.clinicaCoords, 15, { animate: true, duration: 1.2 });
     setTimeout(() => {
       this.isCardHidden = false;
     }, 300);
   }
 
-  // ==========================================
-  // FUNCIONALIDAD 2: ALTERNAR TIPO DE MAPA (Capas)
-  // ==========================================
   toggleMapLayer() {
     if (this.isSatelliteActive) {
-      // Cambiar a diseño de mapa claro estándar
       this.map.removeLayer(this.satelliteLayer);
       this.map.addLayer(this.lightLayer);
       this.isSatelliteActive = false;
       this.presentToast('Vista del mapa clásico');
     } else {
-      // Cambiar a diseño satelital de alta resolución
       this.map.removeLayer(this.lightLayer);
       this.map.addLayer(this.satelliteLayer);
       this.isSatelliteActive = true;
@@ -242,13 +213,12 @@ export class Tab3Page implements OnInit, OnDestroy {
     }
   }
 
-  // Helper para mostrar notificaciones rápidas en pantalla
   async presentToast(message: string) {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
       position: 'top',
-      cssClass: 'custom-toast' // Quitamos 'style' para evitar el error de compilación
+      cssClass: 'custom-toast'
     });
     await toast.present();
   }
@@ -264,7 +234,7 @@ export class Tab3Page implements OnInit, OnDestroy {
   openNavigation() {
     const lat = this.clinicaCoords[0];
     const lng = this.clinicaCoords[1];
-    window.open(`https://www.google.com/maps/search/?api=1&query=${lat},${lng}`, '_system');
+    window.open(`https://maps.google.com/?q=${lat},${lng}`, '_system');
   }
 
   ngOnDestroy() {
@@ -277,5 +247,3 @@ export class Tab3Page implements OnInit, OnDestroy {
     }
   }
 }
-
-

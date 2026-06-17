@@ -34,8 +34,6 @@ ProyectoTesis-ClinicaDental/
 ├── package.json
 └── README.md
 
-
-
 ---
 
 ## 🖥️ Frontend (Angular + Ionic)

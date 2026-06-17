@@ -7,15 +7,15 @@ import { notifications, sparkles } from 'ionicons/icons';
 import { ProfileService } from '../profile.service';
 
 @Component({
-  selector: 'app-tab5',
-  templateUrl: 'tab5.page.html',
-  styleUrls: ['tab5.page.scss'],
+  selector: 'app-tab4',
+  templateUrl: 'tab4.page.html',
+  styleUrls: ['tab4.page.scss'],
   standalone: true,
   imports: [
     CommonModule, IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton
   ],
 })
-export class Tab5Page implements OnInit {
+export class Tab8Page implements OnInit {
   notifActive: boolean = false;
   profileImage: string = '';
 

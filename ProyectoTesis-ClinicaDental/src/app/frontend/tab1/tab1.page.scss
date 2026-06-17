@@ -1,56 +1,6 @@
-/* ==========================================
-   ESTRUCTURA PRINCIPAL Y CABECERA
-   ========================================== */
-
-/* Contenedor General de la App */
-ion-content {
-  --background: #edeff3;
-}
-
-/* Cuadro de Presentación Superior */
-.header-container {
-  background-color: #fffcfc;
-  padding: 12px 18px;
-}
-
-/* Bloque de Marca y Logo */
-.brand-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* Imagen de Avatar del Usuario */
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
-}
-
-/* Título del Negocio / Empresa */
-.business-title {
-  margin: 0;
-  color: #003366;
-  font-size: 1.3rem;
-  font-weight: 550;
-  letter-spacing: -0.5px;
-}
-
-/* Botón Invertido de la Cabecera */
-ion-button[color="inverted"] {
-  --color: var(--ion-color-inverted);
-}
-
-
-/* ==========================================
-   SECCIÓN DE BIENVENIDA Y SALUDO
-   ========================================== */
-
-/* Cuadro de Mensaje de Bienvenida */
+// BIENVENIDA ORIGINAL
 .standalone-welcome {
   padding: 20px 25px 15px 25px;
-
-  /* Texto de Título Principal */
   .welcome-title {
     margin: 0;
     font-size: 1.9rem;
@@ -58,118 +8,84 @@ ion-button[color="inverted"] {
     color: #003366;
     letter-spacing: -0.1px;
   }
-
-  /* Texto de Subtítulo Secundario */
   .welcome-subtitle {
     margin: 6px 0 0 0;
     font-size: 1rem;
-    color: #556b82;
+    color: #64748b;
     font-weight: 400;
   }
 }
 
-
-/* ==========================================
-   SECCIÓN DE PRÓXIMA REVISIÓN / CITAS
-   ========================================== */
-
-/* Tarjeta de la Cita Médica */
-.appointment-card-new {
-  margin: 8px 25px;
+// BOTÓN PRÓXIMA CITA
+.upcoming-appointment-container {
+  padding: 0 25px;
+  margin-top: 8px;
+}
+.upcoming-card {
+  width: 100%;
+  text-align: left;
   background: #ffffff;
-  border-radius: 20px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
-  padding: 14px 18px;
+  padding: 16px;
   position: relative;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.03);
-  cursor: pointer;
   overflow: hidden;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
+  cursor: pointer;
+  transition: transform 0.1s ease;
 
-  /* Línea Lateral Decorativa */
   &::before {
     content: '';
     position: absolute;
     left: 0;
     top: 0;
     bottom: 0;
-    width: 6px;
-    background-color: #ffd700;
+    width: 5px;
+    background: #bfa15f;
   }
-}
-
-
-/* Cuadro del Icono de Calendario */
-.calendar-icon-box {
-  width: 50px;
-  height: 50px;
-  background-color: #f1f4f8;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 6px;
-  margin-right: 15px;
-  flex-shrink: 0;
-
-  ion-icon {
-    font-size: 1.4rem;
-    color: #003366;
-  }
-}
-
-/* Contenedor de Textos de la Cita */
-.appointment-text-content {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-
-  /* Nombre o Tipo de Cita */
-  .appointment-main-title {
-    margin: 0 0 4px 0;
-    color: #003366;
-    font-size: 1.15rem;
-    font-weight: 600;
-    letter-spacing: -0.3px;
+  &:active {
+    transform: scale(0.98);
+    background: #f8fafc;
   }
 
-  /* Detalles de Fecha y Hora */
-  .appointment-details-info {
-    margin: 0;
-    color: #6b7c93;
-    font-size: 0.9rem;
-    font-weight: 400;
+  .upcoming-icon-wrapper {
+    background: #eef4fa;
+    border-radius: 12px;
+    width: 44px;
+    height: 44px;
     display: flex;
     align-items: center;
-
-    /* Separador de Texto */
-    span {
-      margin: 0 6px;
-      color: #a0aec0;
-      font-size: 0.8rem;
+    justify-content: center;
+    margin-right: 14px;
+    ion-icon {
+      font-size: 1.35rem;
+      color: #003366;
     }
   }
-}
-
-/* Cuadro de la Flecha de Acción */
-.appointment-arrow-action {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-left: 10px;
-
-  ion-icon {
-    font-size: 1.2rem;
-    color: #b8c4d4;
+  .upcoming-info {
+    flex: 1;
+    h4 {
+      margin: 0 0 3px 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #003366;
+    }
+    p {
+      margin: 0;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #64748b;
+    }
+  }
+  .upcoming-arrow {
+    color: #94a3b8;
+    font-size: 1.1rem;
   }
 }
 
-
-/* ==========================================
-   SECCIÓN DE GAMIFICACIÓN Y ESTADO DE SALUD
-   ========================================== */
-
+// GAMIFICACIÓN ORIGINAL
 .health-container-clean {
   margin: 25px 25px 0px 25px;
   display: flex;
@@ -179,8 +95,6 @@ ion-button[color="inverted"] {
   border-bottom: 1px solid rgba(0, 51, 102, 0.08);
   padding-bottom: 20px;
 }
-
-/* Columna Izquierda (Icono/Emoji) */
 .health-left-col {
   display: flex;
   flex-direction: column;
@@ -189,8 +103,6 @@ ion-button[color="inverted"] {
   flex-shrink: 0;
   margin-right: 20px;
 }
-
-/* Columna Derecha (Textos y Barra) */
 .health-right-col {
   flex: 1;
   display: flex;
@@ -198,12 +110,8 @@ ion-button[color="inverted"] {
   align-items: flex-start;
   justify-content: center;
 }
-
-/* Contenedor del Círculo del Emoji */
 .status-icon-wrapper {
   margin-bottom: 0;
-
-  /* Círculo Exterior */
   .outer-circle {
     width: 60.5px;
     height: 60.5px;
@@ -214,8 +122,6 @@ ion-button[color="inverted"] {
     justify-content: center;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
   }
-
-  /* Círculo Interior */
   .inner-circle {
     width: 50px;
     height: 50px;
@@ -226,46 +132,34 @@ ion-button[color="inverted"] {
     justify-content: center;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
   }
-
-  /* Botón del Emoji */
   .emoji-btn {
     --color: #003366;
     --padding-start: 0;
     --padding-end: 0;
     margin: 0;
-    font-size: 2rem;
-  }
+    font-size: 2rem; }
 }
 
-/* Título del Estado de Salud */
-.health-title {
-  color: #003366;
-  font-size: 1.4rem;
+// SUBTÍTULO SALUD DENTAL
+.section-title-health {
+  font-size: 1.15rem;
   font-weight: 700;
-  margin: 0 0 8px 0;
-  text-align: left;
+  color: #003366;
+  margin: 0 0 14px 0;
 }
-
-/* Cuadro de la Barra de Progreso */
 .progress-section {
   width: 100%;
-
-  /* Etiquetas de Texto del Progreso */
   .progress-labels {
     display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 6px;
 
-    /* Texto Indicador (ej. "Progreso") */
     .progress-text {
       font-size: 0.8rem;
-      color: #556b82;
+      color: #64748b;
       font-weight: 600;
-      text-align: left;
     }
-
-    /* Número del Porcentaje (ej. "80%") */
     .progress-number {
       font-size: 0.8rem;
       color: #001b3d;
@@ -273,8 +167,6 @@ ion-button[color="inverted"] {
       margin-left: 5px;
     }
   }
-
-  /* Contenedor Fondo de la Barra */
   .progress-bar-container {
     width: 100%;
     height: 7px;
@@ -282,123 +174,119 @@ ion-button[color="inverted"] {
     border-radius: 10px;
     overflow: hidden;
 
-    /* Relleno Activo de la Barra */
     .progress-fill {
       height: 100%;
-      background: #ffd700;
+      background: #bfa15f;
       border-radius: 10px;
       transition: width 0.5s ease-in-out;
     }
   }
 }
 
+// ACCIONES RÁPIDAS
+.treatment-section-actions {
+  margin-top: 26px;
 
-/* ==========================================
-   SECCIÓN DE ACCIONES RÁPIDAS
-   ========================================== */
-
-.quick-actions-container {
-  margin: 20px 25px 0px 25px;
-
-  .quick-actions-title {
-    font-size: 1.3rem;
+  .section-title {
+    font-size: 1.15rem;
     font-weight: 700;
     color: #003366;
-    margin-bottom: 15px;
+    margin: 0 0 14px 0;
+    padding: 0 16px;
   }
 }
 
-/* Columna de Alineación del Botón */
-.action-col {
+.horizontal-scroll-container-actions {
+  display: flex;
+  justify-content: space-between;
+  padding: 2px 25px 10px 25px;
+  gap: 12px;
+  overflow-x: auto;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.treatment-box-action {
+  flex: 0 0 115px;
+  max-width: 105px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-}
-
-/* Botón Circular Base */
-.circle-btn {
-  --padding-start: 0;
-  --padding-end: 0;
-  height: auto;
-  margin: -0.7rem;
-}
-
-/* Diseño del Círculo para Iconos */
-.icon-circle {
-  width: 65px;
-  height: 65px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
-  transition: transform 0.2s ease;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
 
-  ion-icon { font-size: 1.8rem; }
-  &:active { transform: scale(0.92); }
+
+  .icon-wrapper-action {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #f8fafc;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    display: flex;
+
+
+    ion-icon {
+      font-size: 1.3rem;
+      color: #003366;
+    }
+  }
+  h3 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+  }
+
+  &.selected {
+    border-color: #003366;
+    background: #ffffff;
+
+    .icon-wrapper {
+      background: #eef4fa;
+      ion-icon {
+        color: #003366;
+      }
+    }
+
+    h3 {
+      color: #003366;
+      font-weight: 700;
+    }
+  }
 }
-
-/* Botón Variante Azul */
-.bg-blue {
-  background-color: #fffcfc;
-  ion-icon { color: #003366; }
-}
-
-/* Botón Variante Verde */
-.bg-green {
-  background-color: #fffcfc;
-  ion-icon { color: #003366; }
-}
-
-/* Botón Variante Gris */
-.bg-gray {
-  background-color: #fffcfc;
-  ion-icon { color: #003366; }
-}
-
-/* Texto Inferior del Botón */
-.action-label {
-  margin-top: 8px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  color: #556b82;
-  line-height: 1.2;
-  max-width: 80px;
-  text-align: center;
-}
-
-
 /* ==========================================
    SECCIÓN DE PROMOCIONES
    ========================================== */
-
 .promo-section-v2 {
-  margin: 25px 0 10px 0;
-  padding-left: 20px;
+  margin: 25px 0 0px 0;
+  padding-left: 25px;
 
   .section-title {
-    font-size: 1.3rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: #003366;
-    margin-bottom: 15px;
+    margin-bottom: 14px;
   }
 }
 
-/* Contenedor con Scroll Horizontal */
 .promo-scroll-container {
   display: flex;
   overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  padding-bottom: 15px;
+  padding-bottom: 5px;
   padding-left: 2px;
-  -webkit-overflow-scrolling: touch;
-
   &::-webkit-scrollbar { display: none; }
-  -ms-overflow-style: none;
-  scrollbar-width: none;
 }
 
-/* Tarjeta de Promoción Individual */
 .promo-card-v2 {
   flex: 0 0 85%;
   margin-right: 15px;
@@ -406,29 +294,30 @@ ion-button[color="inverted"] {
   border-radius: 24px;
   position: relative;
   overflow: hidden;
-  box-shadow: 0 4px 14px rgb(163, 159, 159);
-  scroll-snap-align: start;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   background-color: #304e78;
-  transition: all 0.15s ease-in-out;
   cursor: pointer;
-  outline: 0px solid transparent;
+  border: none;
+  padding: 0;
+  text-align: left;
+  transition: transform 0.12s ease-in-out,
+  background-color 0.12s ease-in-out;
 
-  -webkit-tap-highlight-color: transparent;
+  &:active {
+    transform: scale(0.96);
+    filter: brightness(0.9);
+  }
 
-  /* Imagen de Fondo de la Promo */
   .promo-bg-img {
     position: absolute;
-    top: 0;
-    left: 0;
+    top: 0; left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
     opacity: 0.75;
-    pointer-events: none;
     z-index: 1;
   }
 
-  /* Capa Degradada Superpuesta */
   .promo-gradient-overlay {
     position: absolute;
     top: 0;
@@ -439,7 +328,6 @@ ion-button[color="inverted"] {
     z-index: 2;
   }
 
-  /* Cuadro de Contenido del Texto */
   .promo-content-v2 {
     position: absolute;
     bottom: 20px;
@@ -448,7 +336,6 @@ ion-button[color="inverted"] {
     z-index: 3;
     color: white;
 
-    /* Etiqueta / Badge Superior */
     .promo-badge-v2 {
       font-size: 0.7rem;
       font-weight: 700;
@@ -456,80 +343,67 @@ ion-button[color="inverted"] {
       letter-spacing: 1px;
       margin-bottom: 5px;
       display: block;
-      color: #ffffff;
       opacity: 0.9;
     }
 
-    /* Texto del Título de la Promo */
     .promo-title-v2 {
       margin: 0;
       font-size: 1.3rem;
       font-weight: 800;
       line-height: 1.2;
-      text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
     }
-  }
-
-  &:active {
-    transform: scale(0.97);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   }
 }
 
-
 /* ==========================================
-   SECCIÓN DE RECOMENDACIONES
+   TIP DE LA SEMANA ACERCADO
    ========================================== */
+.tip-container-v2 {
+  padding: 0 25px;
+  margin-top: 12px;
+  margin-bottom: 90px;
+}
 
-/* Tarjeta de Diseño del Consejo */
-.tip-card {
-  background-color: #f1f6fb;
-  border-radius: 30px;
+.tip-card-v2 {
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 16px 12px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
   display: flex;
   align-items: center;
-  padding: 15px 20px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.03);
 
-  /* Celda del Icono Izquierdo */
-  .tip-icon-cell {
-    margin-right: 15px;
-    flex-shrink: 0;
+  .tip-header-v2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 14px;
 
-    /* Círculo de Fondo del Icono */
-    .icon-circle-light {
-      width: 45px;
-      height: 45px;
-      background-color: #ffffff;
-      border-radius: 50%;
+    .tip-icon-btn-v2 {
+      background: #eef4fa;
+      color: #1063e7;
+      border-radius: 12px;
+      height: 44px; width: 44px;
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-
-      ion-icon {
-        font-size: 1.5rem;
-      }
+      ion-icon { font-size: 1.35rem; color: #003366; }
     }
   }
-
-  /* Celda de Texto del Mensaje */
-  .tip-content-cell {
+  .tip-info-v2 {
     flex: 1;
-
+    h4 {
+      margin: 0 0 3px 0;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #003366;
+    }
     p {
       margin: 0;
-      font-size: 0.95rem;
-      color: #556b82;
+      font-size: 0.8rem;
+      font-weight: 500;
+      color: #64748b;
       line-height: 1.4;
-      strong {
-        color: #003366;
-        font-weight: 700;
-      }
     }
   }
-}
-
-/* Espacio Inferior */
-.tip-container {
-  margin: 5px 10px 80px 20px;
 }

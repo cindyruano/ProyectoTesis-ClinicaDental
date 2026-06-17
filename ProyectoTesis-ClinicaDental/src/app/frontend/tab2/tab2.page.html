@@ -4,12 +4,12 @@
       <ion-row class="ion-align-items-center">
         <ion-col size="9" class="brand-section">
           <ion-avatar class="user-avatar" (click)="viewProfile()">
-            <img src="assets/icon/usuario.webp" alt="Perfil">
+            <img [src]="profileImage" alt="Perfil">
           </ion-avatar>
           <h1 class="business-title">DentalClinic</h1>
         </ion-col>
         <ion-col size="3" class="ion-text-end">
-          <ion-button fill="clear" (click)="toggleNotification()" [color]="notifActive ? 'primary' : 'inverted'">
+          <ion-button fill="clear" class="notif-btn" (click)="toggleNotification()">
             <ion-icon slot="icon-only" name="notifications"></ion-icon>
           </ion-button>
         </ion-col>
@@ -17,144 +17,114 @@
     </ion-grid>
   </div>
 
+  <div class="upcoming-appointment-container">
+    <button class="upcoming-card" (click)="goToTab5()">
+      <div class="upcoming-icon-wrapper">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </div>
+      <div class="upcoming-info">
+        <h4>Próxima Cita</h4>
+        <p>12 Jun • 10:30 AM • Dr. Arispe</p>
+      </div>
+      <ion-icon class="upcoming-arrow" name="chevron-forward"></ion-icon>
+    </button>
+  </div>
+
   <div class="treatment-section">
-    <div class="section-header-inline">
-      <h2 class="section-title-small">SELECCIONAR SERVICIO</h2>
-      <ion-button fill="clear" (click)="viewMoreTreatments()" class="view-more-btn">
-        Ver más
-      </ion-button>
+    <h2 class="section-title">Seleccionar Servicio</h2>
+
+    <div class="horizontal-scroll-container">
+      <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'ortodoncia'" (click)="selectTreatment('ortodoncia')">
+        <div class="icon-wrapper">
+          <ion-icon name="medical-outline"></ion-icon>
+        </div>
+        <h3>Ortodoncia</h3>
+      </div>
+
+      <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'limpieza'" (click)="selectTreatment('limpieza')">
+        <div class="icon-wrapper">
+          <ion-icon name="water-outline"></ion-icon>
+        </div>
+        <h3>Limpieza</h3>
+      </div>
+
+      <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'estetica'" (click)="selectTreatment('estetica')">
+        <div class="icon-wrapper">
+          <ion-icon name="options-outline"></ion-icon>
+        </div>
+        <h3>Estética</h3>
+      </div>
     </div>
-
-    <ion-grid class="ion-no-padding">
-      <ion-row>
-        <ion-col size="4">
-          <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'limpieza'" (click)="seleccionar('limpieza')">
-            <div class="icon-wrapper">
-              <ion-icon name="sparkles-outline"></ion-icon>
-            </div>
-            <h3>Limpieza</h3>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'ortodoncia'" (click)="seleccionar('ortodoncia')">
-            <div class="icon-wrapper">
-              <ion-icon name="medkit-outline"></ion-icon>
-            </div>
-            <h3>Ortodoncia</h3>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'estetica'" (click)="seleccionar('estetica')">
-            <div class="icon-wrapper">
-              <ion-icon name="color-wand-outline"></ion-icon>
-            </div>
-            <h3>Estética</h3>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'extraccion'" (click)="seleccionar('extraccion')">
-            <div class="icon-wrapper">
-              <ion-icon name="bandage-outline"></ion-icon>
-            </div>
-            <h3>Extracción</h3>
-          </div>
-        </ion-col>
-
-        <ion-col size="4">
-          <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'chequeo'" (click)="seleccionar('chequeo')">
-            <div class="icon-wrapper">
-              <ion-icon name="pulse-outline"></ion-icon>
-            </div>
-            <h3>Chequeo</h3>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
   </div>
 
   <div class="calendar-container">
     <div class="calendar-header">
-      <button class="month-year-picker-btn" (click)="openMonthYearPicker()">
-        {{ currentMonthName | uppercase }} {{ currentYear }}
-      </button>
-      <div class="nav-arrows">
-        <ion-button fill="clear" (click)="prevMonth()">
-          <ion-icon slot="icon-only" name="chevron-back-outline"></ion-icon>
-        </ion-button>
-        <ion-button fill="clear" (click)="nextMonth()">
-          <ion-icon slot="icon-only" name="chevron-forward-outline"></ion-icon>
-        </ion-button>
-      </div>
+      <h2 class="month-year-title">{{ currentMonthName }}</h2>
+      <ion-button fill="clear" class="calendar-icon-btn" (click)="openMonthYearPicker()">
+        <ion-icon slot="icon-only" name="calendar-outline"></ion-icon>
+      </ion-button>
     </div>
 
     <div class="calendar-card">
       <div class="weeks-grid">
-        <span class="week-day">Lu</span>
-        <span class="week-day">Ma</span>
-        <span class="week-day">Mi</span>
-        <span class="week-day">Ju</span>
-        <span class="week-day">Vi</span>
-        <span class="week-day">Sa</span>
-        <span class="week-day">Do</span>
+        <span *ngFor="let day of workingDays" class="week-day">{{ day.name }}</span>
       </div>
 
       <div class="days-grid">
-        <span *ngFor="let empty of blankDays" class="day-number prev-month">
-          {{ empty }}
-        </span>
         <button
-          *ngFor="let day of daysInMonth"
-          class="day-number"
-          [class.selected]="isSelected(day)"
+          *ngFor="let day of workingDays"
+          class="day-number-box"
+          [class.selected]="selectedDayNumber === day.number"
           (click)="selectDate(day)">
-          {{ day }}
+          <span class="day-value">{{ day.number }}</span>
         </button>
       </div>
     </div>
 
-    <ion-datetime
-      #datetimePicker
-      presentation="month-year"
-      class="hidden-picker"
-      (ionChange)="onMonthYearChange($event)">
-    </ion-datetime>
+    <ion-modal #calendarModal initialBreakpoint="0.5" [breakpoints]="[0, 0.5, 0.75]" class="calendar-inline-modal">
+      <ng-template>
+        <div class="modal-calendar-wrapper">
+          <div class="modal-drag-indicator"></div>
+
+          <div class="datetime-theme-wrapper" style="position: relative; display: flex; justify-content: center; width: 100%;">
+            <ion-datetime
+              #datetimePicker
+              presentation="date"
+              size="cover"
+              [value]="currentDateSelected.toISOString()"
+              (ionChange)="onMonthYearChange($event)">
+            </ion-datetime>
+
+            <div
+              (click)="confirmMonthYearSelection()"
+              style="position: absolute; top: 43%; left: 5%; width: 90%; height: 46px; z-index: 9999; cursor: pointer; background: transparent;">
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </ion-modal>
   </div>
 
   <div class="slots-section">
     <h2 class="section-title-slots">Horarios Disponibles</h2>
 
-    <div class="slots-container">
-      <div class="slots-grid" *ngIf="availableSlots.length > 0">
-        <button
-          *ngFor="let slot of availableSlots"
-          class="slot-btn"
-          [class.selected]="selectedSlot === slot.time"
-          [class.disabled]="slot.disabled"
-          [disabled]="slot.disabled"
-          (click)="selectSlot(slot.time)">
-          {{ slot.time }}
-        </button>
-      </div>
-
-      <div class="no-slots-alert" *ngIf="availableSlots.length === 0">
-        <ion-icon name="calendar-clear-outline"></ion-icon>
-        <p>No hay horarios disponibles para este día.</p>
-      </div>
+    <div class="slots-grid">
+      <button
+        *ngFor="let slot of availableSlots"
+        class="slot-btn"
+        [class.selected]="selectedSlot === slot.time"
+        [class.disabled]="slot.disabled"
+        [disabled]="slot.disabled"
+        (click)="selectSlot(slot.time)">
+        {{ slot.time }}
+      </button>
     </div>
   </div>
 
   <div class="actions-container">
-    <ion-button class="calendar-sync-btn" (click)="addToCalendar()">
-      <ion-icon slot="start" name="calendar-number-outline"></ion-icon>
-      Agregar a Calendario
-    </ion-button>
-
-    <ion-button class="confirm-appointment-btn" (click)="confirmAppointment()">
-      <ion-icon slot="start" name="checkmark-circle-outline"></ion-icon>
+    <ion-button class="confirm-appointment-btn" expand="block" (click)="confirmAppointment()">
       Confirmar Cita
+      <ion-icon slot="end" name="checkmark-circle"></ion-icon>
     </ion-button>
   </div>
 </ion-content>

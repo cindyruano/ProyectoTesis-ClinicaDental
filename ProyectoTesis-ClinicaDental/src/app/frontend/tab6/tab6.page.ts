@@ -1,35 +1,66 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton } from '@ionic/angular/standalone';
+import { IonContent, IonIcon, IonButton, IonList, IonItem, IonLabel } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
+import { chevronBack, person, settings, logOut, pencilSharp, shieldCheckmarkOutline, chevronForward } from 'ionicons/icons';
 import { Router } from '@angular/router';
-import { notifications, sparkles } from 'ionicons/icons';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-tab6',
-  templateUrl: 'tab6.page.html',
-  styleUrls: ['tab6.page.scss'],
+  templateUrl: './tab6.page.html',
+  styleUrls: ['./tab6.page.scss'],
   standalone: true,
-  imports: [
-    CommonModule, IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton
-  ],
+  imports: [CommonModule, IonContent, IonIcon, IonButton, IonList, IonItem, IonLabel],
 })
-export class Tab6Page {
-  notifActive: boolean = false;
+export class Tab6Page implements OnInit {
+  @ViewChild('fileInput') fileInput!: ElementRef;
+  profileImage: string = '';
 
-  constructor(private router: Router) {
-    addIcons({ notifications, sparkles });
+  constructor(private router: Router, private profileService: ProfileService) {
+    addIcons({
+      chevronBack,
+      person,
+      settings,
+      logOut,
+      pencilSharp,
+      shieldCheckmarkOutline,
+      chevronForward
+    });
   }
 
-  viewProfile() {
-    this.router.navigate(['/tabs/tab6']);
+  ngOnInit() {
+    this.profileService.profileImage$.subscribe(img => {
+      this.profileImage = img;
+    });
   }
 
-  toggleNotification() {
-    this.notifActive = !this.notifActive;
+  triggerFilePicker() {
+    this.fileInput.nativeElement.click();
   }
 
-  goToProfile() {
-  console.log('Navegando al perfil del usuario...');
+  onFileSelected(event: any) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        this.profileService.updateImage(e.target.result);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  goBack() {
+    this.router.navigate(['/tabs/tab2']);
+  }
+
+  goToPersonalData() {
+  }
+
+  goToSettings() {
+    this.router.navigate(['/tabs/tab7']);
+  }
+
+  logout() {
   }
 }

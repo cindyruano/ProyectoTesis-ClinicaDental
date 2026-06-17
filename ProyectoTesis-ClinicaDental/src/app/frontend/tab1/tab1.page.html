@@ -4,7 +4,7 @@
       <ion-row class="ion-align-items-center">
         <ion-col size="9" class="brand-section">
           <ion-avatar class="user-avatar" (click)="viewProfile()">
-            <img src="assets/icon/usuario.webp" alt="Perfil">
+            <img [src]="profileImage" alt="Perfil">
           </ion-avatar>
           <h1 class="business-title">DentalClinic</h1>
         </ion-col>
@@ -22,19 +22,17 @@
     <p class="welcome-subtitle">Tu salud dental es nuestra prioridad hoy.</p>
   </div>
 
-  <div class="appointment-card-new" (click)="goToHistorialCitas()">
-    <div class="calendar-icon-box">
-      <ion-icon name="calendar-clear"></ion-icon>
-    </div>
-    <div class="appointment-text-content">
-      <h2 class="appointment-main-title">Próxima Cita</h2>
-      <p class="appointment-details-info">
-        14 Oct <span>•</span> {{ proximaCita.hora }} <span>•</span> {{ proximaCita.doctor }}
-      </p>
-    </div>
-    <div class="appointment-arrow-action">
-      <ion-icon name="chevron-forward"></ion-icon>
-    </div>
+  <div class="upcoming-appointment-container">
+    <button class="upcoming-card" (click)="goToHistorialCitas()">
+      <div class="upcoming-icon-wrapper">
+        <ion-icon name="calendar-outline"></ion-icon>
+      </div>
+      <div class="upcoming-info">
+        <h4>Próxima Cita</h4>
+        <p>14 Oct • {{ proximaCita.hora }} • {{ proximaCita.doctor }}</p>
+      </div>
+      <ion-icon class="upcoming-arrow" name="chevron-forward"></ion-icon>
+    </button>
   </div>
 
   <div class="health-container-clean">
@@ -50,7 +48,7 @@
       </div>
     </div>
     <div class="health-right-col">
-      <h2 class="health-title">Salud Dental</h2>
+      <h2 class="section-title-health">Salud Dental</h2>
       <div class="progress-section">
         <div class="progress-labels">
           <span class="progress-text">Progreso de Tratamiento</span>
@@ -63,35 +61,29 @@
     </div>
   </div>
 
-  <div class="quick-actions-container">
-    <ion-grid class="ion-no-padding">
-      <ion-row class="ion-justify-content-center">
-        <ion-col size="4" class="ion-text-center action-col">
-          <ion-button fill="clear" class="circle-btn" (click)="agendarCita()">
-            <div class="icon-circle bg-blue">
-              <ion-icon name="add-outline"></ion-icon>
-            </div>
-          </ion-button>
-          <span class="action-label">Agendar Cita</span>
-        </ion-col>
-        <ion-col size="4" class="ion-text-center action-col">
-          <ion-button fill="clear" class="circle-btn" (click)="chatIA()">
-            <div class="icon-circle bg-green">
-              <ion-icon name="chatbubble-ellipses"></ion-icon>
-            </div>
-          </ion-button>
-          <span class="action-label">Chat con IA</span>
-        </ion-col>
-        <ion-col size="4" class="ion-text-center action-col">
-          <ion-button fill="clear" class="circle-btn" (click)="soporteTecnico()">
-            <div class="icon-circle bg-gray">
-              <ion-icon name="headset"></ion-icon>
-            </div>
-          </ion-button>
-          <span class="action-label">Soporte</span>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <div class="treatment-section-actions">
+    <div class="horizontal-scroll-container-actions">
+      <div class="treatment-box-action" (click)="agendarCita()">
+        <div class="icon-wrapper-action">
+          <ion-icon name="add-outline"></ion-icon>
+        </div>
+        <h3>Agendar Cita</h3>
+      </div>
+      <div class="treatment-box-action" (click)="chatIA()">
+        <div class="icon-wrapper-action">
+          <ion-icon name="chatbubble-ellipses"></ion-icon>
+        </div>
+        <h3>Chat con IA</h3>
+      </div>
+
+      <div class="treatment-box-action" (click)="pagos()">
+        <div class="icon-wrapper-action">
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <h3>Pagos</h3>
+      </div>
+
+    </div>
   </div>
 
   <div class="promo-section-v2">
@@ -108,15 +100,16 @@
     </div>
   </div>
 
-  <div class="tip-container">
-    <div class="tip-card">
-      <div class="tip-icon-cell">
-        <div class="icon-circle-light">
-          <ion-icon name="bulb-outline" color="primary"></ion-icon>
+  <div class="tip-container-v2">
+    <div class="tip-card-v2">
+      <div class="tip-header-v2">
+        <div class="tip-icon-btn-v2">
+          <ion-icon name="bulb-outline"></ion-icon>
         </div>
       </div>
-      <div class="tip-content-cell">
-        <p><strong>Tip de la semana:</strong> {{ tipDeLaSemana }}</p>
+      <div class="tip-info-v2">
+        <h4>Tip de la semana</h4>
+        <p>{{ tipDeLaSemana }}</p>
       </div>
     </div>
   </div>

@@ -1,13 +1,14 @@
-// UBICACIÓN
+// ==========================================
+// UBICACIÓN - CONFIGURACIÓN DE PANTALLA
+// ==========================================
 
-// FONDO GENERAL
 ion-content {
-  --background: #edeff3;
+  --background: var(--clinic-bg-main);
 }
 
 // Quitar barras de scroll del contenedor nativo de Ionic
 ion-content.map-page {
-  --background: #edeff3;
+  --background: var(--clinic-bg-main);
   --overflow: hidden;
 }
 
@@ -24,19 +25,19 @@ ion-content.map-page {
 // CAPA 2: CABECERA FLOTANTE
 .floating-header {
   position: absolute;
-  top: 40px; // Ajusta según el notch o barra de estado del celular
+  top: 40px;
   left: 16px;
   right: 16px;
   z-index: 10;
-  background: rgba(255, 252, 252, 0.9); // Tono #fffcfc con transparencia
-  backdrop-filter: blur(10px); // Efecto esmerilado/traslúcido
+  background: rgba(255, 252, 252, 0.9); // Manteniendo tu base #fffcfc con transparencia
+  backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 30px;
   padding: 8px 16px;
-  box-shadow: 0 4px 15px rgba(0, 51, 102, 0.08);
+  box-shadow: var(--clinic-shadow-floating-header);
 
   .back-btn {
-    --color: #003366; // Tu azul corporativo
+    --color: var(--clinic-blue-primary);
     margin: 0;
   }
 
@@ -44,14 +45,14 @@ ion-content.map-page {
     margin: 0;
     font-size: 1.15rem;
     font-weight: 700;
-    color: #003366; // Tu azul corporativo
+    color: var(--clinic-blue-primary);
   }
 
   .user-avatar {
     width: 36px;
     height: 36px;
     margin-left: auto;
-    border: 2px solid #fff;
+    border: 2px solid var(--clinic-bg-white);
   }
 }
 
@@ -69,19 +70,19 @@ ion-content.map-page {
     width: 46px;
     height: 46px;
     border-radius: 16px;
-    background: #ffffff;
-    border: 1.5px solid #e2e8f0;
-    box-shadow: 0 4px 12px rgba(0, 27, 61, 0.08);
+    background: var(--clinic-bg-white);
+    border: 1.5px solid var(--clinic-border-light);
+    box-shadow: var(--clinic-shadow-map-controls);
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #556b82; // Tu azul de acompañamiento
+    color: var(--clinic-text-muted);
     font-size: 1.3rem;
     cursor: pointer;
 
     &:active {
-      background: #f4f7f9;
-      color: #001b3d;
+      background: var(--clinic-map-btn-active);
+      color: var(--clinic-blue-dark-selected);
     }
   }
 }
@@ -89,20 +90,32 @@ ion-content.map-page {
 // CAPA 4: CONTENEDOR Y TARJETA INFORMATIVA INFERIOR
 .info-card-container {
   position: absolute;
-  bottom: 16px;
+  bottom: 80px; /* Manteniendo tu ajuste exacto para la altura de los tabs */
   left: 16px;
   right: 16px;
   z-index: 10;
+
+  // Transición suave con aceleración/desaceleración natural intacta
+  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
+  transform: translateY(0);
+  opacity: 1;
+
+  // Clase activa cuando el usuario interactúa con el mapa
+  &.hidden-card {
+    transform: translateY(350px);
+    opacity: 0;
+    pointer-events: none;
+  }
 }
 
 .info-card {
-  background: rgba(255, 252, 252, 0.95); // Usando tu color #fffcfc
+  background: rgba(255, 252, 252, 0.95); // Manteniendo tu base #fffcfc con transparencia
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 25px; // Mismo radio que tus "treatment-box" y "calendar-card"
+  border-radius: 25px;
   padding: 20px;
-  border: 2px solid #f4f7f9;
-  box-shadow: 0 10px 30px rgba(0, 27, 61, 0.1);
+  border: 2px solid var(--clinic-map-btn-active);
+  box-shadow: var(--clinic-shadow-info-card);
 
   .card-header {
     display: flex;
@@ -113,7 +126,7 @@ ion-content.map-page {
     .subtitle {
       font-size: 0.75rem;
       letter-spacing: 1.5px;
-      color: #556b82; // Tu azul de acompañamiento
+      color: var(--clinic-text-muted);
       font-weight: 800;
       text-transform: uppercase;
     }
@@ -122,11 +135,11 @@ ion-content.map-page {
       margin: 4px 0 0 0;
       font-size: 1.3rem;
       font-weight: 700;
-      color: #003366; // Tu azul corporativo
+      color: var(--clinic-blue-primary);
     }
 
     .verified-badge {
-      color: #003366;
+      color: var(--clinic-blue-primary);
       font-size: 1.6rem;
     }
   }
@@ -141,11 +154,11 @@ ion-content.map-page {
       display: flex;
       align-items: center;
       gap: 12px;
-      color: #556b82;
+      color: var(--clinic-text-muted);
 
       ion-icon {
         font-size: 1.2rem;
-        color: #001b3d; // Iconos resaltados en azul marino
+        color: var(--clinic-blue-dark-selected);
         flex-shrink: 0;
       }
 
@@ -160,10 +173,10 @@ ion-content.map-page {
   // BOTÓN "CÓMO LLEGAR" AZUL MARINO
   .directions-btn {
     width: 100%;
-    background: #001b3d; // Tu color de botón confirmar ("confirm-appointment-btn")
-    color: #ffffff;
+    background: var(--clinic-blue-dark-selected);
+    color: var(--clinic-bg-white);
     border: none;
-    border-radius: 26px; // Mismo border radius que tus botones principales
+    border-radius: 26px;
     padding: 14px;
     font-size: 0.95rem;
     font-weight: 700;
@@ -171,48 +184,18 @@ ion-content.map-page {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    box-shadow: 0 8px 20px rgba(0, 27, 61, 0.25);
+    box-shadow: var(--clinic-shadow-directions-btn);
     cursor: pointer;
     transition: all 0.2s ease-in-out;
 
     &:active {
-      background: #000c1c;
+      background: var(--clinic-map-btn-dark-active);
       transform: scale(0.97);
     }
 
     ion-icon {
       font-size: 1.35rem;
-      color: #ffffff;
+      color: var(--clinic-bg-white);
     }
-  }
-}
-
-
-// MODIFICA ESTA CLASE EN TU ARCHIVO SCSS
-.info-card-container {
-  position: absolute;
-  bottom: 80px; /* SUBIDO de 16px a 80px (o hasta 90px según el alto de tus tabs) */
-  left: 16px;
-  right: 16px;
-  z-index: 10;
-}
-
-.info-card-container {
-  position: absolute;
-  bottom: 80px;
-  left: 16px;
-  right: 16px;
-  z-index: 10;
-
-  // Transición suave de 0.4 segundos con aceleración/desaceleración natural
-  transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease;
-  transform: translateY(0);
-  opacity: 1;
-
-  // Clase que se activa cuando el usuario mueve el mapa
-  &.hidden-card {
-    transform: translateY(350px); // Empuja la tarjeta hacia abajo, fuera del viewport
-    opacity: 0; // Desvanecimiento opcional para un mejor efecto visual
-    pointer-events: none; // Evita que se pueda hacer clic en el botón invisible
   }
 }

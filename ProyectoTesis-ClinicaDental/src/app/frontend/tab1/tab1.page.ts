@@ -1,21 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton, IonRippleEffect } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
-import { chevronForward, notifications, happy, calendarClear, chatbubbleEllipses, headset, addOutline, bulbOutline } from 'ionicons/icons';
+import { chevronForward, notifications, happy, calendarClear, calendarOutline, chatbubbleEllipses, headset, addOutline, bulbOutline, cardOutline} from 'ionicons/icons';
+import { ProfileService } from '../profile.service';
 
 @Component({
   selector: 'app-tab1',
-  templateUrl: 'tab1.page.html',
-  styleUrls: ['tab1.page.scss'],
+  templateUrl: './tab1.page.html',
+  styleUrls: ['./tab1.page.scss'],
   standalone: true,
   imports: [ CommonModule, IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton, IonRippleEffect ],
 })
-export class Tab1Page {
+export class Tab1Page implements OnInit {
   userName: string = 'Cindy';
   saludPorcentaje: number = 75;
   notifActive: boolean = false;
+  profileImage: string = '';
 
   promociones = [
     {
@@ -34,16 +36,21 @@ export class Tab1Page {
     fecha: 'Lunes, 12 de Oct',
     hora: '10:00 AM',
     doctor: 'Dr. Aris',
-    especialidad: 'Especialista en Ortodoncia'
+    specialidad: 'Especialista en Ortodoncia'
   };
 
   tipDeLaSemana: string = 'Recuerda usar el hilo dental después de comidas principales. Tu esmalte lo agradecerá.';
 
-  constructor(private router: Router) {
-    addIcons({ chevronForward, notifications, happy, calendarClear, chatbubbleEllipses, headset, addOutline, bulbOutline });
+  constructor(private router: Router, private profileService: ProfileService) {
+    addIcons({ chevronForward, notifications, happy, calendarClear, calendarOutline, chatbubbleEllipses, headset, addOutline, bulbOutline, cardOutline });
   }
 
-  // Métodos de navegación y acciones de tu lógica original
+  ngOnInit() {
+    this.profileService.profileImage$.subscribe(img => {
+      this.profileImage = img;
+    });
+  }
+
   agendarCita() {
     this.router.navigate(['/tabs/tab2']);
   }
@@ -52,8 +59,8 @@ export class Tab1Page {
     this.router.navigate(['/tabs/tab7']);
   }
 
-  soporteTecnico() {
-    console.log('Soporte técnico');
+  pagos() {
+    this.router.navigate(['/tabs/tab9']);
   }
 
   viewProfile() {

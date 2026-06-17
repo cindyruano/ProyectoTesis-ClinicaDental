@@ -1,11 +1,9 @@
 // PERFIL USUARIO
 
-// FONDO GENERAL
 ion-content {
   --background: #edeff3;
 }
 
-// CUADRO PRESENTACIÓN
 .header-container {
   background-color: #fffcfc;
   padding: 12px 18px;
@@ -27,7 +25,7 @@ ion-content {
   margin: 0;
   color: #003366;
   font-size: 1.3rem;
-  font-weight: 550;
+  font-weight: 700;
   letter-spacing: -0.5px;
 }
 
@@ -35,8 +33,6 @@ ion-button[color="inverted"] {
   --color: var(--ion-color-inverted);
 }
 
-
-// ESTILOS DEL MENÚ DESPLEGABLE (NEW CHAT / HISTORIAL)
 .popover-menu-content {
   display: flex;
   flex-direction: column;
@@ -52,7 +48,7 @@ ion-button[color="inverted"] {
     padding: 12px 16px;
     font-size: 0.95rem;
     font-weight: 600;
-    color: #2d3748;
+    color: #475569;
     text-align: left;
     width: 100%;
     cursor: pointer;
@@ -65,24 +61,27 @@ ion-button[color="inverted"] {
     }
 
     &:active {
-      background: #f7fafc;
+      background: #f1f5f9;
     }
   }
 }
 
-// CONTENEDOR GENERAL DEL CHAT
+// ==========================================
+// ESTRUCTURA PRINCIPAL DEL CHAT (FIJA)
+// ==========================================
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 110px); // Ajusta la altura restando la cabecera
-  justify-content: space-between;
+  // Calcula la altura exacta restando el header superior
+  height: calc(100vh - 65px);
+  position: relative;
 }
 
-// 1. ÁREA DE MENSAJES (SCROLLABLE)
+// 1. ÁREA DE MENSAJES CON SCROLL INDEPENDIENTE
 .chat-messages {
   flex: 1;
   overflow-y: auto;
-  padding: 10px 16px;
+  padding: 16px 16px 8px 16px;
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -120,7 +119,6 @@ ion-button[color="inverted"] {
       }
     }
 
-    // Estilo IA (Blanco)
     &.ia-message {
       justify-content: flex-start;
       .bubble {
@@ -141,63 +139,129 @@ ion-button[color="inverted"] {
       }
     }
 
-    // Estilo Usuario (Azul)
     &.user-message {
       justify-content: flex-end;
       .bubble {
-        background: #0066cc; // Azul corporativo idéntico a tu captura
+        background: #1063e7;
         color: #ffffff;
         border-radius: 18px 4px 18px 18px;
-
         .message-time { color: rgba(255, 255, 255, 0.7); }
       }
     }
   }
 }
 
-// 2. SUGERENCIAS HORIZONTALES (CÁPSULAS)
+// ANIMACIÓN: IA ESTÁ ESCRIBIENDO
+.typing-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 4px;
+  margin-top: 4px;
+
+  .typing-text {
+    font-size: 0.82rem;
+    color: #4b5ebe;
+    font-style: italic;
+    font-weight: 500;
+  }
+
+  .typing-indicator {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    background: #ffffff;
+    padding: 8px 12px;
+    border-radius: 14px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+
+    span {
+      width: 6px;
+      height: 6px;
+      background: #4b5ebe;
+      border-radius: 50%;
+      display: inline-block;
+      animation: bounceDots 1.4s infinite ease-in-out both;
+
+      &:nth-child(1) { animation-delay: -0.32s; }
+      &:nth-child(2) { animation-delay: -0.16s; }
+    }
+  }
+}
+
+@keyframes bounceDots {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.3; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+// ==========================================
+// BLOQUE INFERIOR UNIFICADO (FIJO ABAJO)
+// ==========================================
+.fixed-bottom-bar {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding-bottom: 85px; // Evita colisiones con las pestañas globales inferiores de navegación
+}
+
+// 2. SUGERENCIAS HORIZONTALES (PEGADAS AL INPUT)
 .suggestions-container {
-  padding: 8px 0;
+  padding: 4px 0;
 
   .suggestions-scroll {
     display: flex;
     gap: 10px;
     overflow-x: auto;
     padding: 0 16px;
-    scrollbar-width: none; // Oculta barra en Firefox
-    &::-webkit-scrollbar { display: none; } // Oculta barra en Chrome/Safari
+    scrollbar-width: none;
+    &::-webkit-scrollbar { display: none; }
 
     .suggestion-btn {
-      background: #dbeafe;
-      color: #1e40af;
-      border: none;
-      padding: 9px 18px;
-      border-radius: 20px;
-      font-size: 0.88rem;
-      font-weight: 700;
+      background: #ffffff;
+      color: #003366;
+      border: 1px solid #e2e8f0;
+      padding: 8px 16px;
+      border-radius: 24px;
+      font-size: 0.85rem;
+      font-weight: 600;
       white-space: nowrap;
       cursor: pointer;
-      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+      transition: all 0.15s ease;
+
+      ion-icon {
+        font-size: 0.95rem;
+        color: #1063e7;
+      }
 
       &:active {
-        background: #bfdbfe;
+        background: #f8fafc;
+        border-color: #1063e7;
       }
     }
   }
 }
 
-// 3. BARRA INFERIOR DE ESCRITURA
+// 3. BARRA DE ESCRITURA ESTILO CÁPSULA FLOTANTE INTERNA
 .chat-input-bar {
   display: flex;
   align-items: center;
   background: #ffffff;
-  padding: 8px 10px;
-  border-top: 1px solid #e2e8f0;
+  padding: 8px 12px;
+  margin: 6px 16px 4px 16px; // Márgenes comprimidos para pegarse a las sugerencias
+  border-radius: 30px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 
   .emoji-btn {
-    --color: #718096;
+    --color: #64748b;
     margin: 0;
-    font-size: 1.4rem;
+    font-size: 1.45rem;
+    --padding-start: 4px;
+    --padding-end: 4px;
   }
 
   .input-wrapper {
@@ -208,47 +272,132 @@ ion-button[color="inverted"] {
       width: 100%;
       border: none;
       outline: none;
-      background: #f7fafc;
-      padding: 11px 16px;
-      border-radius: 24px;
+      background: transparent;
+      padding: 8px 2px;
       font-size: 0.95rem;
-      color: #2d3748;
+      color: #1e293b;
 
       &::placeholder {
-        color: #a0aec0;
+        color: #94a3b8;
       }
     }
   }
 
-  .send-btn {
-    --color: #0066cc; // Flecha azul de envío
-    margin: 0;
-    font-size: 1.6rem;
+  // Botón circular azul con flecha blanca resuelto
+  .send-btn-round {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #1063e7;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    color: #ffffff;
+    transition: all 0.15s ease;
+
+    ion-icon {
+      font-size: 1.1rem;
+      // Centra ópticamente el icono del avión de papel dentro de la esfera
+      transform: translate(1px, -0.5px);
+    }
+
+    &:active {
+      background: #0b4eb8;
+      transform: scale(0.95);
+    }
 
     &[disabled] {
-      opacity: 0.4;
+      background: #e2e8f0;
+      color: #94a3b8;
+      cursor: not-allowed;
     }
   }
 }
 
-// CONTENEDOR GENERAL DEL CHAT
-.chat-container {
-  display: flex;
-  flex-direction: column;
-  height: calc(100vh - 110px); // Ajusta la altura restando la cabecera
-  justify-content: space-between;
+// ... Todo tu SCSS previo se mantiene intacto ...
 
-  // CORREGIDO: Agrega este espacio abajo para empujar la barra de texto y que no la tape el menú inferior
-  padding-bottom: 75px;
+// NUEVO: ESTILOS DEL CONTENEDOR DE EMOJIS
+.emoji-picker-container {
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  max-height: 200px;
+  overflow-y: auto;
+  padding: 12px 16px;
+  margin-top: 8px;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.02);
+  animation: slideUp 0.2s ease-out;
+
+  .emoji-category {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); // Rejilla limpia de 8 columnas simétricas
+    gap: 12px;
+    justify-items: center;
+  }
+
+  .emoji-item {
+    font-size: 1.6rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease;
+
+    &:active {
+      transform: scale(1.25); // Feedback visual rápido al presionarlo
+    }
+  }
 }
 
-// Opcional: Si notas que al bajar del todo el último mensaje se pega mucho a las sugerencias,
-// puedes darle un aire extra al contenedor de mensajes:
-.chat-messages {
-  flex: 1;
+// Animación de entrada suave para el selector
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}// ... Todo tu SCSS previo se mantiene intacto ...
+
+// NUEVO: ESTILOS DEL CONTENEDOR DE EMOJIS
+.emoji-picker-container {
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  max-height: 200px;
   overflow-y: auto;
-  padding: 10px 16px 20px 16px; // Un poco más de padding abajo internamente
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
+  padding: 12px 16px;
+  margin-top: 8px;
+  box-shadow: inset 0 4px 8px rgba(0, 0, 0, 0.02);
+  animation: slideUp 0.2s ease-out;
+
+  .emoji-category {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr); // Rejilla limpia de 8 columnas simétricas
+    gap: 12px;
+    justify-items: center;
+  }
+
+  .emoji-item {
+    font-size: 1.6rem;
+    cursor: pointer;
+    user-select: none;
+    transition: transform 0.1s ease;
+
+    &:active {
+      transform: scale(1.25); // Feedback visual rápido al presionarlo
+    }
+  }
+}
+
+// Animación de entrada suave para el selector
+@keyframes slideUp {
+  from {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

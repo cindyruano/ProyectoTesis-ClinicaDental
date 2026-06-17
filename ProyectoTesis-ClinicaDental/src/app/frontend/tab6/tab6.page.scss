@@ -1,36 +1,140 @@
-// PERFIL USUARIO
-
-// FONDO GENERAL
 ion-content {
-  --background: #edeff3;
+  --background: #f8fbff;
 }
 
-// CUADRO PRESENTACIÓN
-.header-container {
-  background-color: #fffcfc;
-  padding: 12px 18px;
+.profile-header-container {
+  padding: 20px;
+  background: linear-gradient(180deg, #e0ebf5 0%, #f8fbff 100%);
+
+  .top-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    .nav-title { font-size: 18px; font-weight: 600; color: #333; margin: 0; }
+  }
 }
 
-.brand-section {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+.avatar-section {
+  text-align: center;
+  margin-bottom: 25px;
+
+  .avatar-wrapper {
+    position: relative;
+    width: 125px;
+    height: 125px;
+    margin: 0 auto 15px;
+
+    img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid white;
+      box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .edit-badge {
+      position: absolute;
+      bottom: 5px;
+      right: 5px;
+      background: #3488ce;
+      color: white;
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid white;
+      cursor: pointer;
+      padding: 0;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+
+      &:active {
+        transform: scale(0.9);
+        background: #286ea8;
+      }
+    }
+  }
+
+  .user-welcome { font-size: 26px; font-weight: 700; color: #1a1a1a; margin: 0; }
+  .user-subtitle { font-size: 14px; color: #666; margin: 5px 0 0; }
 }
 
-.user-avatar {
-  width: 40px;
-  height: 40px;
-  cursor: pointer;
+.completion-card {
+  background: white;
+  margin: 0 10px;
+  padding: 15px;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+  .completion-text {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+    .percentage-group { display: flex; align-items: center; gap: 5px; strong { color: #3488ce; } }
+  }
+
+  .progress-bar-container {
+    height: 8px;
+    background: #eef2f6;
+    border-radius: 10px;
+    .progress-fill { height: 100%; background: #3488ce; border-radius: 10px; transition: width 0.5s ease-in-out; }
+  }
 }
 
-.business-title {
-  margin: 0;
-  color: #003366;
-  font-size: 1.3rem;
-  font-weight: 550;
-  letter-spacing: -0.5px;
+.settings-list-container {
+  padding: 20px;
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #b0b0b0;
+    letter-spacing: 0.8px;
+    margin-bottom: 15px;
+  }
+
+  .setting-item {
+    --background: white;
+    --border-radius: 16px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+
+    .icon-box {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    // Color gris suave original para ambos botones de configuración
+    .unified-grey-bg {
+      background: #f4f4f4;
+    }
+
+    .logout-bg {
+      background: #fff1f1;
+    }
+
+    ion-label { font-weight: 500; font-size: 16px; color: #333; }
+
+    // Control preciso de una sola flecha limpia
+    .single-arrow {
+      font-size: 18px;
+      color: #ccc;
+      margin-right: -5px;
+    }
+  }
 }
 
-ion-button[color="inverted"] {
-  --color: var(--ion-color-inverted);
+.app-footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-bottom: 30px;
+  p { font-size: 12px; color: #bbb; margin: 4px 0; }
 }
