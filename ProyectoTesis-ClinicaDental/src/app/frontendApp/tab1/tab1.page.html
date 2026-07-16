@@ -1,0 +1,215 @@
+<ion-content [fullscreen]="true">
+
+  <!-- BARRA SUPERIOR-->
+  <div class="home-header-gradient">
+    <div class="header-capsule-container">
+      <div class="header-capsule">
+        <ion-grid class="ion-no-padding">
+          <ion-row class="ion-align-items-center">
+            <ion-col size="3" class="ion-text-start">
+              <ion-avatar class="user-avatar" (click)="viewProfile()">
+                <img [src]="profileImage" alt="Perfil">
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="6" class="ion-text-center">
+              <h1 class="business-title">DentalClinic</h1>
+            </ion-col>
+            <ion-col size="3" class="ion-text-end">
+              <ion-button
+                fill="clear"
+                class="notif-btn"
+                [class.active]="notifActive"
+                (click)="toggleNotification()">
+                <ion-icon slot="icon-only" name="notifications"></ion-icon>
+              </ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE BIENVENIDA -->
+    <div class="standalone-welcome">
+      <h1 class="welcome-title">Hola, {{ userName }}</h1>
+      <p class="welcome-subtitle">Tu salud dental es nuestra prioridad hoy.</p>
+    </div>
+
+    <!-- 1. TARJETA UNIFICADA -->
+    <div class="unified-card-container">
+      <div class="unified-card">
+        <div class="appointment-internal-layout" (click)="goToHistorialCitas()">
+          <div class="date-badge-box">
+            <span class="badge-month">OCT</span>
+            <span class="badge-day">14</span>
+          </div>
+          <div class="appointment-details-box">
+            <span class="tag-next-appointment">PRÓXIMA CITA</span>
+            <h2 class="appointment-procedure-title">Limpieza Profunda</h2>
+            <div class="appointment-meta-row">
+              <ion-icon name="time-outline"></ion-icon>
+              <span>10:30 AM</span>
+            </div>
+            <div class="appointment-meta-row">
+              <ion-icon name="person-outline"></ion-icon>
+              <span>Dr. Aris Rodriguez</span>
+            </div>
+          </div>
+        </div>
+
+        <hr class="card-divider" />
+
+        <div class="progress-internal-layout">
+          <div class="progress-labels-row">
+            <span class="progress-main-text">PROGRESO DEL TRATAMIENTO</span>
+            <span class="progress-percentage-number">{{ saludPorcentaje }}%</span>
+          </div>
+          <div class="progress-bar-track">
+            <div class="progress-bar-fill" [style.width.%]="saludPorcentaje"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. SUBTÍTULO ACCESOS RÁPIDOS -->
+  <div class="section-header-title">
+    <h2>ACCESOS RÁPIDOS</h2>
+  </div>
+
+  <!-- 3. ACCESOS RÁPIDOS -->
+  <div class="quick-actions-grid-container">
+    <div class="actions-top-row">
+      <button class="action-card-square" (click)="agendarCita()">
+        <div class="icon-circle-white">
+          <ion-icon name="add-outline"></ion-icon>
+        </div>
+        <h3>Agendar</h3>
+        <p>¡Fácil y rápido!</p>
+      </button>
+
+      <button class="action-card-square dark-icon-mode" (click)="chatIA()">
+        <div class="icon-circle-dark">
+          <ion-icon name="happy-outline"></ion-icon>
+        </div>
+        <h3>Chat IA</h3>
+        <p>Tus dudas aquí</p>
+      </button>
+    </div>
+
+    <button class="action-banner-wide" (click)="pagos()">
+      <div class="banner-left-content">
+        <div class="icon-square-container">
+          <ion-icon name="card-outline"></ion-icon>
+        </div>
+        <div class="banner-texts">
+          <h3>Pagos y Facturas</h3>
+          <p>Gestiona tu salud financiera</p>
+        </div>
+      </div>
+      <ion-icon name="chevron-forward-outline" class="banner-arrow-right"></ion-icon>
+    </button>
+  </div>
+
+  <!-- 4. SECCIÓN NOVEDADES -->
+  <div class="promo-section-v2">
+    <div class="promo-header-row">
+      <h2 class="section-title">Novedades</h2>
+      <button class="btn-ver-todo" (click)="abrirModalNovedades(true)">
+        Ver todo <ion-icon name="chevron-forward"></ion-icon>
+      </button>
+    </div>
+
+    <div class="promo-scroll-container">
+      <div class="news-feed-card" (click)="seleccionarDescuento(promociones[0])">
+        <div class="news-image-wrapper">
+          <img [src]="promociones[0].img" [alt]="promociones[0].title" class="news-main-img">
+          <span class="news-status-badge">ÉXITO</span>
+        </div>
+        <div class="news-card-body">
+          <h2 class="news-card-title">{{ promociones[0].displayTitle }}</h2>
+          <p class="news-card-description">{{ promociones[0].descShort }}</p>
+          <button class="btn-read-testimonial">
+            Leer testimonio <ion-icon name="arrow-forward-outline"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. VENTANITA FLOTANTE (MODAL DE DESCUENTOS) -->
+  <ion-modal #modalDescuentos [isOpen]="isModalOpen" class="custom-promos-modal">
+  <ng-template>
+    <ion-header class="ion-no-border modal-custom-header">
+      <ion-toolbar>
+        <ion-title>Todos los Descuentos</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="cerrarVentanita(modalDescuentos)" class="btn-close-modal">
+            <ion-icon name="close-outline"></ion-icon>
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="modal-cards-content">
+      <div class="modal-scroll-wrapper">
+        <div class="news-feed-card modal-spacing" *ngFor="let promo of promociones" (click)="seleccionarDescuento(promo, modalDescuentos)">
+          <div class="news-image-wrapper">
+            <img [src]="promo.img" [alt]="promo.title" class="news-main-img">
+            <span class="news-status-badge">ÉXITO</span>
+          </div>
+          <div class="news-card-body">
+            <h2 class="news-card-title">{{ promo.displayTitle }}</h2>
+            <p class="news-card-description">{{ promo.descShort }}</p>
+            <button class="btn-read-testimonial">
+              Agendar con este beneficio <ion-icon name="arrow-forward-outline"></ion-icon>
+            </button>
+          </div>
+        </div>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+  <!-- 6. BURBUJA DEL TIP -->
+  <div class="tip-floating-container">
+    <button class="tip-bubble" (click)="abrirModalTip(true)">
+      <div class="tip-icon-inside">
+        <ion-icon name="bulb-outline"></ion-icon>
+      </div>
+    </button>
+  </div>
+
+  <!-- 7. VENTANITA MODAL COMPACTA PARA EL TIP DE LA SEMANA -->
+  <ion-modal [isOpen]="isTipModalOpen" (didDismiss)="abrirModalTip(false)" class="custom-tip-modal">
+    <ng-template>
+      <div class="tip-card-modal-content">
+
+        <!-- Icono flotante superior de la bombilla -->
+        <div class="tip-modal-badge">
+          <ion-icon name="bulb"></ion-icon>
+        </div>
+
+        <h2 class="tip-modal-title">Tip de la semana</h2>
+
+        <!-- Contenido de texto -->
+        <div class="tip-modal-body">
+          <p>
+            Recuerda usar el hilo dental después de comidas principales. <br>
+            <strong>Tu esmalte lo agradecerá.</strong>
+          </p>
+        </div>
+
+        <!-- Acciones/Botones -->
+        <div class="tip-modal-actions">
+          <button class="btn-tip-entendido" (click)="abrirModalTip(false)">
+            ¡ENTENDIDO!
+          </button>
+        </div>
+
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <div class="scroll-spacer"></div>
+
+</ion-content>

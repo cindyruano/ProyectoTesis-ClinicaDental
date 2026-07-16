@@ -1,0 +1,275 @@
+ion-content {
+  --background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 40%, #f8fbff 60%, #f8fbff 100%);
+}
+
+/* BARRA SUPERIOR */
+.header-capsule-container {
+  padding: 18px 16px 8px 16px;
+  background: transparent;
+}
+
+.header-capsule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+
+  .business-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #003366;
+    text-align: center;
+  }
+
+  .notif-btn {
+    --color: #003366 !important;
+    color: #003366 !important;
+    transition: color 0.2s ease-in-out;
+    margin: 0;
+
+    &.active {
+      --color: #1063e7 !important;
+      color: #1063e7 !important;
+    }
+  }
+}
+
+/* =================================================================
+   1. SECCIÓN DE BIENVENIDA (Ajustada a la derecha)
+   ================================================================= */
+.shop-welcome-container {
+  padding: 22px 25px 20px 20px;
+
+  .welcome-main-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: #003366;
+    margin: 0 0 4px 0;
+    letter-spacing: -0.1px;
+  }
+
+  .welcome-subtitle {
+    margin: 6px 0 0 0;
+    font-size: 1rem;
+    font-weight: 400;
+    color: #64748b;
+  }
+}
+
+/* =================================================================
+   LISTA VERTICAL DE PRODUCTOS
+   ================================================================= */
+.products-vertical-list {
+  padding: 0 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .product-item-row {
+    background: #ffffff;
+    border-radius: 18px;
+    border: 1px solid #edf2f7;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.015);
+    padding: 14px;
+    display: flex;
+    align-items: center;
+
+    .product-image-box {
+      width: 70px;
+      height: 70px;
+      background: #f8fafc;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px;
+      flex-shrink: 0;
+      margin-right: 14px;
+
+      img {
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+      }
+    }
+
+    .product-details-box {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-right: 8px;
+
+      .product-item-title {
+        margin: 0 0 4px 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #003366;
+        line-height: 1.2;
+      }
+
+      .product-item-price {
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #1063e7;
+      }
+    }
+
+    /* 3. DISEÑO DE BOTONES MÁS Y MENOS SIMÉTRICOS */
+    .product-action-box {
+      flex-shrink: 0;
+
+      .quantity-control-wrapper {
+        display: flex;
+        align-items: center;
+        background: #f1f5f9;
+        border-radius: 30px;
+        padding: 4px 6px;
+        gap: 12px;
+        border: 1px solid #e2e8f0;
+
+        .qty-btn {
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          background: #ffffff;
+          border: none;
+          color: #003366;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+          transition: all 0.1s ease;
+
+          ion-icon {
+            font-size: 1rem;
+            font-weight: bold;
+          }
+
+          &:active {
+            background: #1063e7;
+            color: #ffffff;
+          }
+        }
+
+        .qty-number {
+          font-size: 0.95rem;
+          font-weight: 700;
+          color: #003366;
+          min-width: 16px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+/* =================================================================
+   NUEVA SECCIÓN DE CHECKOUT Y DESGLOSE INFERIOR
+   ================================================================= */
+.checkout-footer-section {
+  margin-top: 30px;
+  padding: 0 16px 40px 16px;
+
+  /* 5. AVISO EXCLUSIVO EN CLÍNICA */
+  .delivery-notice-box {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: rgba(224, 235, 245, 0.4);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 20px;
+
+    .notice-icon {
+      color: #003366;
+      font-size: 1.3rem;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .notice-text {
+      margin: 0;
+      font-size: 0.82rem;
+      color: #475569;
+      line-height: 1.4;
+      font-weight: 500;
+      text-align: left;
+    }
+  }
+
+  /* 6. LÍNEA DIVISORA */
+  .section-divider {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 20px 0;
+  }
+
+  /* 7. CONTENEDOR DE TOTAL */
+  .total-summary-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 6px;
+    margin-bottom: 26px;
+
+    .total-label {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #64748b;
+    }
+
+    .total-amount {
+      font-size: 1.5rem;
+      font-weight: 800;
+      color: #003366;
+    }
+  }
+
+  /* 8. BOTÓN DE CONFIRMACIÓN DE COMPRA */
+  .submit-action-container {
+    width: 100%;
+
+    .confirm-purchase-btn {
+      width: 85%;
+      max-width: 320px;
+      background: #001a33;
+      color: #ffffff;
+      border: none;
+      padding: 15px 24px;
+      border-radius: 30px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.15s ease;
+
+      &:active {
+        transform: scale(0.97);
+        background: #0c52c1;
+      }
+    }
+  }
+}
+
+.scroll-spacer {
+  height: 40px;
+  width: 100%;
+  pointer-events: none;
+}

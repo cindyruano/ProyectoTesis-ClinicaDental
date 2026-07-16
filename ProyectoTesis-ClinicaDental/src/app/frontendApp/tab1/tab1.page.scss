@@ -1,0 +1,713 @@
+ion-content {
+  --background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 40%, #f8fbff 60%, #f8fbff 100%);
+}
+
+/* BARRA SUPERIOR */
+.header-capsule-container {
+  padding: 18px 16px 8px 16px;
+  background: transparent;
+}
+
+.header-capsule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+
+  .business-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #002244;
+    text-align: center;
+  }
+
+  .notif-btn {
+    --color: #002244 !important;
+    color: #002244 !important;
+    transition: color 0.2s ease-in-out;
+    margin: 0;
+
+    &.active {
+      --color: #1063e7 !important;
+      color: #1063e7 !important;
+    }
+  }
+}
+
+/* BIENVENIDA */
+.standalone-welcome {
+  padding: 22px 20px 14px 20px;
+
+  .welcome-title {
+    margin: 0;
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #002244;
+    letter-spacing: -0.1px;
+  }
+
+  .welcome-subtitle {
+    margin: 6px 0 0 0;
+    font-size: 1rem;
+    color: #64748b;
+    font-weight: 400;
+  }
+}
+
+/* 1. TARJETA UNIFICADA */
+.unified-card-container {
+  padding: 0 20px;
+  margin-top: 6px;
+}
+
+.unified-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 28px 22px;
+  box-shadow: 0 10px 30px rgba(0, 34, 68, 0.06);
+  border: 1px solid rgba(0, 51, 102, 0.05);
+
+  .card-divider {
+    border: 0;
+    height: 1px;
+    background: rgba(0, 51, 102, 0.08);
+    margin: 24px 0;
+  }
+}
+
+.appointment-internal-layout {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+
+  .date-badge-box {
+    background: #002244;
+    border-radius: 18px;
+    width: 84px;
+    height: 88px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    flex-shrink: 0;
+
+    .badge-month {
+      font-size: 0.8rem;
+      font-weight: 700;
+      opacity: 0.85;
+      letter-spacing: 0.5px;
+    }
+
+    .badge-day {
+      font-size: 2.1rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-top: 2px;
+    }
+  }
+
+  .appointment-details-box {
+    flex: 1;
+
+    .tag-next-appointment {
+      background: #e6f7ed;
+      color: #007f2c;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 5px 10px;
+      border-radius: 6px;
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .appointment-procedure-title {
+      margin: 0 0 6px 0;
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: #002244;
+    }
+
+    .appointment-meta-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 4px;
+      color: #475569;
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      ion-icon {
+        font-size: 1.05rem;
+        color: #002244;
+      }
+    }
+  }
+}
+
+.progress-internal-layout {
+  width: 100%;
+
+  .progress-labels-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    .progress-main-text {
+      font-size: 0.8rem;
+      color: #002244;
+      font-weight: 800;
+      letter-spacing: 0.4px;
+    }
+
+    .progress-percentage-number {
+      font-size: 0.9rem;
+      color: #002244;
+      font-weight: 800;
+    }
+  }
+
+  .progress-bar-track {
+    width: 100%;
+    height: 8px;
+    background: #eef2f6;
+    border-radius: 10px;
+    overflow: hidden;
+
+    .progress-bar-fill {
+      height: 100%;
+      background: #002244;
+      border-radius: 10px;
+    }
+  }
+}
+
+/* 2. SUBTÍTULO ACCESOS RÁPIDOS */
+.section-header-title {
+  padding: 24px 20px 0px 20px;
+
+  h2 {
+    margin: 0;
+    font-size: 15px;
+    font-weight: 800;
+    color: #002244;
+  }
+}
+
+/* 3. ACCESOS RÁPIDOS GRID */
+.quick-actions-grid-container {
+  padding: 14px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.actions-top-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.action-card-square {
+  flex: 1;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 24px 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 10px 28px rgba(0, 34, 68, 0.05);
+  border: 1px solid rgba(0, 51, 102, 0.02);
+  cursor: pointer;
+  margin: 0;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  &:active {
+    transform: scale(0.97);
+    box-shadow: 0 4px 12px rgba(0, 34, 68, 0.03);
+  }
+
+  .icon-circle-white {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 6px 16px rgba(0, 34, 68, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+
+    ion-icon {
+      font-size: 1.5rem;
+      color: #002244;
+    }
+  }
+
+  .icon-circle-dark {
+    width: 54px;
+    height: 54px;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 6px 16px rgba(0, 34, 68, 0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 14px;
+
+    ion-icon {
+      font-size: 1.5rem;
+      color: #002244;
+    }
+  }
+
+  h3 {
+    margin: 0 0 4px 0;
+    font-size: 1.05rem;
+    font-weight: 800;
+    color: #002244;
+  }
+
+  p {
+    margin: 0;
+    font-size: 0.7rem;
+    color: #94a3b8;
+    font-weight: 500;
+  }
+}
+
+.action-banner-wide {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 28px;
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-shadow: 0 10px 24px rgba(0, 34, 68, 0.12);
+  border: none;
+  cursor: pointer;
+  margin: 0;
+  transition: transform 0.15s ease;
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  .banner-left-content {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .icon-square-container {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+
+    ion-icon {
+      font-size: 1.3rem;
+      color: #ffffff;
+    }
+  }
+
+  .banner-texts {
+    text-align: left;
+
+    h3 {
+      margin: 0 0 2px 0;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #002244;
+    }
+
+    p {
+      margin: 0;
+      font-size: 0.75rem;
+      color: #94a3b8;
+      font-weight: 400;
+    }
+  }
+
+  .banner-arrow-right {
+    font-size: 1.1rem;
+    color: #002244;
+    opacity: 0.9;
+  }
+}
+
+/* 4. SECCIÓN NOVEDADES */
+.promo-section-v2 {
+  margin: 22px 0 32px 0;
+  padding: 0 20px;
+
+  .promo-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .section-title {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #002244;
+      margin: 0;
+    }
+
+    .btn-ver-todo {
+      background: transparent;
+      margin: 0;
+      padding: 0;
+      color: #002244;
+      font-size: 0.9rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      cursor: pointer;
+
+      ion-icon {
+        font-size: 0.9rem;
+      }
+    }
+  }
+}
+
+.promo-scroll-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* DISEÑO DE LA TARJETA (CALCADO CON SU RESPECTIVA SOMBRA REQUERIDA) */
+.news-feed-card {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 32px;
+  overflow: visible;
+  box-shadow: 0 12px 32px rgba(0, 34, 68, 0.05); /* Sombra suave solicitada */
+  border: 1px solid rgba(0, 51, 102, 0.03);
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:active {
+    transform: scale(0.99);
+  }
+
+  &.modal-spacing {
+    margin-bottom: 20px; /* Separación limpia entre elementos dentro de la ventanita */
+  }
+
+  .news-image-wrapper {
+    width: 100%;
+    height: 210px;
+    position: relative;
+    border-radius: 32px 32px 0 0;
+    overflow: hidden;
+
+    .news-main-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .news-status-badge {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      background: #002244;
+      color: #ffffff;
+      font-size: 0.75rem;
+      font-weight: 900;
+      padding: 6px 14px;
+      border-radius: 10px;
+      letter-spacing: 0.8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      z-index: 10;
+    }
+  }
+
+  .news-card-body {
+    padding: 24px 22px;
+
+    .news-card-title {
+      margin: 0 0 12px 0;
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #002244;
+      line-height: 1.3;
+    }
+
+    .news-card-description {
+      margin: 0 0 20px 0;
+      font-size: 0.95rem;
+      color: #475569;
+      line-height: 1.5;
+      font-weight: 400;
+    }
+
+    .btn-read-testimonial {
+      background: transparent;
+      padding: 0;
+      margin: 0;
+      color: #002244;
+      font-size: 1.05rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+
+      ion-icon {
+        font-size: 1.1rem;
+      }
+    }
+  }
+}
+
+/* 5. DISEÑO DE LA VENTANITA DE NOVEDADES (MODAL FLOTANTE) */
+.custom-promos-modal {
+  --height: 75%;
+  --border-radius: 32px 32px 0 0;
+  --backdrop-opacity: 0.4;
+  align-items: flex-end; /* Efecto bottom-sheet elegante */
+
+  .modal-custom-header {
+    background: #ffffff;
+
+    ion-toolbar {
+      --background: #ffffff;
+      --color: #002244;
+      padding: 10px 10px 0 10px;
+
+      ion-title {
+        font-weight: 800;
+        font-size: 1.2rem;
+      }
+    }
+
+    .btn-close-modal {
+      --color: #475569;
+      font-size: 1.4rem;
+    }
+  }
+
+  .modal-cards-content {
+    --background: #f8fbff; /* Fondo sutilmente contrastado */
+
+    .modal-scroll-wrapper {
+      padding: 16px 20px;
+    }
+  }
+}
+
+/* 6. BURBUJA FLOTANTE */
+.tip-floating-container {
+  position: fixed;
+  bottom: 105px;
+  right: 25px;
+  z-index: 999;
+}
+
+.tip-bubble {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #eef4fa;
+  box-shadow: 0 8px 24px rgba(16, 99, 231, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  animation: bounceAnimation 3s infinite ease-in-out;
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  .tip-icon-inside {
+    width: 44px;
+    height: 44px;
+    background: #eef4fa;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    ion-icon {
+      font-size: 1.5rem;
+      color: #002244;
+    }
+  }
+}
+
+@keyframes bounceAnimation {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-12px);
+  }
+  60% {
+    transform: translateY(-6px);
+  }
+}
+.custom-promos-modal {
+  --height: 75%;
+  --border-radius: 32px 32px 0 0;
+  --backdrop-opacity: 0.4;
+  align-items: flex-end;
+}
+
+
+.scroll-spacer {
+  height: 55px;
+  width: 100%;
+  pointer-events: none;
+}
+
+
+/* 7. DISEÑO DE LA VENTANITA COMPACTA DEL TIP CORREGIDA */
+.custom-tip-modal {
+  --width: 82%;              /* Reducción horizontal para forzar los saltos de línea perfectos */
+  --max-width: 290px;        /* Ajuste de contención exacto */
+  --height: auto;
+  --border-radius: 32px;     /* Aplica el redondeado al contenedor principal de Ionic */
+  --backdrop-opacity: 0.4;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+
+  &::part(content) {
+    position: relative;
+    overflow: visible;       /* Permite que la bombilla superior sobresalga sin cortarse */
+    border-radius: 32px;     /* Redondeado del cuadro de fondo blanco garantizado */
+  }
+}
+
+.tip-card-modal-content {
+  background: #ffffff;
+  padding: 38px 20px 24px 20px; /* Ajuste sutil de padding interno */
+  text-align: center;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 32px;       /* Refuerzo de redondeado interno */
+
+  /* Circulito superior con la bombilla */
+  .tip-modal-badge {
+    position: absolute;
+    top: -30px;
+    background: #ffffff;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+
+    ion-icon {
+      font-size: 1.7rem;
+      color: #ffa500;
+    }
+  }
+
+  .tip-modal-title {
+    margin: 12px 0 16px 0;
+    font-size: 1.4rem;
+    font-weight: 800;
+    color: #002244;
+  }
+
+  .tip-modal-body {
+    margin-bottom: 24px;
+    padding: 0 4px;          /* Margen extra para abrazar la estructura del texto */
+
+    p {
+      margin: 0;
+      font-size: 0.98rem;    /* Tamaño ligeramente reducido en base al nuevo ancho */
+      color: #475569;
+      line-height: 1.5;
+      font-weight: 400;
+
+      strong {
+        color: #002244;
+        font-weight: 800;
+        display: block;
+        margin-top: 6px;
+      }
+    }
+  }
+
+  .tip-modal-actions {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+
+    /* Botón azul marino */
+    .btn-tip-entendido {
+      width: 100%;
+      background: #002244;
+      color: #ffffff;
+      padding: 14px 0;       /* Proporcional al nuevo tamaño reducido */
+      border-radius: 18px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      border: none;
+      box-shadow: 0 6px 16px rgba(0, 34, 68, 0.16);
+      cursor: pointer;
+      transition: transform 0.1s ease;
+
+      &:active {
+        transform: scale(0.97);
+      }
+    }
+
+    /* Enlace inferior */
+    .btn-tip-more {
+      background: transparent;
+      border: none;
+      color: #002244;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 4px;
+
+      &:active {
+        opacity: 0.7;
+      }
+    }
+  }
+}

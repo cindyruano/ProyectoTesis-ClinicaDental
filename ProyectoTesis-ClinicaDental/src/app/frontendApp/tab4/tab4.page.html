@@ -1,0 +1,181 @@
+<ion-content [fullscreen]="true">
+
+  <!-- BARRA SUPERIOR-->
+  <div class="header-capsule-container">
+    <div class="header-capsule">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="3" class="ion-text-start">
+            <ion-avatar class="user-avatar" (click)="viewProfile()">
+              <img [src]="profileImage" alt="Perfil">
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <h1 class="business-title">DentalClinic</h1>
+          </ion-col>
+          <ion-col size="3" class="ion-text-end">
+            <ion-button fill="clear" class="notif-btn" [class.active]="notifActive" (click)="toggleNotification()">
+              <ion-icon slot="icon-only" name="notifications"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <!-- SECCIÓN DE GAMIFICACIÓN -->
+  <div class="gamification-container">
+    <div class="character-section">
+      <div class="badge-level">
+        <ion-icon name="star"></ion-icon>
+        <span>Nivel 5</span>
+      </div>
+      <div class="image-wrapper">
+        <img src="assets/icon/reze.webp" alt="Diente Personaje" class="character-img" />
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE RACHA -->
+    <div class="streak-section">
+      <h2 class="streak-title">¡Súper Limpieza!</h2>
+      <p class="streak-subtitle">Vas por buen camino, ¡continúa así!</p>
+      <div class="streak-card">
+        <div class="streak-info">
+          <span class="label">RACHA ACTUAL</span>
+          <span class="days">7 Días</span>
+        </div>
+        <div class="streak-badge-icon">
+          <div class="fire-circle">
+            <ion-icon name="flame" class="fire-icon"></ion-icon>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE PROGRESO -->
+    <div class="progress-section">
+      <div class="progress-header">
+        <span class="progress-title">Progreso Diario</span>
+        <span class="progress-percentage">75%</span>
+      </div>
+      <div class="progress-bar-container">
+        <div class="progress-bar-fill" style="width: 75%;"></div>
+      </div>
+      <div class="progress-footer">
+        <ion-icon name="checkmark-circle-outline" color="success"></ion-icon>
+        <span class="footer-text">¡Falta poco para tu misión nocturna!</span>
+      </div>
+    </div>
+
+    <!-- SECCIÓN DE PREMIOS -->
+    <div class="prizes-section">
+      <h3 class="section-title">Tus Premios</h3>
+      <div class="prizes-grid">
+        <button class="prize-btn" (click)="onPrizeClick('sparkles')">
+          <ion-icon name="sparkles" color="primary"></ion-icon>
+        </button>
+        <button class="prize-btn" (click)="onPrizeClick('brush')">
+          <ion-icon name="brush" color="primary"></ion-icon>
+        </button>
+        <button class="prize-btn" (click)="onPrizeClick('ribbon')">
+          <ion-icon name="ribbon" color="primary"></ion-icon>
+        </button>
+        <button class="prize-btn locked" (click)="onPrizeClick('locked')">
+          <ion-icon name="lock-closed-outline" color="medium"></ion-icon>
+        </button>
+      </div>
+    </div>
+
+    <!-- BARRA DE ACCIÓN -->
+    <div class="action-section">
+      <ion-button expand="block" shape="round" class="btn-redeem" (click)="redeemPoints()">
+        Canjear puntos
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- MODAL DE PERSONALIZACIÓN DE SKINS -->
+  <ion-modal [isOpen]="isSkinModalOpen" (didDismiss)="isSkinModalOpen = false" [initialBreakpoint]="0.6" [breakpoints]="[0, 0.6, 0.9]">
+  <ng-template>
+    <div class="modal-skin-content">
+      <div class="modal-header">
+        <h2>Personalizar a Reze</h2>
+        <p>Usa tus puntos para cambiar su aspecto</p>
+      </div>
+
+      <!-- SECCIÓN DE PESTAÑAS -->
+      <ion-segment [value]="activeTab" (ionChange)="onTabChange($event)" class="custom-segment">
+        <ion-segment-button value="clothing">
+          <ion-label>Ropa</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="backgrounds">
+          <ion-label>Fondos</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="effects">
+          <ion-label>Efectos</ion-label>
+        </ion-segment-button>
+      </ion-segment>
+
+      <!-- SECCIÓN DE SKINS -->
+      <div class="skins-grid" *ngIf="activeTab === 'clothing'">
+        <div class="skin-item">
+          <div class="skin-preview">👒</div>
+          <span class="skin-name">Sombrero Playa</span>
+          <span class="skin-price">50 pts</span>
+        </div>
+        <div class="skin-item">
+          <div class="skin-preview">🕶️</div>
+          <span class="skin-name">Gafas Cool</span>
+          <span class="skin-price">80 pts</span>
+        </div>
+        <div class="skin-item">
+          <div class="skin-preview">👑</div>
+          <span class="skin-name">Corona Real</span>
+          <span class="skin-price">200 pts</span>
+        </div>
+      </div>
+
+      <!-- SECCIÓN DE FONDOS -->
+      <div class="skins-grid" *ngIf="activeTab === 'backgrounds'">
+        <div class="skin-item">
+          <div class="skin-preview-box bg-space">🌌</div>
+          <span class="skin-name">Espacio Exterior</span>
+          <span class="skin-price">120 pts</span>
+        </div>
+        <div class="skin-item">
+          <div class="skin-preview-box bg-beach">🏖️</div>
+          <span class="skin-name">Playa Dental</span>
+          <span class="skin-price">150 pts</span>
+        </div>
+        <div class="skin-item">
+          <div class="skin-preview-box bg-aurora">✨</div>
+          <span class="skin-name">Aurora Boreal</span>
+          <span class="skin-price">250 pts</span>
+        </div>
+      </div>
+
+      <!-- SECCIÓN DE EFECTOS -->
+      <div class="skins-grid" *ngIf="activeTab === 'effects'">
+        <div class="skin-item">
+          <div class="skin-preview">✨</div>
+          <span class="skin-name">Brillo Espejo</span>
+          <span class="skin-price">100 pts</span>
+        </div>
+        <div class="skin-item">
+          <div class="skin-preview">🛡️</div>
+          <span class="skin-name">Escudo Flúor</span>
+          <span class="skin-price">180 pts</span>
+        </div>
+        <div class="skin-item">
+          <div class="skin-preview">🍃</div>
+          <span class="skin-name">Aura Menta</span>
+          <span class="skin-price">140 pts</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</ion-modal>
+
+<!-- BARRA DE SCROLL -->
+ <div class="scroll-spacer"></div>
+</ion-content>

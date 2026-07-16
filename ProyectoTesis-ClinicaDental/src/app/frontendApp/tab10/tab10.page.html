@@ -1,0 +1,79 @@
+<ion-content [fullscreen]="true">
+  <div class="header-capsule-container">
+    <div class="header-capsule">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-center">
+
+          <ion-col size="3" class="ion-text-start">
+            <ion-avatar class="user-avatar" (click)="viewProfile()">
+              <img [src]="profileImage" alt="Perfil">
+            </ion-avatar>
+          </ion-col>
+
+          <ion-col size="6" class="ion-text-center">
+            <h1 class="business-title" style="margin: 0; font-size: 1.3rem; font-weight: 700; color: #003366;">DentalClinic</h1>
+          </ion-col>
+
+          <ion-col size="3" class="ion-text-end">
+            <ion-button
+              fill="clear"
+              class="notif-btn"
+              [class.active]="notifActive"
+              (click)="toggleNotification()">
+              <ion-icon slot="icon-only" name="notifications"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <div class="shop-welcome-container">
+    <h2 class="welcome-main-title">Nuestro catálogo</h2>
+    <p class="welcome-subtitle">Cuidado recomendado por nuestros dentistas.</p>
+  </div>
+
+  <div class="products-vertical-list">
+    <div class="product-item-row" *ngFor="let producto of productos">
+      <div class="product-image-box">
+        <img [src]="producto.img" [alt]="producto.nombre">
+      </div>
+      <div class="product-details-box">
+        <h3 class="product-item-title">{{ producto.nombre }}</h3>
+        <span class="product-item-price">${{ producto.precio | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="product-action-box">
+        <div class="quantity-control-wrapper">
+          <button class="qty-btn minus" (click)="decrementarCantidad(producto)">
+            <ion-icon name="remove"></ion-icon>
+          </button>
+          <span class="qty-number">{{ producto.cantidad }}</span>
+          <button class="qty-btn plus" (click)="incrementarCantidad(producto)">
+            <ion-icon name="add"></ion-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="checkout-footer-section">
+    <div class="delivery-notice-box">
+      <ion-icon name="storefront-outline" class="notice-icon"></ion-icon>
+      <p class="notice-text">Nota importante: Entrega de productos únicamente en clínica. No contamos con servicio de delivery.</p>
+    </div>
+    <hr class="section-divider">
+    <div class="total-summary-box">
+      <span class="total-label">Total</span>
+      <span class="total-amount">${{ calcularTotal() | number:'1.2-2' }}</span>
+    </div>
+    <div class="submit-action-container ion-text-center">
+      <button class="confirm-purchase-btn" (click)="confirmarCompra()">
+        Confirmar compra
+      </button>
+    </div>
+  </div>
+
+  <div class="scroll-spacer"></div>
+
+</ion-content>

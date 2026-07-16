@@ -1,0 +1,157 @@
+<ion-content [fullscreen]="true">
+
+  <div class="header-capsule-container">
+    <div class="header-capsule">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="3" class="ion-text-start">
+            <ion-avatar class="user-avatar" (click)="viewProfile()">
+              <img [src]="profileImage" alt="Perfil">
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <h1 class="business-title" style="margin: 0; font-size: 1.3rem; font-weight: 700; color: #003366;">DentalClinic</h1>
+          </ion-col>
+          <ion-col size="3" class="ion-text-end">
+            <ion-button
+              fill="clear"
+              class="notif-btn"
+              [class.active]="notifActive"
+              (click)="toggleNotification()">
+              <ion-icon slot="icon-only" name="notifications"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <div class="upcoming-appointment-container">
+    <div class="upcoming-card-exact">
+      <div class="date-badge-dark">
+        <span class="badge-month">OCT</span>
+        <span class="badge-day">14</span>
+      </div>
+      <div class="appointment-details-exact">
+        <span class="appointment-title-exact">Limpieza Profunda</span>
+        <div class="detail-row-exact">
+          <ion-icon name="time-outline"></ion-icon>
+          <span>10:30 AM</span>
+        </div>
+        <div class="detail-row-exact">
+          <ion-icon name="person-outline"></ion-icon>
+          <span>Dr. Aris</span>
+        </div>
+      </div>
+      <button class="arrow-circle-btn" (click)="goToTab5()">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </button>
+    </div>
+  </div>
+
+  <div class="treatment-section">
+    <h2 class="section-title">Seleccionar Servicio</h2>
+    <div class="horizontal-scroll-container">
+
+      <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'ortodoncia'" (click)="selectTreatment('ortodoncia')">
+        <div class="icon-wrapper">
+          <ion-icon name="medical-outline"></ion-icon>
+        </div>
+        <h3>Ortodoncia</h3>
+      </div>
+
+      <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'limpieza'" (click)="selectTreatment('limpieza')">
+        <div class="icon-wrapper">
+          <ion-icon name="water-outline"></ion-icon>
+        </div>
+        <h3>Limpieza</h3>
+      </div>
+
+      <div class="treatment-box" [class.selected]="tratamientoSeleccionado === 'estetica'" (click)="selectTreatment('estetica')">
+        <div class="icon-wrapper">
+          <ion-icon name="options-outline"></ion-icon>
+        </div>
+        <h3>Estética</h3>
+      </div>
+    </div>
+  </div>
+
+  <div class="calendar-container">
+    <h2 class="section-title">Seleccionar Fecha</h2>
+
+    <div class="calendar-header">
+      <button class="nav-arrow-btn" (click)="navigateCalendar(-1)">
+        <ion-icon name="chevron-back"></ion-icon>
+      </button>
+
+      <button class="month-year-toggle-btn" (click)="toggleCalendarView()">
+        {{ getHeaderLabel() }}
+      </button>
+
+      <button class="nav-arrow-btn" (click)="navigateCalendar(1)">
+        <ion-icon name="chevron-forward"></ion-icon>
+      </button>
+    </div>
+
+    <div class="calendar-card">
+      <div *ngIf="calendarView === 'days'">
+        <div class="weeks-grid-full">
+          <span>Lu</span><span>Ma</span><span>Mi</span><span>Ju</span><span>Vi</span><span>Sa</span><span>Do</span>
+        </div>
+        <div class="days-grid-full">
+          <span class="day-cell-empty">30</span>
+
+          <button
+            *ngFor="let day of workingDays"
+            class="day-number-box"
+            [class.selected]="selectedDayNumber === day.number"
+            (click)="selectDate(day)">
+            <span class="day-value">{{ day.number }}</span>
+          </button>
+        </div>
+      </div>
+
+      <div *ngIf="calendarView === 'months'" class="months-grid-exact">
+        <button
+          *ngFor="let monthName of monthsList; let i = index"
+          class="month-select-btn"
+          [class.active]="currentDateSelected.getMonth() === i"
+          (click)="selectMonthInternal(i)">
+          {{ monthName }}
+        </button>
+      </div>
+
+      <div *ngIf="calendarView === 'years'" class="years-grid-exact">
+        <button
+          *ngFor="let yearNum of yearsList"
+          class="year-select-btn"
+          [class.active]="currentDateSelected.getFullYear() === yearNum"
+          (click)="selectYearInternal(yearNum)">
+          {{ yearNum }}
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="slots-section">
+    <h2 class="section-title-slots">Horarios Disponibles</h2>
+    <div class="slots-grid">
+      <button
+        *ngFor="let slot of availableSlots"
+        class="slot-btn"
+        [class.selected]="selectedSlot === slot.time"
+        [class.disabled]="slot.disabled"
+        [disabled]="slot.disabled"
+        (click)="selectSlot(slot.time)">
+        {{ slot.time }}
+      </button>
+    </div>
+  </div>
+
+  <div class="actions-container">
+    <button class="confirm-appointment-capsule" (click)="confirmAppointment()">
+      Confirmar Cita
+      <ion-icon name="checkmark-circle"></ion-icon>
+    </button>
+  </div>
+</ion-content>

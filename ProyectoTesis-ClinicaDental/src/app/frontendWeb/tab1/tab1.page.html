@@ -1,0 +1,56 @@
+<ion-content [fullscreen]="true" class="dashboard-content">
+  <div class="dashboard-container">
+    <div class="welcome-section">
+      <h1>Hola, Dra. Melissa 👋</h1>
+      <p>Este es el resumen de la actividad de la clínica para el día de hoy.</p>
+    </div>
+
+    <div class="metrics-grid">
+
+      <div class="metric-card cyan">
+        <div class="card-icon">
+          <ion-icon name="calendar-outline"></ion-icon>
+        </div>
+        <div class="card-data">
+          <h3>8</h3>
+          <p>Citas programadas</p>
+        </div>
+      </div>
+
+      <div class="metric-card blue">
+        <div class="card-icon">
+          <ion-icon name="people-outline"></ion-icon>
+        </div>
+        <div class="card-data">
+          <h3>142</h3>
+          <p>Pacientes registrados</p>
+        </div>
+      </div>
+
+      <div class="metric-card green">
+        <div class="card-icon">
+          <ion-icon name="pulse-outline"></ion-icon>
+        </div>
+        <div class="card-data">
+          <h3>4</h3>
+          <p>Doctores activos</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="status-section">
+      <h2>Estado de Recordatorios (WhatsApp)</h2>
+      <div class="status-card">
+        <div class="status-item">
+          <ion-icon name="checkmark-circle" class="success-icon"></ion-icon>
+          <span>6 Confirmados por el paciente</span>
+        </div>
+        <div class="status-item">
+          <ion-icon name="time-outline" class="pending-icon"></ion-icon>
+          <span>2 Pendientes de respuesta</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>

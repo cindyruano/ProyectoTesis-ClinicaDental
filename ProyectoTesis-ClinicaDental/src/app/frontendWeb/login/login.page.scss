@@ -1,0 +1,141 @@
+// Contenedor principal que ocupa toda la pantalla con un fondo profesional
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  width: 100vw;
+  background: linear-gradient(135deg, #f0f4f8 0%, #d9e2ec 100%);
+  font-family: 'Inter', sans-serif;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+// Tarjeta del formulario con sombras suaves estilo "Glassmorphism"
+.login-card {
+  background: #ffffff;
+  padding: 40px;
+  border-radius: 16px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 20px 48px rgba(0, 0, 0, 0.05);
+  width: 100%;
+  max-width: 450px; // Evita que se estire demasiado en pantallas gigantes
+  box-sizing: border-box;
+}
+
+// Estilos del encabezado
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+
+  .logo-icon {
+    background-color: #e3fafc;
+    color: #0c8599; // Azul dental/médico profesional
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 16px auto;
+    font-size: 28px;
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #102a43;
+    font-weight: 700;
+  }
+
+  p {
+    margin: 8px 0 0 0;
+    font-size: 14px;
+    color: #627d98;
+  }
+}
+
+// Formulario e Inputs estilizados para Web (sin depender tanto de ion-item pesados)
+.login-form {
+  .input-group {
+    margin-bottom: 20px;
+
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: #486581;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      ion-icon {
+        position: absolute;
+        left: 14px;
+        color: #829ab1;
+        font-size: 20px;
+      }
+
+      input {
+        width: 100%;
+        padding: 14px 14px 14px 45px;
+        border: 1.5px solid #cbd5e1;
+        border-radius: 8px;
+        font-size: 15px;
+        outline: none;
+        transition: all 0.2s ease;
+        color: #102a43;
+
+        &:focus {
+          border-color: #0c8599;
+          box-shadow: 0 0 0 3px rgba(12, 133, 153, 0.15);
+        }
+      }
+    }
+  }
+}
+
+// Acciones adicionales
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 24px;
+
+  .forgot-password {
+    font-size: 13px;
+    color: #0c8599;
+    text-decoration: none;
+    font-weight: 500;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
+// Botón de acción principal
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background-color: #0c8599;
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+
+  &:hover {
+    background-color: #0b7285;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+}

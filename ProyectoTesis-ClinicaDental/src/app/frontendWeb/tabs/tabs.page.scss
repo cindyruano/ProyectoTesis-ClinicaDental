@@ -1,0 +1,223 @@
+.web-layout {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background-color: #f8fafc;
+  font-family: 'Inter', sans-serif;
+}
+
+// Sidebar fijo lateral izquierdo
+.sidebar {
+  width: 250px;
+  background-color: #031e33; // Azul marino profundo oscuro (similar a tu imagen)
+  color: #ffffff;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  flex-shrink: 0;
+
+  // Header del Logo
+  .sidebar-header {
+    padding: 24px 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+
+    .header-logo-icon {
+      font-size: 28px;
+      color: #0c8599; // Tu color corporativo turquesa
+    }
+
+    .header-text {
+      display: flex;
+      flex-direction: column;
+
+      h2 {
+        margin: 0;
+        font-size: 19px;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        color: #ffffff;
+      }
+
+      span {
+        font-size: 11px;
+        color: #8da2b5;
+        font-weight: 500;
+      }
+    }
+  }
+
+  // Lista de items del menú
+  .sidebar-menu {
+    flex: 1;
+    padding: 20px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+
+    .menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      color: #94a9bc;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s ease-in-out;
+
+      ion-icon {
+        font-size: 18px;
+      }
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.04);
+        color: #ffffff;
+      }
+    }
+
+    // Estilo activo seleccionado (igual que en tu imagen pero en turquesa)
+    .active-item {
+      background-color: rgba(12, 133, 153, 0.15); // Fondo sutil turquesa
+      color: #3bc9db; // Turquesa claro brillante para resaltar
+      font-weight: 600;
+
+      ion-icon {
+        color: #3bc9db;
+      }
+    }
+  }
+
+  // Footer con el avatar del usuario
+  .sidebar-footer {
+    padding: 20px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+
+      .profile-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: #0c8599; // Tu color turquesa
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .profile-info {
+        display: flex;
+        flex-direction: column;
+
+        h4 {
+          margin: 0;
+          font-size: 13px;
+          font-weight: 600;
+          color: #ffffff;
+        }
+
+        span {
+          font-size: 10px;
+          color: #8da2b5;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+        }
+      }
+    }
+  }
+}
+
+// Área de visualización de las páginas cargadas a la derecha
+.web-main-content {
+  flex: 1;
+  height: 100%;
+  overflow-y: auto;
+  background-color: #f8fafc;
+}
+
+// Footer con el avatar del usuario e icono de cerrar sesión
+  .sidebar-footer {
+    padding: 20px 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      position: relative; // Para posicionamiento relativo interno
+
+      .profile-avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 50%;
+        background-color: #0c8599; // Tu color turquesa
+        color: #ffffff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: 700;
+        font-size: 13px;
+        border: 2px solid rgba(255, 255, 255, 0.1);
+        flex-shrink: 0;
+      }
+
+      .profile-info {
+        display: flex;
+        flex-direction: column;
+        flex-grow: 1; // Ocupa el espacio restante para empujar el botón de logout
+        min-width: 0; // Evita overflow en textos largos
+
+        h4 {
+          margin: 0;
+          font-size: 13px;
+          font-weight: 600;
+          color: #ffffff;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        span {
+          font-size: 10px;
+          color: #8da2b5;
+          font-weight: 700;
+          letter-spacing: 0.5px;
+        }
+      }
+
+      // Estilo del nuevo botón de cerrar sesión
+      .logout-btn {
+        background: transparent;
+        border: none;
+        color: #94a9bc;
+        padding: 6px;
+        cursor: pointer;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.2s ease-in-out;
+
+        ion-icon {
+          font-size: 18px;
+        }
+
+        &:hover {
+          background-color: rgba(239, 68, 68, 0.15); // Fondo rojo sutil
+          color: #ef4444; // Icono rojo
+        }
+      }
+    }
+  }

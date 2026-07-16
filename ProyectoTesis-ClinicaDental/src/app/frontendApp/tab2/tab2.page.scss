@@ -1,0 +1,444 @@
+ion-content {
+  --background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 40%, #f8fbff 60%, #f8fbff 100%);
+}
+
+/* BARRA SUPERIOR */
+.header-capsule-container {
+  padding: 18px 16px 8px 16px;
+  background: transparent;
+}
+
+.header-capsule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+
+  .business-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #003366;
+    text-align: center;
+  }
+
+  .notif-btn {
+    --color: #003366 !important;
+    color: #003366 !important;
+    transition: color 0.2s ease-in-out;
+    margin: 0;
+
+    &.active {
+      --color: #1063e7 !important;
+      color: #1063e7 !important;
+    }
+  }
+}
+
+// =================================================================
+// PRÓXIMA CITA (DISEÑO EXACTO IMAGEN 1)
+// =================================================================
+.upcoming-appointment-container {
+  padding: 0 16px;
+  margin-top: 10px;
+}
+
+.upcoming-card-exact {
+  width: 100%;
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.03);
+  border: 1px solid #edf2f7;
+
+  .date-badge-dark {
+    background: #001a33;
+    border-radius: 18px;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+
+    .badge-month {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .badge-day {
+      color: #ffffff;
+      font-size: 1.35rem;
+      font-weight: 700;
+      line-height: 1.1;
+    }
+  }
+
+  .appointment-details-exact {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    text-align: left;
+
+    .appointment-title-exact {
+      font-size: 1.05rem;
+      color: #2d3748;
+      font-weight: 400;
+      margin-bottom: 2px;
+    }
+
+    .detail-row-exact {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #718096;
+      font-size: 0.88rem;
+
+      ion-icon {
+        font-size: 1rem;
+        color: #4a5568;
+      }
+    }
+  }
+
+  .arrow-circle-btn {
+    background: #f7fafc;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+    cursor: pointer;
+
+    ion-icon {
+      font-size: 1.1rem;
+      color: #1a202c;
+    }
+  }
+}
+
+// =================================================================
+// SELECCIÓN DE SERVICIOS
+// =================================================================
+.treatment-section {
+  margin-top: 22px;
+
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #003366;
+    margin: 0 0 14px 0;
+    padding: 0 16px;
+  }
+}
+
+.horizontal-scroll-container {
+  display: flex;
+  overflow-x: auto;
+  padding: 2px 16px 10px 16px;
+  gap: 12px;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.treatment-box {
+  flex: 0 0 115px;
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 18px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #edf2f7;
+  transition: all 0.2s ease;
+  cursor: pointer;
+
+  .icon-wrapper {
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    background: #f8fafc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+
+    ion-icon {
+      font-size: 1.3rem;
+      color: #003366;
+    }
+  }
+
+  h3 {
+    margin: 0;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #475569;
+    text-align: center;
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+
+  &.selected {
+    border-color: #003366;
+    background: #ffffff;
+
+    .icon-wrapper {
+      background: #eef4fa;
+      ion-icon {
+        color: #003366;
+      }
+    }
+
+    h3 {
+      color: #003366;
+      font-weight: 700;
+    }
+  }
+}
+
+// =================================================================
+// CALENDARIO
+// =================================================================
+.calendar-container {
+  padding: 0 16px;
+  margin-top: 16px;
+
+  .section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #003366;
+    margin: 0 0 14px 0;
+  }
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+
+    .nav-arrow-btn {
+      background: #ffffff;
+      border: none;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+
+      ion-icon {
+        font-size: 1.2rem;
+        color: #003366;
+      }
+    }
+
+    .month-year-toggle-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #003366;
+      text-transform: capitalize;
+      cursor: pointer;
+      padding: 6px 12px;
+    }
+  }
+}
+
+.calendar-card {
+  background: #ffffff;
+  border-radius: 24px;
+  padding: 20px 14px;
+  border: 1px solid #edf2f7;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.01);
+
+  .weeks-grid-full {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: 14px;
+    span { font-size: 0.82rem; font-weight: 700; color: #94a3b8; }
+  }
+
+  .days-grid-full {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    row-gap: 10px;
+    justify-items: center;
+    align-items: center;
+
+    .day-cell-empty {
+      font-size: 0.95rem;
+      color: #cbd5e1;
+      padding: 8px 0;
+      align-self: center;
+    }
+  }
+
+  .day-number-box {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    border: none;
+    width: 38px;
+    height: 38px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    .day-value {
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #334155;
+    }
+
+    &.selected {
+      background: #001a33;
+      box-shadow: 0 4px 12px rgba(0, 26, 51, 0.3);
+
+      .day-value {
+        color: #ffffff;
+      }
+    }
+  }
+}
+
+.months-grid-exact, .years-grid-exact {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  padding: 10px 0;
+}
+
+.month-select-btn, .year-select-btn {
+  background: #f7fafc;
+  border: none;
+  padding: 14px 0;
+  border-radius: 14px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #475569;
+  cursor: pointer;
+
+  &.active {
+    background: #001a33;
+    color: #ffffff;
+  }
+}
+
+// =================================================================
+// HORARIOS DISPONIBLES
+// =================================================================
+.slots-section {
+  padding: 0 16px;
+  margin-top: 22px;
+
+  .section-title-slots {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #003366;
+    margin-bottom: 14px;
+  }
+}
+
+.slots-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.slot-btn {
+  background: #ffffff;
+  color: #003366;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 14px 0;
+  text-align: center;
+  border-radius: 16px;
+  border: 1px solid #edf2f7;
+  transition: all 0.15s ease;
+  cursor: pointer;
+
+  &.selected {
+    background: #001a33; // Mismo color oscuro corporativo al seleccionar la hora
+    color: #ffffff;
+    border-color: #001a33;
+    box-shadow: 0 4px 12px rgba(0, 26, 51, 0.25);
+  }
+
+  &.disabled {
+    background: #f1f5f9;
+    color: #cbd5e1;
+    border-color: transparent;
+    pointer-events: none;
+  }
+}
+
+// =================================================================
+// CONFIRMAR CITA (DISEÑO ESTILO CÁPSULA IMAGEN 4)
+// =================================================================
+.actions-container {
+  padding: 30px 14px;
+  margin-bottom: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.confirm-appointment-capsule {
+  background: #001a33;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 1rem;
+  height: 52px;
+  width: 85%;
+  max-width: 290px;
+  border: none;
+  border-radius: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  box-shadow: 0 6px 20px rgba(0, 26, 51, 0.2);
+  cursor: pointer;
+  transition: transform 0.1s ease;
+
+  &:active {
+    transform: scale(0.97);
+  }
+
+  ion-icon {
+    font-size: 1.3rem;
+  }
+}

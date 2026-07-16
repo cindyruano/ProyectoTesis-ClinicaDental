@@ -1,0 +1,414 @@
+// PAGOS
+ion-content {
+  --background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 35%, #f8fbff 55%, #f8fbff 100%);
+  --page-custom-background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 35%, #f8fbff 55%, #f8fbff 100%);
+}
+
+.header-capsule-container {
+  padding: 18px 16px 8px 16px;
+  background: transparent;
+}
+
+.header-capsule {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #ffffff;
+  padding: 10px 14px;
+  border-radius: 40px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.01);
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+
+  .business-title {
+    margin: 0;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #003366;
+    text-align: center;
+  }
+
+  .notif-btn {
+    --color: #003366 !important;
+    color: #003366 !important;
+    transition: color 0.2s ease-in-out;
+    margin: 0;
+
+    &.active {
+      --color: #1063e7 !important;
+      color: #1063e7 !important;
+    }
+  }
+}
+
+/* =================================================================
+   NUEVOS ESTILOS PARA LA VISTA DE PAGO (CARRITO)
+   ================================================================= */
+
+.page-title-section {
+  padding: 12px 20px 4px 20px;
+  .page-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #002244;
+    margin: 0;
+  }
+}
+
+.checkout-container {
+  padding: 12px 16px;
+}
+
+// Estilo unificado para los bloques / tarjetas contenedoras
+.checkout-card {
+  background: #ffffff;
+  border-radius: 18px;
+  padding: 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 6px 20px rgba(0, 40, 80, 0.03);
+}
+
+.section-label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.8px;
+  margin: 18px 0 8px 4px;
+}
+
+/* 1. LISTA RESUMIDA DE PRODUCTOS */
+.products-card {
+  padding: 6px 16px;
+
+  .product-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f1f5f9;
+
+    &:last-child {
+      border-bottom: none;
+    }
+
+    .product-img-box {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f8fafc;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      img {
+        max-width: 85%;
+        max-height: 85%;
+        object-fit: contain;
+      }
+    }
+
+    .product-details {
+      flex: 1;
+      padding-left: 12px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+
+      .product-qty {
+        font-weight: 700;
+        color: #64748b;
+        font-size: 0.95rem;
+      }
+      .product-name {
+        margin: 0;
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #1e293b;
+      }
+    }
+
+    .product-price-box {
+      font-weight: 600;
+      color: #1e293b;
+      font-size: 0.95rem;
+    }
+  }
+}
+
+/* 2. PROMOCIONES ACTIVAS */
+.promo-card {
+  background: #e0f2fe;
+  border: 1px solid rgba(14, 165, 233, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  .promo-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    .promo-icon-circle {
+      background: #ffffff;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #0284c7;
+      box-shadow: 0 2px 6px rgba(2, 132, 199, 0.08);
+
+      .promo-icon {
+        font-size: 1.1rem;
+      }
+    }
+
+    .promo-text-box {
+      h3 {
+        margin: 0 0 1px 0;
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #0369a1;
+      }
+      p {
+        margin: 0;
+        font-size: 0.8rem;
+        color: #0c4a6e;
+      }
+    }
+  }
+
+  .promo-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    border-top: 1px solid rgba(14, 165, 233, 0.1);
+    padding-top: 8px;
+
+    .btn-action-text {
+      background: transparent;
+      border: none;
+      font-size: 0.82rem;
+      font-weight: 700;
+      padding: 4px 6px;
+      cursor: pointer;
+
+      &.change {
+        color: #475569;
+      }
+      &.remove {
+        color: #df2c2c; // Destacado en rojo solicitado
+      }
+    }
+  }
+}
+
+.no-promo-card {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px dashed #cbd5e1;
+  color: #0284c7;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 18px;
+}
+
+/* 3. PUNTOS DIENTE CARD */
+.points-card {
+  background: #f0f7f4;
+  border: 1px solid rgba(16, 185, 129, 0.08);
+
+  .points-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .points-title {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      h3 {
+        margin: 0;
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #0f172a;
+      }
+      .points-sparkle {
+        color: #007f2c;
+        font-size: 1.1rem;
+      }
+    }
+    .points-value {
+      font-weight: 700;
+      font-size: 1.15rem;
+      color: #007f2c;
+    }
+  }
+
+  .points-subtitle {
+    margin: 4px 0 10px 0;
+    font-size: 0.82rem;
+    color: #64748b;
+  }
+
+  .range-wrapper {
+    .checkout-range {
+      padding: 0;
+      --bar-background: #cbd5e1;
+      --bar-background-active: #007f2c;
+      --knob-background: #007f2c;
+      --knob-size: 18px;
+    }
+    .range-labels {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      font-weight: 600;
+      color: #64748b;
+      margin-top: 6px;
+
+      .range-center-text {
+        color: #007f2c;
+        font-weight: 700;
+        &.static {
+          color: #94a3b8;
+          font-weight: 400;
+        }
+      }
+    }
+  }
+}
+
+/* 4. TOTALES FINALES */
+.summary-card {
+  .summary-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 6px 0;
+
+    .label {
+      color: #64748b;
+      font-size: 0.92rem;
+    }
+    .value {
+      color: #1e293b;
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    &.discount {
+      .label, .value {
+        color: #0284c7;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .summary-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 10px 0;
+  }
+
+  .summary-row.total {
+    .total-label {
+      font-size: 1.15rem;
+      font-weight: 800;
+      color: #003366;
+    }
+    .total-value {
+      font-size: 1.35rem;
+      font-weight: 800;
+      color: #003366;
+    }
+  }
+}
+
+/* 5. BOTÓN DE ACCIÓN CONTROLADO */
+.checkout-action-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding: 12px 0;
+}
+
+.btn-confirm-payment {
+  --background: #001a33;
+  --color: #ffffff;
+  --border-radius: 26px;
+  font-weight: 700;
+  font-size: 1rem;
+  height: 54px;
+  width: 250px; // Tamaño ajustado perfecto
+  margin: 0 auto;
+  text-transform: none;
+
+  ion-icon {
+    font-size: 1.2rem;
+    margin-left: 6px;
+  }
+}
+
+.scroll-spacer {
+  height: 100px;
+}
+
+// ... (manten tus estilos de header y capsule)
+
+.btn-points-manual {
+  background: #ffffff;
+  border: 1px solid #007f2c;
+  color: #007f2c;
+  font-weight: 700;
+  font-size: 1.15rem;
+  padding: 4px 12px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(16, 185, 129, 0.15);
+  cursor: pointer;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.promo-modal-content {
+  padding: 24px 16px;
+  background: #f8fbff;
+  height: 100%;
+
+  .modal-header {
+    text-align: center;
+    margin-bottom: 20px;
+    h2 { font-size: 1.2rem; font-weight: 800; color: #003366; margin: 0; }
+    p { font-size: 0.9rem; color: #64748b; margin-top: 4px; }
+  }
+
+  .promo-list-item {
+    --background: #ffffff;
+    margin-bottom: 12px;
+    border-radius: 16px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.02);
+
+    ion-icon { color: #0284c7; }
+    h3 { font-weight: 700; color: #1e293b; font-size: 1rem; }
+    p { font-size: 0.85rem; color: #64748b; }
+  }
+}
+
+// ... (asegurate de tener los estilos checkout-card, products-card, etc de la respuesta anterior)
