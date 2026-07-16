@@ -1,0 +1,122 @@
+<ion-content [fullscreen]="true" class="agenda-content">
+  <div class="agenda-container">
+
+    <div class="section-header">
+      <div>
+        <h1>Agenda Médica</h1>
+        <p>Control y confirmación de citas para los odontólogos de MODent</p>
+      </div>
+      <button class="btn-primary">
+        <ion-icon name="add-outline"></ion-icon>
+        Nueva Cita
+      </button>
+    </div>
+
+    <div class="toolbar-card">
+      <div class="search-box">
+        <ion-icon name="search-outline"></ion-icon>
+        <input type="text" placeholder="Buscar paciente por nombre o DPI...">
+      </div>
+
+      <div class="doctor-filter">
+        <label for="doctor-select">Odontólogo:</label>
+        <select id="doctor-select">
+          <option value="todos">Todos los doctores (4)</option>
+          <option value="melissa">Dra. Melissa Montenegro</option>
+          <option value="doctor2">Dr. Juan Pérez (Endodoncia)</option>
+          <option value="doctor3">Dra. Ana Gómez (Ortodoncia)</option>
+          <option value="doctor4">Dr. Carlos Ruíz (Cirugía)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <table class="appointments-table">
+        <thead>
+          <tr>
+            <th>Hora</th>
+            <th>Paciente</th>
+            <th>Tratamiento / Especialidad</th>
+            <th>Doctor Asignado</th>
+            <th>Recordatorio WhatsApp</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="time-col">09:00 AM</td>
+            <td>
+              <div class="patient-info">
+                <span class="patient-name">Carlos Mendoza</span>
+                <span class="patient-sub">DPI: 2981-3312</span>
+              </div>
+            </td>
+            <td>Limpieza Dental Profunda</td>
+            <td>Dra. Melissa Montenegro</td>
+            <td>
+              <span class="badge-whatsapp confirmed">
+                <ion-icon name="checkmark-circle-outline"></ion-icon> Confirmado
+              </span>
+            </td>
+            <td><span class="status-pill scheduled">Programada</span></td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-icon edit" title="Editar"><ion-icon name="create-outline"></ion-icon></button>
+                <button class="btn-icon delete" title="Cancelar"><ion-icon name="trash-outline"></ion-icon></button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="time-col">10:30 AM</td>
+            <td>
+              <div class="patient-info">
+                <span class="patient-name">Sofía Herrera</span>
+                <span class="patient-sub">DPI: 1045-8921</span>
+              </div>
+            </td>
+            <td>Evaluación Ortodoncia</td>
+            <td>Dra. Ana Gómez</td>
+            <td>
+              <span class="badge-whatsapp pending">
+                <ion-icon name="time-outline"></ion-icon> Enviado (Sin resp.)
+              </span>
+            </td>
+            <td><span class="status-pill scheduled">Programada</span></td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-icon edit" title="Editar"><ion-icon name="create-outline"></ion-icon></button>
+                <button class="btn-icon delete" title="Cancelar"><ion-icon name="trash-outline"></ion-icon></button>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="time-col">12:00 PM</td>
+            <td>
+              <div class="patient-info">
+                <span class="patient-name">Jorge Ortega</span>
+                <span class="patient-sub">DPI: 3122-4541</span>
+              </div>
+            </td>
+            <td>Extracción Tercer Molar</td>
+            <td>Dr. Carlos Ruíz</td>
+            <td>
+              <span class="badge-whatsapp failed">
+                <ion-icon name="close-circle-outline"></ion-icon> Canceló Cita
+              </span>
+            </td>
+            <td><span class="status-pill cancelled">Cancelada</span></td>
+            <td>
+              <div class="action-buttons">
+                <button class="btn-icon edit" title="Reagendar"><ion-icon name="sync-outline"></ion-icon></button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</ion-content>

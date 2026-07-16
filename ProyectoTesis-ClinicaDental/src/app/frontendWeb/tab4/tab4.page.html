@@ -1,0 +1,423 @@
+<ion-content [fullscreen]="true" class="pacientes-content">
+
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
+      <header class="global-app-header">
+        <div class="header-left-empty">
+        </div>
+
+        <div class="header-right-actions">
+          <div class="search-box">
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+            <input type="text" placeholder="Buscar registros..." class="search-input" />
+          </div>
+
+          <button class="icon-btn notification-btn">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span class="notification-dot"></span>
+          </button>
+          <button class="icon-btn shield-btn">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+          </button>
+        </div>
+      </header>
+
+      <div class="clinical-subheader-row">
+        <div class="header-left-brand">
+          <div class="brand-logo-circle">
+            <ion-icon name="medical-sharp"></ion-icon>
+          </div>
+          <div class="brand-titles-stack">
+            <h1>ODONTOLOGÍA INCLUSIVA</h1>
+            <h2>Odontólogos Sociales y Comunitarios</h2>
+            <h3>FICHA DE EVALUACIÓN CLÍNICO-EPIDEMIOLÓGICA — EXPEDIENTE</h3>
+          </div>
+        </div>
+
+        <div class="active-status-container">
+          <div class="paciente-activo-badge">
+            <span class="pulse-dot"></span>
+            Paciente Activo
+          </div>
+        </div>
+      </div>
+
+      <div class="workspace-grid">
+        <section class="workspace-column col-datos">
+
+          <div class="card-clinica">
+            <div class="card-header">
+              <ion-icon name="person-outline"></ion-icon>
+              <h3>Datos de Identificación</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-row-multi">
+                <div class="form-group span-full">
+                  <label>Nombres y Apellidos</label>
+                  <input type="text" value="Carlos Antonio Mendoza Ruiz" class="input-editable">
+                </div>
+              </div>
+
+              <div class="form-row-multi pt-2">
+                <div class="form-group">
+                  <label>Fecha de Examen</label>
+                  <input type="date" value="2026-07-15" class="input-editable">
+                </div>
+                <div class="form-group">
+                  <label>Edad</label>
+                  <input type="text" value="28" class="input-editable">
+                </div>
+                <div class="form-group">
+                  <label>Sexo</label>
+                  <input type="text" value="Masculino" class="input-editable">
+                </div>
+              </div>
+              <div class="form-row-multi pt-2">
+                <div class="form-group span-2">
+                  <label>Fecha de Nacimiento</label>
+                  <input type="date" value="1998-04-12" class="input-editable">
+                </div>
+                <div class="form-group span-1">
+                  <label>Discapacidad</label>
+                  <input type="text" value="Ninguna" class="input-editable">
+                </div>
+              </div>
+
+              <div class="form-row-multi pt-2">
+                <div class="form-group span-2">
+                  <label>Institución</label>
+                  <input type="text" value="Particular" class="input-editable">
+                </div>
+                <div class="form-group span-1">
+                  <label>Operador</label>
+                  <input type="text" value="Dr. Gómez" class="input-editable">
+                </div>
+              </div>
+
+              <div class="form-row-multi pt-2">
+                <div class="form-group span-full">
+                  <label>Asistente</label>
+                  <input type="text" placeholder="Nombre del asistente..." class="input-editable">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-clinica">
+            <div class="card-header">
+              <ion-icon name="pulse-outline"></ion-icon>
+              <h3>Examen Extraoral e Intraoral</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-row-multi">
+                <div class="form-group">
+                  <label>Piel y Anexos</label>
+                  <input type="text" class="input-editable" value="Sana">
+                </div>
+                <div class="form-group">
+                  <label>Úlceras</label>
+                  <input type="text" class="input-editable" placeholder="No presenta">
+                </div>
+                <div class="form-group">
+                  <label>Leucoplasia</label>
+                  <input type="text" class="input-editable" placeholder="No presenta">
+                </div>
+              </div>
+
+              <div class="form-row-multi pt-2">
+                <div class="form-group">
+                  <label>Cuello (Ganglios)</label>
+                  <input type="text" class="input-editable" value="Sin anomalías">
+                </div>
+                <div class="form-group">
+                  <label>Queilitis</label>
+                  <input type="text" class="input-editable" placeholder="No presenta">
+                </div>
+                <div class="form-group">
+                  <label>Eritroplasia</label>
+                  <input type="text" class="input-editable" placeholder="No presenta">
+                </div>
+              </div>
+
+              <div class="form-row-multi pt-2">
+                <div class="form-group">
+                  <label>ATM</label>
+                  <input type="text" class="input-editable" value="Normal">
+                </div>
+                <div class="form-group">
+                  <label>Candidiasis</label>
+                  <input type="text" class="input-editable" placeholder="Negativo">
+                </div>
+                <div class="form-group">
+                  <label>Otros</label>
+                  <input type="text" class="input-editable" placeholder="Ninguno">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-clinica">
+            <div class="card-header">
+              <ion-icon name="shield-checkmark-outline"></ion-icon>
+              <h3>Prótesis y Necesidad de Tratamiento</h3>
+            </div>
+            <div class="card-body grid-split-2">
+
+              <div class="protesis-section">
+                <h4 class="sub-section-title">Situación y Necesidad de Prótesis</h4>
+                <div class="form-row-multi">
+                  <div class="form-group span-full">
+                    <label>Max. Superior</label>
+                    <input type="text" class="input-editable" placeholder="Situación / Necesidad">
+                  </div>
+                  <div class="form-group span-full pt-1">
+                    <label>Max. Inferior</label>
+                    <input type="text" class="input-editable" placeholder="Situación / Necesidad">
+                  </div>
+                </div>
+              </div>
+
+              <div class="tratamiento-checklist-section">
+                <h4 class="sub-section-title">Necesidad de Tratamiento</h4>
+                <div class="checklist-grid">
+                  <label class="check-item"><input type="checkbox"> Prevención</label>
+                  <label class="check-item"><input type="checkbox"> Radiología</label>
+                  <label class="check-item"><input type="checkbox"> Restauradora</label>
+                  <label class="check-item"><input type="checkbox"> Odontopediatría</label>
+                  <label class="check-item"><input type="checkbox"> Endodoncia</label>
+                  <label class="check-item"><input type="checkbox"> Ortodoncia</label>
+                  <label class="check-item"><input type="checkbox"> Rehabilitación</label>
+                  <label class="check-item"><input type="checkbox"> Patología</label>
+                  <label class="check-item"><input type="checkbox"> Periodoncia</label>
+                  <label class="check-item"><input type="checkbox"> APE</label>
+                  <label class="check-item"><input type="checkbox"> Cirugía</label>
+                  <label class="check-item"><input type="checkbox"> Otro</label>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="workspace-column col-odontograma">
+          <div class="card-clinica">
+            <div class="card-header space-between">
+              <div class="header-left">
+                <ion-icon name="grid-outline"></ion-icon>
+                <h3>Odontograma Anatómico</h3>
+              </div>
+              <div class="legend">
+                <span class="legend-item"><span class="dot red"></span> Caries</span>
+                <span class="legend-item"><span class="dot blue"></span> Calza</span>
+                <span class="legend-item"><span class="dot grey"></span> Ausente</span>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="arcada-section">
+                <span class="arcada-title">Arcada Superior Permanente</span>
+                <div class="teeth-row-scrollable">
+                  <div class="tooth-box caries"><span class="tooth-num">18</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">17</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box obturado"><span class="tooth-num">16</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">15</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">14</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">13</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">12</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">11</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-divider-line"></div>
+                  <div class="tooth-box"><span class="tooth-num">21</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">22</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">23</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">24</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">25</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">26</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">27</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">28</span><div class="tooth-icon">🦷</div></div>
+                </div>
+              </div>
+
+              <div class="arcada-section pt-2">
+                <span class="arcada-title">Arcada Infantil (Temporal Superior)</span>
+                <div class="teeth-row-scrollable">
+                  <div class="tooth-box mini"><span class="tooth-num">55</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">54</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">53</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">52</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">51</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-divider-line"></div>
+                  <div class="tooth-box mini"><span class="tooth-num">61</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">62</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">63</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">64</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">65</span><div class="tooth-icon">🦷</div></div>
+                </div>
+              </div>
+
+              <div class="axis-divider"></div>
+
+              <div class="arcada-section">
+                <span class="arcada-title">Arcada Infantil (Temporal Inferior)</span>
+                <div class="teeth-row-scrollable">
+                  <div class="tooth-box mini"><span class="tooth-num">85</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">84</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">83</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">82</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">81</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-divider-line"></div>
+                  <div class="tooth-box mini"><span class="tooth-num">71</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">72</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">73</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">74</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box mini"><span class="tooth-num">75</span><div class="tooth-icon">🦷</div></div>
+                </div>
+              </div>
+
+              <div class="arcada-section pt-2">
+                <span class="arcada-title">Arcada Inferior Permanente</span>
+                <div class="teeth-row-scrollable">
+                  <div class="tooth-box"><span class="tooth-num">48</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">47</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box caries"><span class="tooth-num">46</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">45</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box ausente"><span class="tooth-num">44</span><div class="tooth-icon">❌</div></div>
+                  <div class="tooth-box"><span class="tooth-num">43</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">42</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">41</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-divider-line"></div>
+                  <div class="tooth-box"><span class="tooth-num">31</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">32</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">33</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">34</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">35</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">36</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">37</span><div class="tooth-icon">🦷</div></div>
+                  <div class="tooth-box"><span class="tooth-num">38</span><div class="tooth-icon">🦷</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-clinica">
+            <div class="card-header">
+              <ion-icon name="calculator-outline"></ion-icon>
+              <h3>Índice de Higiene Oral - Simplificado (Greene y Vermillion)</h3>
+            </div>
+            <div class="card-body">
+              <div class="iho-container-grid">
+
+                <div class="iho-table-box">
+                  <span class="iho-table-title">IPB (Placa)</span>
+                  <div class="iho-grid-inputs">
+                    <input type="number" class="iho-input" value="1" placeholder="16/55">
+                    <input type="number" class="iho-input" value="1" placeholder="11/51">
+                    <input type="number" class="iho-input" value="2" placeholder="26/65">
+                    <input type="number" class="iho-input" value="2" placeholder="46/85">
+                    <input type="number" class="iho-input" value="1" placeholder="31/71">
+                    <input type="number" class="iho-input" value="1" placeholder="36/75">
+                  </div>
+                </div>
+
+                <div class="iho-table-box">
+                  <span class="iho-table-title">IPC (Cálculo)</span>
+                  <div class="iho-grid-inputs">
+                    <input type="number" class="iho-input" value="0" placeholder="16/55">
+                    <input type="number" class="iho-input" value="0" placeholder="11/51">
+                    <input type="number" class="iho-input" value="1" placeholder="26/65">
+                    <input type="number" class="iho-input" value="1" placeholder="46/85">
+                    <input type="number" class="iho-input" value="8" placeholder="31/71">
+                    <input type="number" class="iho-input" value="0" placeholder="36/75">
+                  </div>
+                </div>
+
+                <div class="iho-scores-box">
+                  <div class="score-row">
+                    <span>IPB:</span>
+                    <input type="text" class="score-result" value="1.3" readonly>
+                  </div>
+                  <div class="score-row">
+                    <span>IPC:</span>
+                    <input type="text" class="score-result" value="0.3" readonly>
+                  </div>
+                  <div class="score-row total">
+                    <span>IHO-S:</span>
+                    <input type="text" class="score-result highlight" value="1.6" readonly>
+                  </div>
+                </div>
+              </div>
+
+              <div class="iho-evaluation">
+                <span class="eval-label">Evaluación:</span>
+                <div class="radio-group">
+                  <label class="radio-item"><input type="radio" name="eval" checked> Bueno</label>
+                  <label class="radio-item"><input type="radio" name="eval"> Regular</label>
+                  <label class="radio-item"><input type="radio" name="eval"> Malo</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-clinica">
+            <div class="card-header">
+              <ion-icon name="document-text-outline"></ion-icon>
+              <h3>Diagnóstico e Indicaciones</h3>
+            </div>
+            <div class="card-body">
+              <div class="form-group">
+                <label>Especificaciones</label>
+                <textarea rows="2" class="input-editable" placeholder="Especificaciones de tratamiento..."></textarea>
+              </div>
+
+              <div class="form-group pt-2">
+                <label>Observaciones</label>
+                <textarea rows="2" class="input-editable" placeholder="Observaciones generales..."></textarea>
+              </div>
+
+              <div class="form-group pt-2">
+                <label>Diagnóstico (CIE-10)</label>
+                <table class="tabla-diagnosticos">
+                  <thead>
+                    <tr>
+                      <th>Descripción Diagnóstica</th>
+                      <th style="width: 80px;">CIE-10</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><input type="text" class="table-input" value="Caries de la dentina"></td>
+                      <td><input type="text" class="table-input code-center" value="K02.1"></td>
+                    </tr>
+                    <tr>
+                      <td><input type="text" class="table-input" value="Gingivitis crónica, placa inducida"></td>
+                      <td><input type="text" class="table-input code-center" value="K05.1"></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <footer class="footer-actions-bar">
+        <div class="footer-left">
+          <p>Ficha clínica editada por última vez el 15/07/2026 por Dr. Gómez</p>
+        </div>
+        <div class="footer-right">
+          <button class="btn-action btn-delete">
+            <ion-icon name="trash-outline"></ion-icon>
+            <span>Eliminar Expediente</span>
+          </button>
+          <div class="actions-divider"></div>
+          <button class="btn-action btn-edit">
+            <ion-icon name="create-outline"></ion-icon>
+            <span>Modificar Datos</span>
+          </button>
+          <button class="btn-action btn-save">
+            <ion-icon name="save-outline"></ion-icon>
+            <span>Guardar Cambios</span>
+          </button>
+        </div>
+      </footer>
+    </main>
+  </div>
+</ion-content>

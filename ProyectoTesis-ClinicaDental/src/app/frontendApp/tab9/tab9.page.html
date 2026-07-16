@@ -1,0 +1,160 @@
+<ion-content [fullscreen]="true">
+
+  <div class="header-capsule-container">
+    <div class="header-capsule">
+      <ion-grid class="ion-no-padding">
+        <ion-row class="ion-align-items-center">
+          <ion-col size="3" class="ion-text-start">
+            <ion-avatar class="user-avatar" (click)="viewProfile()">
+              <img [src]="profileImage" alt="Perfil">
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="6" class="ion-text-center">
+            <h1 class="business-title">DentalClinic</h1>
+          </ion-col>
+          <ion-col size="3" class="ion-text-end">
+            <ion-button fill="clear" class="notif-btn" [class.active]="notifActive" (click)="toggleNotification()">
+              <ion-icon slot="icon-only" name="notifications"></ion-icon>
+            </ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </div>
+  </div>
+
+  <div class="page-title-section">
+    <h2 class="page-title">Carrito de Compra</h2>
+  </div>
+
+  <div class="checkout-container">
+
+    <div class="checkout-card products-card">
+      <div class="product-item" *ngFor="let item of selectedProducts">
+        <div class="product-img-box">
+          <img [src]="item.image" [alt]="item.name" />
+        </div>
+        <div class="product-details">
+          <span class="product-qty">x{{ item.quantity }}</span>
+          <h3 class="product-name">{{ item.name }}</h3>
+        </div>
+        <div class="product-price-box">
+          <span class="product-price">${{ item.price | number:'1.2-2' }}</span>
+        </div>
+      </div>
+    </div>
+
+    <span class="section-label">PROMOCIONES ACTIVAS</span>
+
+    <div class="checkout-card promo-card" *ngIf="isPromoApplied; else noPromo">
+      <div class="promo-info">
+        <div class="promo-icon-circle">
+          <ion-icon name="pricetag" class="promo-icon"></ion-icon>
+        </div>
+        <div class="promo-text-box">
+          <h3>{{ currentPromo.title }}</h3>
+          <p>{{ currentPromo.description }}</p>
+        </div>
+      </div>
+      <div class="promo-actions">
+        <button class="btn-action-text change" (click)="openPromoModal()">CAMBIAR</button>
+        <button class="btn-action-text remove" (click)="removePromotion()">QUITAR</button>
+      </div>
+    </div>
+
+    <ng-template #noPromo>
+      <div class="checkout-card no-promo-card" (click)="openPromoModal()">
+        <ion-icon name="add-circle-outline"></ion-icon>
+        <span>Aplicar un código de descuento o cupón</span>
+      </div>
+    </ng-template>
+
+    <div class="checkout-card points-card">
+      <div class="points-header">
+        <div class="points-title">
+          <h3>Puntos Diente</h3>
+          <ion-icon name="sparkles" class="points-sparkle"></ion-icon>
+        </div>
+        <button class="btn-points-manual" (click)="openManualPointsInput()">
+          -${{ pointsDiscount | number:'1.2-2' }}
+        </button>
+      </div>
+      <p class="points-subtitle">Tienes {{ totalAvailablePoints | number }} puntos disponibles</p>
+
+      <div class="range-wrapper">
+        <ion-range
+          [min]="0"
+          [max]="totalAvailablePoints"
+          [step]="1"
+          [value]="pointsToRedeem"
+          (ionInput)="onPointsChange($event)"
+          class="checkout-range">
+        </ion-range>
+        <div class="range-labels">
+          <span>0 pts</span>
+          <span class="range-center-text" *ngIf="pointsToRedeem > 0">Canjeando {{ pointsToRedeem }} pts</span>
+          <span class="range-center-text static" *ngIf="pointsToRedeem === 0">Desliza o toca el monto</span>
+          <span>{{ totalAvailablePoints | number }} pts</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="checkout-card summary-card">
+      <div class="summary-row">
+        <span class="label">Subtotal</span>
+        <span class="value">${{ subtotal | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="summary-row discount" *ngIf="isPromoApplied">
+        <span class="label">Descuento ({{ currentPromo.code }})</span>
+        <span class="value">-${{ promoDiscount | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="summary-row discount" *ngIf="pointsToRedeem > 0">
+        <span class="label">Puntos canjeados</span>
+        <span class="value">-${{ pointsDiscount | number:'1.2-2' }}</span>
+      </div>
+
+      <div class="summary-divider"></div>
+
+      <div class="summary-row total">
+        <span class="total-label">Total</span>
+        <span class="total-value">${{ finalTotal | number:'1.2-2' }}</span>
+      </div>
+    </div>
+
+    <div class="checkout-action-section">
+      <ion-button class="btn-confirm-payment" (click)="proceedToPayment()">
+        Continuar al pago
+        <ion-icon name="arrow-forward-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+
+  </div>
+
+  <ion-modal [isOpen]="isPromoModalOpen" (didDismiss)="isPromoModalOpen = false" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.5, 0.75]">
+    <ng-template>
+      <div class="promo-modal-content">
+        <div class="modal-header">
+          <h2>Promociones Disponibles</h2>
+          <p>Elige el cupón que quieras aplicar</p>
+        </div>
+
+        <ion-radio-group [value]="currentPromo.code">
+          <ion-list lines="none">
+            <ion-item *ngFor="let promo of availablePromos" class="promo-list-item" (click)="selectPromotion(promo)">
+              <ion-icon name="pricetag-outline" slot="start"></ion-icon>
+              <ion-label>
+                <h3>{{ promo.title }}</h3>
+                <p>{{ promo.description }}</p>
+              </ion-label>
+              <ion-radio slot="end" [value]="promo.code"></ion-radio>
+            </ion-item>
+          </ion-list>
+        </ion-radio-group>
+
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <div class="scroll-spacer"></div>
+</ion-content>

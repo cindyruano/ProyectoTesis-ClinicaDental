@@ -1,0 +1,43 @@
+// GAMIFICACIÓN
+
+ion-content {
+  --background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 35%, #f8fbff 55%, #f8fbff 100%);
+  --page-custom-background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 35%, #f8fbff 55%, #f8fbff 100%);
+}
+
+.header-container {
+  background: transparent !important;
+  background-color: transparent !important;
+  --page-header-bg: transparent !important;
+  box-shadow: none !important;
+}
+
+// CUADRO PRESENTACIÓN
+.header-container {
+  background-color: #fffcfc;
+  padding: 12px 18px;
+}
+
+.brand-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.business-title {
+  margin: 0;
+  color: #003366;
+  font-size: 1.3rem;
+  font-weight: 550;
+  letter-spacing: -0.5px;
+}
+
+ion-button[color="inverted"] {
+  --color: var(--ion-color-inverted);
+}

@@ -25,15 +25,15 @@
 }
 
 /* =========================================================================
-   ESTRUCTURAS COMPARTIDAS PARA LOS 7 TABS (AHORRO DE CÓDIGO)
+   ESTRUCTURAS COMPARTIDAS PARA LOS 7 TABS
    ========================================================================= */
 
 ion-content {
-  --background: var(--clinic-bg-main);
+  --background: var(--page-custom-background, var(--clinic-bg-main));
 }
 
 .header-container {
-  background-color: var(--clinic-bg-header);
+  background-color: var(--page-header-bg, var(--clinic-bg-header));
   padding: 12px 18px;
   box-shadow: var(--clinic-shadow-header);
 }
