@@ -1,11 +1,11 @@
 import { Routes } from '@angular/router';
 import { TabsPage } from './frontendApp/tabs/tabs.page';
-import { WebTabsPage } from './frontendWeb/tabs/tabs.page';
+import { WebTabsPage } from './frontendWeb/tabs/tabs.page' ;
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   // =========================================================
-  // 📱 RUTAS DE LA APP MÓVIL (PACIENTES)
+  // RUTAS DE LA APP MÓVIL (PACIENTES)
   // =========================================================
   {
     path: 'tabs',
@@ -13,43 +13,43 @@ export const routes: Routes = [
     canActivate: [authGuard],
     children: [
       {
-        path: 'tab1', // Inicio móvil
+        path: 'tab1',
         loadComponent: () => import('./frontendApp/tab1/tab1.page').then(m => m.Tab1Page)
       },
       {
-        path: 'tab2', // Citas móvil
+        path: 'tab2',
         loadComponent: () => import('./frontendApp/tab2/tab2.page').then(m => m.Tab2Page)
       },
       {
-        path: 'tab3', // Ubicación móvil
+        path: 'tab3',
         loadComponent: () => import('./frontendApp/tab3/tab3.page').then(m => m.Tab3Page)
       },
       {
-        path: 'tab4', // Gamificación móvil
+        path: 'tab4',
         loadComponent: () => import('./frontendApp/tab4/tab4.page').then(m => m.Tab4Page)
       },
       {
-        path: 'tab5', // Historial móvil
+        path: 'tab5',
         loadComponent: () => import('./frontendApp/tab5/tab5.page').then(m => m.Tab5Page)
       },
       {
-        path: 'tab6', // Perfil móvil
+        path: 'tab6',
         loadComponent: () => import('./frontendApp/tab6/tab6.page').then(m => m.Tab6Page)
       },
       {
-        path: 'tab7', // Chat con IA móvil
+        path: 'tab7',
         loadComponent: () => import('./frontendApp/tab7/tab7.page').then(m => m.Tab7Page)
       },
       {
-        path: 'tab8', // Progreso móvil
+        path: 'tab8',
         loadComponent: () => import('./frontendApp/tab8/tab8.page').then(m => m.Tab8Page)
       },
       {
-        path: 'tab9', // Pagos móvil
+        path: 'tab9',
         loadComponent: () => import('./frontendApp/tab9/tab9.page').then(m => m.Tab9Page)
       },
       {
-        path: 'tab10', // Inventario móvil
+        path: 'tab10',
         loadComponent: () => import('./frontendApp/tab10/tab10.page').then(m => m.Tab10Page)
       },
       {
@@ -64,8 +64,8 @@ export const routes: Routes = [
     loadComponent: () => import('./frontendApp/login/login.page').then(m => m.LoginPage)
   },
 
-  // =========================================================
-  // 💻 RUTAS DE LA PLATAFORMA WEB (ADMINISTRACIÓN & DOCTORES)
+// =========================================================
+  // RUTAS DE LA PLATAFORMA WEB (ADMINISTRACIÓN & DOCTORES)
   // =========================================================
   {
     path: 'admin/login',
@@ -76,23 +76,27 @@ export const routes: Routes = [
     component: WebTabsPage,
     children: [
       {
-        path: 'tab1', // Inicio / Dashboard Web
+        path: 'tab1',
         loadComponent: () => import('./frontendWeb/tab1/tab1.page').then(m => m.Tab1Page)
       },
       {
-        path: 'tab2', // Agenda Web
+        path: 'tab2',
         loadComponent: () => import('./frontendWeb/tab2/tab2.page').then(m => m.Tab2Page)
       },
       {
-        path: 'tab3', // Pacientes Web
+        path: 'tab3',
         loadComponent: () => import('./frontendWeb/tab3/tab3.page').then(m => m.Tab3Page)
       },
       {
-        path: 'tab4', // Doctores Web
+        path: 'tab4',
         loadComponent: () => import('./frontendWeb/tab4/tab4.page').then(m => m.Tab4Page)
       },
       {
-        path: 'tab5', // Finanzas Web
+        path: 'tab4/:id',
+        loadComponent: () => import('./frontendWeb/tab4/tab4.page').then(m => m.Tab4Page)
+      },
+      {
+        path: 'tab5',
         loadComponent: () => import('./frontendWeb/tab5/tab5.page').then(m => m.Tab5Page)
       },
       {
@@ -103,24 +107,18 @@ export const routes: Routes = [
     ]
   },
 
-  // =========================================================
-  // ⚡ ENRUTADOR GUARDIÁN INTELIGENTE (Ruta raíz '')
-  // =========================================================
   {
     path: '',
     pathMatch: 'full',
     redirectTo: () => {
-      // Si el ancho de pantalla es de un dispositivo móvil (< 768px)
       if (window.innerWidth < 768) {
         return 'login';
       } else {
-        // Si es una pantalla de computadora o tablet de escritorio (>= 768px)
         return 'admin/login';
       }
     }
   },
 
-  // Comodín para evitar URLs rotas redirigiendo a la raíz inteligente
   {
     path: '**',
     redirectTo: ''

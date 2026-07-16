@@ -1,32 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonContent,
-  IonGrid,
-  IonRow,
-  IonCol,
-  IonAvatar,
-  IonIcon,
-  IonButton,
-  IonModal,
-  IonSegment,
-  IonSegmentButton,
-  IonLabel,
-  IonTitle
-} from '@ionic/angular/standalone';
-import { ToastController } from '@ionic/angular'; // <-- Importamos el ToastController de Ionic tradicional
+import { IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton, IonModal, IonSegment, IonSegmentButton, IonLabel, IonTitle } from '@ionic/angular/standalone';
+import { ToastController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
-import {
-  notifications,
-  sparkles,
-  star,
-  flame,
-  checkmarkCircleOutline,
-  brush,
-  ribbon,
-  lockClosedOutline
-} from 'ionicons/icons';
+import { notifications, sparkles, star, flame, checkmarkCircleOutline, brush, ribbon, lockClosedOutline } from 'ionicons/icons';
 import { ProfileService } from '../profile.service';
 
 @Component({
@@ -57,7 +35,6 @@ export class Tab4Page implements OnInit {
   isSkinModalOpen: boolean = false;
   activeTab: string = 'clothing';
 
-  // Inyectamos el toastController en el constructor
   constructor(
     private router: Router,
     private profileService: ProfileService,
@@ -91,7 +68,6 @@ export class Tab4Page implements OnInit {
     this.notifActive = !this.notifActive;
   }
 
-  // Lógica de clicks actualizada con la notificación asíncrona para el candado
   async onPrizeClick(prizeType: string) {
     console.log(`Premio seleccionado: ${prizeType}`);
 
@@ -108,19 +84,17 @@ export class Tab4Page implements OnInit {
       this.isSkinModalOpen = true;
     }
     else if (prizeType === 'locked') {
-      // Llamamos a la función que crea y muestra el aviso en pantalla
       await this.showLockedMessage();
     }
   }
 
-  // Función encargada de renderizar el mensaje flotante
   async showLockedMessage() {
     const toast = await this.toastController.create({
       message: '🔒 Necesitas alcanzar el Nivel 10 para desbloquear esta categoría de premios.',
-      duration: 3000,           // Duración de 3 segundos en pantalla
-      position: 'bottom',       // Aparece en la parte inferior de la pantalla
-      color: 'dark',            // Fondo oscuro para que resalte elegante
-      cssClass: 'custom-toast'  // Clase por si quieres meterle estilos personalizados más adelante
+      duration: 3000,
+      position: 'bottom',
+      color: 'dark',
+      cssClass: 'custom-toast'
     });
     await toast.present();
   }

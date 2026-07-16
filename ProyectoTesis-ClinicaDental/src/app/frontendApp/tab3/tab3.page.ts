@@ -79,7 +79,6 @@ export class Tab3Page implements OnInit, OnDestroy {
       layers: [this.lightLayer]
     });
 
-    // Crear marcador personalizado de la clínica
     const customIcon = L.divIcon({
       html: `
         <div style="

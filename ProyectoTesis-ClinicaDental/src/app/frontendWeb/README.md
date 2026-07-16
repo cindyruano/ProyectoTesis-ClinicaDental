@@ -14,7 +14,7 @@ La plataforma web está organizada en un sistema simétrico de tabs (pestañas d
 | Tab3    | Pacientes       | Expediente clínico digital, historial de tratamientos y radiografías.    | 
 | Tab4    | Doctores        | Gestión de perfiles médicos, especialidades y horarios rotativos.        |
 | Tab5    | Finanzas        | Control de ingresos, saldos pendientes y liquidación de comisiones.      | 
-| Tabs    | Menú / Sidebar  | Contenedor principal y barra lateral de navegación para administración.  | 
+| Tab6    | Menú / Sidebar  | Contenedor principal y barra lateral de navegación para administración.  | 
 | Login   | Login Admin     | Módulo de autenticación seguro para administradores y doctores.          |
 
 ---

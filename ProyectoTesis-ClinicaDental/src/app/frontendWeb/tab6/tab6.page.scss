@@ -1,0 +1,185 @@
+.finanzas-content {
+  --background: #f8fafc;
+}
+
+.finanzas-container {
+  padding: 24px;
+  max-width: 1300px;
+  margin: 0 auto;
+  font-family: 'Inter', sans-serif;
+}
+
+// Encabezado
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+
+  h1 {
+    font-size: 26px;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0 0 4px 0;
+  }
+
+  p {
+    font-size: 14px;
+    color: #64748b;
+    margin: 0;
+  }
+}
+
+.btn-primary {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: #0c8599;
+  color: #ffffff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+
+  &:hover {
+    background-color: #0b7285;
+  }
+}
+
+// Tarjetas Financieras Grid
+.finance-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+.finance-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+
+  .card-icon-wrapper {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+
+    &.income { background-color: #dcfce7; color: #16a34a; }
+    &.pending { background-color: #fee2e2; color: #ef4444; }
+    &.doctors { background-color: #e0f2fe; color: #0284c7; }
+  }
+
+  .card-data {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-size: 13px;
+      color: #64748b;
+      font-weight: 500;
+    }
+
+    h2 {
+      margin: 4px 0;
+      font-size: 24px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .trend {
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin: 0;
+
+      &.up { color: #16a34a; }
+      &.info { color: #0284c7; }
+      &.warning { color: #ca8a04; }
+    }
+  }
+}
+
+// Tabla Financiera
+.table-card {
+  background: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  overflow: hidden;
+
+  .table-header {
+    padding: 20px 24px;
+    border-bottom: 1px solid #f1f5f9;
+
+    h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 700;
+      color: #334155;
+    }
+  }
+}
+
+.finance-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 14px;
+
+  th, td {
+    padding: 16px 24px;
+    border-bottom: 1px solid #f1f5f9;
+  }
+
+  th {
+    background-color: #f8fafc;
+    font-weight: 600;
+    color: #475569;
+    text-transform: uppercase;
+    font-size: 11px;
+    letter-spacing: 0.5px;
+  }
+
+  .text-success { color: #16a34a; font-weight: 600; }
+  .text-warning { color: #ca8a04; font-weight: 600; }
+  .text-danger { color: #ef4444; font-weight: 600; }
+  .text-muted { color: #94a3b8; }
+  .font-bold { font-weight: 700; }
+
+  .doctor-commission {
+    display: flex;
+    flex-direction: column;
+
+    span {
+      font-weight: 500;
+      color: #334155;
+    }
+    small {
+      font-size: 11px;
+      margin-top: 2px;
+    }
+  }
+
+  .pay-method {
+    background-color: #f1f5f9;
+    color: #475569;
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+  }
+}

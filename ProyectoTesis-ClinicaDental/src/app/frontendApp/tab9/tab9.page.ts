@@ -1,16 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import {
-  IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton,
-  IonRange, IonModal, IonList, IonItem, IonLabel, IonRadio, IonRadioGroup, // <-- Agregado IonRadioGroup e imports faltantes
-  AlertController
-} from '@ionic/angular/standalone';
+import { IonContent, IonGrid, IonRow, IonCol, IonAvatar, IonIcon, IonButton, IonRange, IonModal, IonList, IonItem, IonLabel, IonRadio, IonRadioGroup, AlertController } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { Router } from '@angular/router';
-import {
-  notifications, sparkles, pricetag, arrowForwardOutline,
-  addCircleOutline, pricetagOutline
-} from 'ionicons/icons';
+import { notifications, sparkles, pricetag, arrowForwardOutline, addCircleOutline, pricetagOutline } from 'ionicons/icons';
 import { ProfileService } from '../profile.service';
 
 @Component({

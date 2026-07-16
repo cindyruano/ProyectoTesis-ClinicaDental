@@ -1,8 +1,6 @@
 <div class="web-layout">
 
-  <!-- BARRA LATERAL (SIDEBAR) -->
   <aside class="sidebar">
-    <!-- Logotipo y Nombre Clínica -->
     <div class="sidebar-header">
       <ion-icon name="medical-sharp" class="header-logo-icon"></ion-icon>
       <div class="header-text">
@@ -11,7 +9,6 @@
       </div>
     </div>
 
-    <!-- Menú de Navegación -->
     <nav class="sidebar-menu">
       <a routerLink="/admin/tab1" routerLinkActive="active-item" class="menu-item">
         <ion-icon name="grid-sharp"></ion-icon>
@@ -28,18 +25,17 @@
         <span>Pacientes</span>
       </a>
 
-      <a routerLink="/admin/tab4" routerLinkActive="active-item" class="menu-item">
-        <ion-icon name="pulse-sharp"></ion-icon>
+      <a routerLink="/admin/tab5" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="cash-sharp"></ion-icon>
         <span>Doctores</span>
       </a>
 
-      <a routerLink="/admin/tab5" routerLinkActive="active-item" class="menu-item">
-        <ion-icon name="cash-sharp"></ion-icon>
+      <a routerLink="/admin/tab6" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="people-sharp"></ion-icon>
         <span>Finanzas</span>
       </a>
     </nav>
 
-    <!-- Perfil del Administrador + Cerrar Sesión -->
     <div class="sidebar-footer">
       <div class="profile-section">
         <div class="profile-avatar">
@@ -49,7 +45,6 @@
           <h4>Dra. Montenegro</h4>
           <span>ADMINISTRADOR</span>
         </div>
-        <!-- BOTÓN DE CERRAR SESIÓN -->
         <button class="logout-btn" (click)="onLogout()" title="Cerrar Sesión">
           <ion-icon name="log-out-outline"></ion-icon>
         </button>
@@ -57,7 +52,6 @@
     </div>
   </aside>
 
-  <!-- CONTENEDOR DE LAS PÁGINAS -->
   <main class="web-main-content">
     <router-outlet></router-outlet>
   </main>

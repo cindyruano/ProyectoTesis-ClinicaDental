@@ -20,7 +20,7 @@ ion-content.map-page {
   z-index: 1;
 }
 
-// CAPA 2: CABECERA FLOTANTE
+// CABECERA FLOTANTE
 .floating-header {
   position: absolute;
   top: 40px;
@@ -54,7 +54,7 @@ ion-content.map-page {
   }
 }
 
-// CAPA 3: BOTONES DE CONTROL DE MAPA
+// BOTONES DE CONTROL DE MAPA
 .map-controls {
   position: absolute;
   top: 130px;
@@ -85,7 +85,7 @@ ion-content.map-page {
   }
 }
 
-// CAPA 4: CONTENEDOR Y TARJETA INFORMATIVA INFERIOR
+// CONTENEDOR Y TARJETA INFORMATIVA INFERIOR
 .info-card-container {
   position: absolute;
   bottom: 80px;
