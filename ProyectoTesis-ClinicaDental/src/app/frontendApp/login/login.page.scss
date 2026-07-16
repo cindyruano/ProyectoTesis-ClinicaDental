@@ -1,5 +1,4 @@
 .login-page-content {
-  // 1. Degradado exacto e idéntico al de tus otras vistas
   --background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 35%, #f8fbff 55%, #f8fbff 100%);
   --page-custom-background: linear-gradient(180deg, #e0ebf5 0%, #e0ebf5 35%, #f8fbff 55%, #f8fbff 100%);
 }
@@ -111,7 +110,6 @@
     }
   }
 
-  // 2. Modificado perfectamente hacia el lado derecho
   .forgot-password-container {
     text-align: right;
     padding-right: 6px;

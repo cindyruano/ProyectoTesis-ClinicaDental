@@ -1,0 +1,136 @@
+<ion-content [fullscreen]="true" class="finanzas-content">
+  <div class="finanzas-container">
+
+    <!-- Encabezado -->
+    <div class="section-header">
+      <div>
+        <h1>Módulo Financiero</h1>
+        <p>Control de ingresos, saldos de tratamientos y liquidación de comisiones médicas</p>
+      </div>
+      <button class="btn-primary">
+        <ion-icon name="document-text-outline"></ion-icon>
+        Exportar Reporte
+      </button>
+    </div>
+
+    <!-- Tarjetas de Resumen Financiero -->
+    <div class="finance-cards-grid">
+
+      <!-- Tarjeta 1: Ingresos del Mes -->
+      <div class="finance-card">
+        <div class="card-icon-wrapper income">
+          <ion-icon name="trending-up-outline"></ion-icon>
+        </div>
+        <div class="card-data">
+          <span>Ingresos Mensuales</span>
+          <h2>Q24,850.00</h2>
+          <p class="trend up">
+            <ion-icon name="arrow-up-outline"></ion-icon> +12% vs mes anterior
+          </p>
+        </div>
+      </div>
+
+      <!-- Tarjeta 2: Cuentas por Cobrar (Saldos de Pacientes) -->
+      <div class="finance-card">
+        <div class="card-icon-wrapper pending">
+          <ion-icon name="time-outline"></ion-icon>
+        </div>
+        <div class="card-data">
+          <span>Saldos Pendientes (Pacientes)</span>
+          <h2>Q8,400.00</h2>
+          <p class="trend info">Tratamientos en progreso</p>
+        </div>
+      </div>
+
+      <!-- Tarjeta 3: Comisiones por Pagar -->
+      <div class="finance-card">
+        <div class="card-icon-wrapper doctors">
+          <ion-icon name="people-outline"></ion-icon>
+        </div>
+        <div class="card-data">
+          <span>Comisiones a Doctores</span>
+          <h2>Q9,940.00</h2>
+          <p class="trend warning">Por liquidar a fin de mes</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Tabla de Transacciones y Liquidaciones -->
+    <div class="table-card">
+      <div class="table-header">
+        <h3>Historial de Pagos y Tratamientos</h3>
+      </div>
+
+      <div class="table-container">
+        <table class="finance-table">
+          <thead>
+            <tr>
+              <th>Fecha</th>
+              <th>Paciente</th>
+              <th>Tratamiento</th>
+              <th>Total Tratamiento</th>
+              <th>Monto Pagado</th>
+              <th>Saldo Restante</th>
+              <th>Doctor (Comisión)</th>
+              <th>Método</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Fila 1 -->
+            <tr>
+              <td>15/07/2026</td>
+              <td><strong>Carlos Mendoza</strong></td>
+              <td>Limpieza + Resina</td>
+              <td>Q750.00</td>
+              <td class="text-success">Q750.00</td>
+              <td class="text-muted">Q0.00</td>
+              <td>
+                <div class="doctor-commission">
+                  <span>Dra. Melissa M.</span>
+                  <small class="text-success">Q300.00 (40%)</small>
+                </div>
+              </td>
+              <td><span class="pay-method">Tarjeta</span></td>
+            </tr>
+
+            <!-- Fila 2 -->
+            <tr>
+              <td>14/07/2026</td>
+              <td><strong>Sofía Herrera</strong></td>
+              <td>Ortodoncia (Mensualidad)</td>
+              <td>Q500.00</td>
+              <td class="text-success">Q500.00</td>
+              <td class="text-muted">Q0.00</td>
+              <td>
+                <div class="doctor-commission">
+                  <span>Dra. Ana Gómez</span>
+                  <small class="text-success">Q200.00 (40%)</small>
+                </div>
+              </td>
+              <td><span class="pay-method">Efectivo</span></td>
+            </tr>
+
+            <!-- Fila 3 -->
+            <tr>
+              <td>12/07/2026</td>
+              <td><strong>Jorge Ortega</strong></td>
+              <td>Cirugía Tercer Molar</td>
+              <td>Q1,800.00</td>
+              <td class="text-warning">Q1,000.00</td>
+              <td class="text-danger font-bold">Q800.00</td>
+              <td>
+                <div class="doctor-commission">
+                  <span>Dr. Carlos Ruíz</span>
+                  <small class="text-success">Q400.00 (Liquidado)</small>
+                </div>
+              </td>
+              <td><span class="pay-method">Transferencia</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</ion-content>

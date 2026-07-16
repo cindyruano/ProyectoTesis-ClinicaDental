@@ -392,7 +392,7 @@ ion-content {
   cursor: pointer;
 
   &.selected {
-    background: #001a33; // Mismo color oscuro corporativo al seleccionar la hora
+    background: #001a33;
     color: #ffffff;
     border-color: #001a33;
     box-shadow: 0 4px 12px rgba(0, 26, 51, 0.25);
@@ -407,7 +407,7 @@ ion-content {
 }
 
 // =================================================================
-// CONFIRMAR CITA (DISEÑO ESTILO CÁPSULA IMAGEN 4)
+// CONFIRMAR CITA
 // =================================================================
 .actions-container {
   padding: 30px 14px;

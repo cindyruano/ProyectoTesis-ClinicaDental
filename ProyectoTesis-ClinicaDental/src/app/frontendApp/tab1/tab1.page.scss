@@ -403,13 +403,12 @@ ion-content {
   gap: 20px;
 }
 
-/* DISEÑO DE LA TARJETA (CALCADO CON SU RESPECTIVA SOMBRA REQUERIDA) */
 .news-feed-card {
   width: 100%;
   background: #ffffff;
   border-radius: 32px;
   overflow: visible;
-  box-shadow: 0 12px 32px rgba(0, 34, 68, 0.05); /* Sombra suave solicitada */
+  box-shadow: 0 12px 32px rgba(0, 34, 68, 0.05);
   border: 1px solid rgba(0, 51, 102, 0.03);
   display: flex;
   flex-direction: column;
@@ -421,7 +420,7 @@ ion-content {
   }
 
   &.modal-spacing {
-    margin-bottom: 20px; /* Separación limpia entre elementos dentro de la ventanita */
+    margin-bottom: 20px;
   }
 
   .news-image-wrapper {
@@ -491,12 +490,12 @@ ion-content {
   }
 }
 
-/* 5. DISEÑO DE LA VENTANITA DE NOVEDADES (MODAL FLOTANTE) */
+/* 5. DISEÑO DE LA VENTANITA DE NOVEDADES  */
 .custom-promos-modal {
   --height: 75%;
   --border-radius: 32px 32px 0 0;
   --backdrop-opacity: 0.4;
-  align-items: flex-end; /* Efecto bottom-sheet elegante */
+  align-items: flex-end;
 
   .modal-custom-header {
     background: #ffffff;
@@ -519,7 +518,7 @@ ion-content {
   }
 
   .modal-cards-content {
-    --background: #f8fbff; /* Fondo sutilmente contrastado */
+    --background: #f8fbff;
 
     .modal-scroll-wrapper {
       padding: 16px 20px;
@@ -598,31 +597,30 @@ ion-content {
 
 /* 7. DISEÑO DE LA VENTANITA COMPACTA DEL TIP CORREGIDA */
 .custom-tip-modal {
-  --width: 82%;              /* Reducción horizontal para forzar los saltos de línea perfectos */
-  --max-width: 290px;        /* Ajuste de contención exacto */
+  --width: 82%;
+  --max-width: 290px;
   --height: auto;
-  --border-radius: 32px;     /* Aplica el redondeado al contenedor principal de Ionic */
+  --border-radius: 32px;
   --backdrop-opacity: 0.4;
   box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 
   &::part(content) {
     position: relative;
-    overflow: visible;       /* Permite que la bombilla superior sobresalga sin cortarse */
-    border-radius: 32px;     /* Redondeado del cuadro de fondo blanco garantizado */
+    overflow: visible;
+    border-radius: 32px;
   }
 }
 
 .tip-card-modal-content {
   background: #ffffff;
-  padding: 38px 20px 24px 20px; /* Ajuste sutil de padding interno */
+  padding: 38px 20px 24px 20px;
   text-align: center;
   position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-radius: 32px;       /* Refuerzo de redondeado interno */
+  border-radius: 32px;
 
-  /* Circulito superior con la bombilla */
   .tip-modal-badge {
     position: absolute;
     top: -30px;
@@ -650,11 +648,11 @@ ion-content {
 
   .tip-modal-body {
     margin-bottom: 24px;
-    padding: 0 4px;          /* Margen extra para abrazar la estructura del texto */
+    padding: 0 4px;
 
     p {
       margin: 0;
-      font-size: 0.98rem;    /* Tamaño ligeramente reducido en base al nuevo ancho */
+      font-size: 0.98rem;
       color: #475569;
       line-height: 1.5;
       font-weight: 400;
@@ -675,12 +673,11 @@ ion-content {
     align-items: center;
     gap: 14px;
 
-    /* Botón azul marino */
     .btn-tip-entendido {
       width: 100%;
       background: #002244;
       color: #ffffff;
-      padding: 14px 0;       /* Proporcional al nuevo tamaño reducido */
+      padding: 14px 0;
       border-radius: 18px;
       font-size: 0.95rem;
       font-weight: 800;

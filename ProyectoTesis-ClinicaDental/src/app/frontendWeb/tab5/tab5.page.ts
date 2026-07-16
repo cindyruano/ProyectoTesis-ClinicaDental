@@ -3,13 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import {
-  documentTextOutline,
-  trendingUpOutline,
-  timeOutline,
-  peopleOutline,
-  arrowUpOutline
-} from 'ionicons/icons';
+import { documentTextOutline, trendingUpOutline, timeOutline, peopleOutline, arrowUpOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-tab5-web',

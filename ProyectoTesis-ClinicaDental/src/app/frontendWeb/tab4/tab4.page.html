@@ -1,9 +1,13 @@
 <ion-content [fullscreen]="true" class="pacientes-content">
-
   <div class="dashboard-viewport">
     <main class="main-workspace">
+
       <header class="global-app-header">
         <div class="header-left-empty">
+          <button (click)="regresarAlListado()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #0c8599; display: flex; align-items: center; padding: 10px;">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+            <span style="font-size: 14px; margin-left: 5px; font-weight: 500;">Volver al Directorio</span>
+          </button>
         </div>
 
         <div class="header-right-actions">
@@ -30,14 +34,21 @@
           <div class="brand-titles-stack">
             <h1>ODONTOLOGÍA INCLUSIVA</h1>
             <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>FICHA DE EVALUACIÓN CLÍNICO-EPIDEMIOLÓGICA — EXPEDIENTE</h3>
+            <h3>{{ esFichaNueva() ? 'CREAR NUEVA FICHA CLÍNICO-EPIDEMIOLÓGICA' : 'FICHA DE EVALUACIÓN CLÍNICO-EPIDEMIOLÓGICA — EXPEDIENTE' }}</h3>
           </div>
         </div>
 
-        <div class="active-status-container">
-          <div class="paciente-activo-badge">
+        <div class="active-status-container" style="display: flex; align-items: center; gap: 15px;">
+          <div *ngIf="modoEdicion() && !esFichaNueva()" class="form-group" style="margin: 0;">
+            <select [ngModel]="formulario().estado" (ngModelChange)="cambiarEstado($event)" style="padding: 6px 12px; border: 1px solid #e11d48; border-radius: 6px; font-weight: 600; font-size: 13px; color: #e11d48; background: white;">
+              <option value="Activo">Estado: Activo</option>
+              <option value="Inactivo">Estado: Inactivo</option>
+            </select>
+          </div>
+
+          <div class="paciente-activo-badge" [ngClass]="formulario().estado.toLowerCase()">
             <span class="pulse-dot"></span>
-            Paciente Activo
+            Paciente {{ formulario().estado }}
           </div>
         </div>
       </div>
@@ -54,50 +65,54 @@
               <div class="form-row-multi">
                 <div class="form-group span-full">
                   <label>Nombres y Apellidos</label>
-                  <input type="text" value="Carlos Antonio Mendoza Ruiz" class="input-editable">
+                  <input type="text" [(ngModel)]="formulario().nombreCompleto" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
               </div>
 
               <div class="form-row-multi pt-2">
                 <div class="form-group">
                   <label>Fecha de Examen</label>
-                  <input type="date" value="2026-07-15" class="input-editable">
+                  <input type="date" [(ngModel)]="formulario().fechaExamen" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
                 <div class="form-group">
                   <label>Edad</label>
-                  <input type="text" value="28" class="input-editable">
+                  <input type="number" [(ngModel)]="formulario().edad" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
                 <div class="form-group">
                   <label>Sexo</label>
-                  <input type="text" value="Masculino" class="input-editable">
+                  <select [(ngModel)]="formulario().sexo" [disabled]="!modoEdicion()" class="input-editable" style="background: white; height: 38px;">
+                    <option value="">Seleccione...</option>
+                    <option value="Masculino">Masculino</option>
+                    <option value="Femenino">Femenino</option>
+                  </select>
                 </div>
               </div>
               <div class="form-row-multi pt-2">
                 <div class="form-group span-2">
                   <label>Fecha de Nacimiento</label>
-                  <input type="date" value="1998-04-12" class="input-editable">
+                  <input type="date" [(ngModel)]="formulario().fechaNacimiento" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
                 <div class="form-group span-1">
                   <label>Discapacidad</label>
-                  <input type="text" value="Ninguna" class="input-editable">
+                  <input type="text" [(ngModel)]="formulario().discapacidad" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
               </div>
 
               <div class="form-row-multi pt-2">
                 <div class="form-group span-2">
                   <label>Institución</label>
-                  <input type="text" value="Particular" class="input-editable">
+                  <input type="text" [(ngModel)]="formulario().institucion" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
                 <div class="form-group span-1">
                   <label>Operador</label>
-                  <input type="text" value="Dr. Gómez" class="input-editable">
+                  <input type="text" [(ngModel)]="formulario().operador" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
               </div>
 
               <div class="form-row-multi pt-2">
                 <div class="form-group span-full">
                   <label>Asistente</label>
-                  <input type="text" placeholder="Nombre del asistente..." class="input-editable">
+                  <input type="text" placeholder="Nombre del asistente..." [(ngModel)]="formulario().asistente" [disabled]="!modoEdicion()" class="input-editable">
                 </div>
               </div>
             </div>
@@ -112,45 +127,45 @@
               <div class="form-row-multi">
                 <div class="form-group">
                   <label>Piel y Anexos</label>
-                  <input type="text" class="input-editable" value="Sana">
+                  <input type="text" class="input-editable" [(ngModel)]="formulario().pielAnexos" [disabled]="!modoEdicion()">
                 </div>
                 <div class="form-group">
                   <label>Úlceras</label>
-                  <input type="text" class="input-editable" placeholder="No presenta">
+                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().ulceras" [disabled]="!modoEdicion()">
                 </div>
                 <div class="form-group">
                   <label>Leucoplasia</label>
-                  <input type="text" class="input-editable" placeholder="No presenta">
+                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().leucoplasia" [disabled]="!modoEdicion()">
                 </div>
               </div>
 
               <div class="form-row-multi pt-2">
                 <div class="form-group">
                   <label>Cuello (Ganglios)</label>
-                  <input type="text" class="input-editable" value="Sin anomalías">
+                  <input type="text" class="input-editable" [(ngModel)]="formulario().cuello" [disabled]="!modoEdicion()">
                 </div>
                 <div class="form-group">
                   <label>Queilitis</label>
-                  <input type="text" class="input-editable" placeholder="No presenta">
+                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().queilitis" [disabled]="!modoEdicion()">
                 </div>
                 <div class="form-group">
                   <label>Eritroplasia</label>
-                  <input type="text" class="input-editable" placeholder="No presenta">
+                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().eritroplasia" [disabled]="!modoEdicion()">
                 </div>
               </div>
 
               <div class="form-row-multi pt-2">
                 <div class="form-group">
                   <label>ATM</label>
-                  <input type="text" class="input-editable" value="Normal">
+                  <input type="text" class="input-editable" [(ngModel)]="formulario().atm" [disabled]="!modoEdicion()">
                 </div>
                 <div class="form-group">
                   <label>Candidiasis</label>
-                  <input type="text" class="input-editable" placeholder="Negativo">
+                  <input type="text" class="input-editable" placeholder="Negativo" [(ngModel)]="formulario().candidiasis" [disabled]="!modoEdicion()">
                 </div>
                 <div class="form-group">
                   <label>Otros</label>
-                  <input type="text" class="input-editable" placeholder="Ninguno">
+                  <input type="text" class="input-editable" placeholder="Ninguno" [(ngModel)]="formulario().otros" [disabled]="!modoEdicion()">
                 </div>
               </div>
             </div>
@@ -162,17 +177,16 @@
               <h3>Prótesis y Necesidad de Tratamiento</h3>
             </div>
             <div class="card-body grid-split-2">
-
               <div class="protesis-section">
                 <h4 class="sub-section-title">Situación y Necesidad de Prótesis</h4>
                 <div class="form-row-multi">
                   <div class="form-group span-full">
                     <label>Max. Superior</label>
-                    <input type="text" class="input-editable" placeholder="Situación / Necesidad">
+                    <input type="text" class="input-editable" [disabled]="!modoEdicion()" placeholder="Situación / Necesidad">
                   </div>
                   <div class="form-group span-full pt-1">
                     <label>Max. Inferior</label>
-                    <input type="text" class="input-editable" placeholder="Situación / Necesidad">
+                    <input type="text" class="input-editable" [disabled]="!modoEdicion()" placeholder="Situación / Necesidad">
                   </div>
                 </div>
               </div>
@@ -180,18 +194,18 @@
               <div class="tratamiento-checklist-section">
                 <h4 class="sub-section-title">Necesidad de Tratamiento</h4>
                 <div class="checklist-grid">
-                  <label class="check-item"><input type="checkbox"> Prevención</label>
-                  <label class="check-item"><input type="checkbox"> Radiología</label>
-                  <label class="check-item"><input type="checkbox"> Restauradora</label>
-                  <label class="check-item"><input type="checkbox"> Odontopediatría</label>
-                  <label class="check-item"><input type="checkbox"> Endodoncia</label>
-                  <label class="check-item"><input type="checkbox"> Ortodoncia</label>
-                  <label class="check-item"><input type="checkbox"> Rehabilitación</label>
-                  <label class="check-item"><input type="checkbox"> Patología</label>
-                  <label class="check-item"><input type="checkbox"> Periodoncia</label>
-                  <label class="check-item"><input type="checkbox"> APE</label>
-                  <label class="check-item"><input type="checkbox"> Cirugía</label>
-                  <label class="check-item"><input type="checkbox"> Otro</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Prevención</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Radiología</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Restauradora</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Odontopediatría</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Endodoncia</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Ortodoncia</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Rehabilitación</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Patología</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Periodoncia</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> APE</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Cirugía</label>
+                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Otro</label>
                 </div>
               </div>
             </div>
@@ -304,28 +318,27 @@
             </div>
             <div class="card-body">
               <div class="iho-container-grid">
-
                 <div class="iho-table-box">
                   <span class="iho-table-title">IPB (Placa)</span>
                   <div class="iho-grid-inputs">
-                    <input type="number" class="iho-input" value="1" placeholder="16/55">
-                    <input type="number" class="iho-input" value="1" placeholder="11/51">
-                    <input type="number" class="iho-input" value="2" placeholder="26/65">
-                    <input type="number" class="iho-input" value="2" placeholder="46/85">
-                    <input type="number" class="iho-input" value="1" placeholder="31/71">
-                    <input type="number" class="iho-input" value="1" placeholder="36/75">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="2">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="2">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
                   </div>
                 </div>
 
                 <div class="iho-table-box">
                   <span class="iho-table-title">IPC (Cálculo)</span>
                   <div class="iho-grid-inputs">
-                    <input type="number" class="iho-input" value="0" placeholder="16/55">
-                    <input type="number" class="iho-input" value="0" placeholder="11/51">
-                    <input type="number" class="iho-input" value="1" placeholder="26/65">
-                    <input type="number" class="iho-input" value="1" placeholder="46/85">
-                    <input type="number" class="iho-input" value="8" placeholder="31/71">
-                    <input type="number" class="iho-input" value="0" placeholder="36/75">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="0">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="0">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="8">
+                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="0">
                   </div>
                 </div>
 
@@ -348,9 +361,9 @@
               <div class="iho-evaluation">
                 <span class="eval-label">Evaluación:</span>
                 <div class="radio-group">
-                  <label class="radio-item"><input type="radio" name="eval" checked> Bueno</label>
-                  <label class="radio-item"><input type="radio" name="eval"> Regular</label>
-                  <label class="radio-item"><input type="radio" name="eval"> Malo</label>
+                  <label class="radio-item"><input type="radio" name="eval" checked [disabled]="!modoEdicion()"> Bueno</label>
+                  <label class="radio-item"><input type="radio" name="eval" [disabled]="!modoEdicion()"> Regular</label>
+                  <label class="radio-item"><input type="radio" name="eval" [disabled]="!modoEdicion()"> Malo</label>
                 </div>
               </div>
             </div>
@@ -364,12 +377,12 @@
             <div class="card-body">
               <div class="form-group">
                 <label>Especificaciones</label>
-                <textarea rows="2" class="input-editable" placeholder="Especificaciones de tratamiento..."></textarea>
+                <textarea rows="2" class="input-editable" [disabled]="!modoEdicion()" placeholder="Especificaciones de tratamiento..."></textarea>
               </div>
 
               <div class="form-group pt-2">
                 <label>Observaciones</label>
-                <textarea rows="2" class="input-editable" placeholder="Observaciones generales..."></textarea>
+                <textarea rows="2" class="input-editable" [disabled]="!modoEdicion()" placeholder="Observaciones generales..."></textarea>
               </div>
 
               <div class="form-group pt-2">
@@ -383,12 +396,12 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td><input type="text" class="table-input" value="Caries de la dentina"></td>
-                      <td><input type="text" class="table-input code-center" value="K02.1"></td>
+                      <td><input type="text" class="table-input" [disabled]="!modoEdicion()" value="Caries de la dentina"></td>
+                      <td><input type="text" class="table-input code-center" [disabled]="!modoEdicion()" value="K02.1"></td>
                     </tr>
                     <tr>
-                      <td><input type="text" class="table-input" value="Gingivitis crónica, placa inducida"></td>
-                      <td><input type="text" class="table-input code-center" value="K05.1"></td>
+                      <td><input type="text" class="table-input" [disabled]="!modoEdicion()" value="Gingivitis crónica, placa inducida"></td>
+                      <td><input type="text" class="table-input code-center" [disabled]="!modoEdicion()" value="K05.1"></td>
                     </tr>
                   </tbody>
                 </table>
@@ -400,24 +413,29 @@
 
       <footer class="footer-actions-bar">
         <div class="footer-left">
-          <p>Ficha clínica editada por última vez el 15/07/2026 por Dr. Gómez</p>
+          <p *ngIf="!esFichaNueva()">Ficha clínica editada por última vez el 15/07/2026 por {{ formulario().operador }}</p>
+          <p *ngIf="esFichaNueva()">Modo de creación de registro activado</p>
         </div>
         <div class="footer-right">
-          <button class="btn-action btn-delete">
+          <button *ngIf="!esFichaNueva()" class="btn-action btn-delete">
             <ion-icon name="trash-outline"></ion-icon>
             <span>Eliminar Expediente</span>
           </button>
-          <div class="actions-divider"></div>
-          <button class="btn-action btn-edit">
+
+          <div class="actions-divider" *ngIf="!esFichaNueva()"></div>
+
+          <button *ngIf="!modoEdicion() && !esFichaNueva()" (click)="activarModificacion()" class="btn-action btn-edit">
             <ion-icon name="create-outline"></ion-icon>
             <span>Modificar Datos</span>
           </button>
-          <button class="btn-action btn-save">
+
+          <button *ngIf="modoEdicion()" (click)="guardarCambios()" class="btn-action btn-save">
             <ion-icon name="save-outline"></ion-icon>
-            <span>Guardar Cambios</span>
+            <span>{{ esFichaNueva() ? 'Registrar Paciente' : 'Guardar Cambios' }}</span>
           </button>
         </div>
       </footer>
     </main>
   </div>
 </ion-content>
+

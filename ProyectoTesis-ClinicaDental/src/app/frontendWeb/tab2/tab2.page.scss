@@ -1,86 +1,222 @@
 .agenda-content {
-  --background: #f8fafc;
+  --background: #f1f5f9;
 }
 
-.agenda-container {
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
-  font-family: 'Inter', sans-serif;
+/* ==========================================================================
+   VIEWPORT GENERAL COMPACTO AL FILO DE LA PANTALLA
+   ========================================================================== */
+.dashboard-viewport {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f1f5f9;
 }
 
-// Encabezado
-.section-header {
+.main-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   CABECERA GLOBAL EXTENDIDA (IDÉNTICA A TAB3)
+   ========================================================================== */
+.global-app-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 24px;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 
-  h1 {
-    font-size: 26px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0 0 4px 0;
+  .header-left-empty {
+    flex: 1;
   }
 
-  p {
-    font-size: 14px;
-    color: #64748b;
-    margin: 0;
-  }
-}
-
-.btn-primary {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  background-color: #0c8599; // Turquesa corporativo
-  color: #ffffff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-
-  &:hover {
-    background-color: #0b7285;
-  }
-}
-
-// Barra de herramientas (Filtros)
-.toolbar-card {
-  background: #ffffff;
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  justify-content: space-between;
-  gap: 20px;
-  margin-bottom: 24px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
-  border: 1px solid #e2e8f0;
-
-  .search-box {
-    position: relative;
+  .header-right-actions {
     display: flex;
     align-items: center;
-    flex: 1;
+    gap: 16px;
 
-    ion-icon {
-      position: absolute;
-      left: 12px;
-      color: #94a3b8;
-      font-size: 18px;
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .search-icon {
+        position: absolute;
+        left: 14px;
+        color: #94a3b8;
+        font-size: 18px;
+      }
+
+      .search-input {
+        width: 280px;
+        height: 38px;
+        padding: 0 16px 0 42px;
+        border-radius: 30px;
+        border: 1px solid #e2e8f0;
+        background-color: #f8fafc;
+        font-size: 12px;
+        color: #334155;
+        outline: none;
+        transition: all 0.2s ease;
+
+        &::placeholder {
+          color: #94a3b8;
+        }
+
+        &:focus {
+          border-color: #0c8599;
+          background-color: #ffffff;
+          box-shadow: 0 0 0 3px rgba(12, 133, 153, 0.1);
+        }
+      }
     }
 
-    input {
-      width: 100%;
-      padding: 10px 10px 10px 38px;
+    .icon-btn {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid #e2e8f0;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      ion-icon {
+        font-size: 20px;
+        color: #64748b;
+      }
+
+      &:hover {
+        background-color: #f8fafc;
+        transform: translateY(-1px);
+      }
+
+      .notification-dot {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 8px;
+        height: 8px;
+        background-color: #ef4444;
+        border-radius: 50%;
+        border: 2px solid #ffffff;
+      }
+
+      &.shield-btn {
+        background-color: #e0f2fe;
+        border: none;
+
+        ion-icon {
+          color: #0c8599;
+        }
+
+        &:hover {
+          background-color: #bae6fd;
+        }
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   SUBBARRA CONTENEDORA CON FILTROS REUBICADOS DERECHA
+   ========================================================================== */
+.clinical-subheader-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 16px 24px 0 24px !important;
+  flex-shrink: 0;
+  width: 100%;
+
+  .header-left-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .brand-logo-circle {
+      width: 46px;
+      height: 46px;
+      background-color: #ffffff;
+      color: #0c8599;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+      ion-icon {
+        font-size: 22px;
+      }
+    }
+
+    .brand-titles-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+
+      h1 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.3px;
+        line-height: 1.2;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 11px;
+        color: #0c8599;
+        font-weight: 600;
+        line-height: 1.2;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 10px;
+        color: #64748b;
+        font-weight: 600;
+        letter-spacing: 0.2px;
+        line-height: 1.2;
+      }
+    }
+  }
+}
+
+.header-actions-relocated {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .filter-group {
+    display: flex;
+    gap: 8px;
+
+    .filter-select {
+      height: 36px;
       border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 14px;
+      border-radius: 6px;
+      padding: 0 10px;
+      background-color: #ffffff;
+      font-size: 11px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
       outline: none;
+      transition: all 0.2s;
 
       &:focus {
         border-color: #0c8599;
@@ -88,149 +224,297 @@
     }
   }
 
-  .doctor-filter {
+  .btn-primary {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 6px;
+    background-color: #0c8599;
+    color: #ffffff;
+    border: none;
+    padding: 0 16px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 11px;
+    cursor: pointer;
+    height: 36px;
+    transition: all 0.2s;
+    box-shadow: 0 2px 4px rgba(12, 133, 153, 0.15);
 
-    label {
+    ion-icon {
       font-size: 14px;
-      font-weight: 600;
-      color: #475569;
     }
 
-    select {
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 1px solid #cbd5e1;
-      background-color: #fff;
-      font-size: 14px;
-      outline: none;
-      cursor: pointer;
+    &:hover {
+      background-color: #0b7285;
+      transform: translateY(-1px);
     }
   }
 }
 
-// Tabla de Citas
-.table-container {
-  background: #ffffff;
-  border-radius: 12px;
-  border: 1px solid #e2e8f0;
+/* ==========================================================================
+   CONTENIDO DE TRABAJO (TABLA ENCAPSULADA DE PACIENTES - COPIADO DE TAB3)
+   ========================================================================== */
+.directorio-workspace-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+  padding: 16px 24px 20px 24px;
 }
 
-.appointments-table {
+.table-container {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  overflow-y: auto;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
+
+.pacientes-table {
   width: 100%;
   border-collapse: collapse;
   text-align: left;
-  font-size: 14px;
+  font-size: 13px;
 
-  th, td {
-    padding: 16px 20px;
-    border-bottom: 1px solid #f1f5f9;
+  .number-col {
+    width: 60px;
+    text-align: center;
+    color: #64748b;
+    font-weight: 600;
+  }
+
+  .center-col {
+    text-align: center !important;
   }
 
   th {
+    position: sticky;
+    top: 0;
     background-color: #f8fafc;
+    padding: 12px 16px;
     font-weight: 600;
     color: #475569;
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 10px;
     letter-spacing: 0.5px;
+    border-bottom: 1px solid #e2e8f0;
+    z-index: 10;
+
+    &.center-col {
+      text-align: center;
+    }
+    &.number-col {
+      text-align: center;
+    }
   }
 
-  .time-col {
+  td {
+    padding: 10px 16px;
+    border-bottom: 1px solid #f1f5f9;
+    color: #334155;
+    vertical-align: middle;
+  }
+
+  tr:hover td {
+    background-color: #f8fafc;
+  }
+
+  // Estilo de Hora Cita destacado
+  .time-col-highlight {
     font-weight: 700;
     color: #0c8599;
+    font-size: 13px;
   }
 
-  .patient-info {
-    display: flex;
-    flex-direction: column;
-
-    .patient-name {
-      font-weight: 600;
-      color: #0f172a;
-    }
-
-    .patient-sub {
-      font-size: 11px;
-      color: #64748b;
-      margin-top: 2px;
-    }
-  }
-}
-
-// Badges de WhatsApp
-.badge-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 500;
-
-  &.confirmed {
-    background-color: #dcfce7;
-    color: #16a34a;
-  }
-
-  &.pending {
-    background-color: #fef9c3;
-    color: #ca8a04;
-  }
-
-  &.failed {
-    background-color: #fee2e2;
-    color: #ef4444;
-  }
-}
-
-// Estados de Cita
-.status-pill {
-  display: inline-block;
-  padding: 4px 10px;
-  border-radius: 12px;
-  font-size: 12px;
-  font-weight: 600;
-
-  &.scheduled {
-    background-color: #e0f2fe;
-    color: #0369a1;
-  }
-
-  &.cancelled {
-    background-color: #f1f5f9;
-    color: #64748b;
-  }
-}
-
-// Botones de acción
-.action-buttons {
-  display: flex;
-  gap: 8px;
-
-  .btn-icon {
-    background: none;
-    border: 1px solid #cbd5e1;
-    border-radius: 6px;
-    padding: 6px;
-    cursor: pointer;
+  // Paciente con Avatar (Calco de tab3)
+  .paciente-cell {
     display: flex;
     align-items: center;
-    font-size: 16px;
-    transition: all 0.2s;
+    gap: 12px;
 
-    &.edit {
-      color: #3b82f6;
-      &:hover { background-color: #eff6ff; border-color: #3b82f6; }
+    .p-avatar {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 700;
+      background-color: #e0f2fe;
+      color: #0c8599;
+      flex-shrink: 0;
+
+      &.teal { background-color: #e3fafc; color: #0b7285; }
+      &.amber { background-color: #fffbeb; color: #92400e; }
+      &.indigo { background-color: #e0e7ff; color: #4338ca; }
     }
 
-    &.delete {
+    .p-meta {
+      display: flex;
+      flex-direction: column;
+
+      .p-name {
+        font-weight: 600;
+        color: #0f172a;
+      }
+
+      .p-sub {
+        font-size: 11px;
+        color: #64748b;
+      }
+    }
+  }
+
+  .treatment-text {
+    font-weight: 500;
+    color: #475569;
+  }
+
+  .doctor-name {
+    font-weight: 500;
+    color: #475569;
+  }
+
+  // Badges estilizados para WhatsApp
+  .badge-whatsapp {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 500;
+
+    &.confirmed {
+      background-color: #dcfce7;
+      color: #16a34a;
+    }
+
+    &.pending {
+      background-color: #fef9c3;
+      color: #ca8a04;
+    }
+
+    &.failed {
+      background-color: #fee2e2;
       color: #ef4444;
-      &:hover { background-color: #fef2f2; border-color: #ef4444; }
+    }
+
+    ion-icon {
+      font-size: 13px;
+    }
+  }
+
+  // Badge Estado Cita (Estilos de p-status-badge del tab3)
+  .p-status-badge {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+
+    &.scheduled {
+      background-color: #dcfce7;
+      color: #16a34a;
+    }
+
+    &.cancelled {
+      background-color: #f1f5f9;
+      color: #64748b;
+    }
+  }
+
+  .actions-col {
+    text-align: center;
+  }
+
+  .action-buttons {
+    display: flex;
+    gap: 6px;
+    justify-content: center;
+
+    .btn-icon {
+      background: transparent;
+      border: none;
+      padding: 6px;
+      border-radius: 4px;
+      cursor: pointer;
+      color: #94a3b8;
+      transition: all 0.2s;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      &.edit:hover {
+        background-color: #e0f2fe;
+        color: #0c8599;
+      }
+
+      &.delete:hover {
+        background-color: #fee2e2;
+        color: #ef4444;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   FOOTER PAGINACIÓN (IDÉNTICO A TAB3)
+   ========================================================================== */
+.directorio-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-top: 14px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+
+  .pagination-info {
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .pagination-buttons {
+    display: flex;
+    gap: 4px;
+
+    .btn-pager {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s;
+
+      &:hover:not([disabled]) {
+        border-color: #cbd5e1;
+        background-color: #f8fafc;
+      }
+
+      &.active {
+        background-color: #0c8599;
+        color: #ffffff;
+        border-color: #0c8599;
+      }
+
+      &[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
     }
   }
 }

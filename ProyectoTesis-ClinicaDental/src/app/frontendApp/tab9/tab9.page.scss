@@ -68,7 +68,6 @@ ion-content {
   padding: 12px 16px;
 }
 
-// Estilo unificado para los bloques / tarjetas contenedoras
 .checkout-card {
   background: #ffffff;
   border-radius: 18px;
@@ -208,7 +207,7 @@ ion-content {
         color: #475569;
       }
       &.remove {
-        color: #df2c2c; // Destacado en rojo solicitado
+        color: #df2c2c;
       }
     }
   }
@@ -353,7 +352,7 @@ ion-content {
   font-weight: 700;
   font-size: 1rem;
   height: 54px;
-  width: 250px; // Tamaño ajustado perfecto
+  width: 250px;
   margin: 0 auto;
   text-transform: none;
 
@@ -366,8 +365,6 @@ ion-content {
 .scroll-spacer {
   height: 100px;
 }
-
-// ... (manten tus estilos de header y capsule)
 
 .btn-points-manual {
   background: #ffffff;
@@ -410,5 +407,3 @@ ion-content {
     p { font-size: 0.85rem; color: #64748b; }
   }
 }
-
-// ... (asegurate de tener los estilos checkout-card, products-card, etc de la respuesta anterior)

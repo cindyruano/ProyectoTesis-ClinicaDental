@@ -1,134 +1,640 @@
-.dashboard-content {
-  --background: #f8fafc;
-}
+// Paleta de colores e identidades visuales
+$bg-color: #F8F9FD;
+$text-dark: #1E293B;
+$text-muted: #8892A0;
+$primary-teal: #005F54;
+$light-gray: #F1F3F9;
 
-.dashboard-container {
-  padding: 24px;
-  max-width: 1200px;
-  margin: 0 auto;
+.dashboard-content {
+  --background: #{$bg-color};
   font-family: 'Inter', sans-serif;
 }
 
-// Mensaje de bienvenida
-.welcome-section {
-  margin-bottom: 32px;
-
-  h1 {
-    font-size: 28px;
-    font-weight: 700;
-    color: #0f172a;
-    margin: 0 0 8px 0;
-  }
-
-  p {
-    font-size: 15px;
-    color: #64748b;
-    margin: 0;
-  }
-}
-
-// Cuadrícula de tarjetas
-.metrics-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
-  margin-bottom: 40px;
-}
-
-// Tarjeta de métricas individual
-.metric-card {
-  background: #ffffff;
-  border-radius: 16px;
-  padding: 24px;
+.dashboard-container {
   display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+  max-width: 1400px;
+  margin: 0 auto;
+
+  @media (min-width: 992px) {
+    flex-direction: row;
+  }
+}
+
+// Estructura de columnas
+.main-content {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.sidebar-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  min-width: 320px;
+}
+
+// NUEVA BARRA SUPERIOR (Buscador + Acciones a la par)
+.dashboard-top-bar {
+  display: flex;
+  justify-content: space-between;
   align-items: center;
   gap: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
-  border: 1px solid #f1f5f9;
+  flex-wrap: wrap;
 
-  .card-icon {
-    width: 56px;
-    height: 56px;
-    border-radius: 12px;
+  @media (max-width: 576px) {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  // Estilo exacto del buscador de Tab3 (Bordes redondeados)
+  .search-container {
+    position: relative;
+    flex-grow: 1;
+    max-width: 450px;
+
+    .search-icon {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #94a3b8;
+      font-size: 1.2rem;
+      pointer-events: none;
+    }
+
+    .custom-search-input {
+      width: 100%;
+      padding: 12px 16px 12px 48px;
+      border-radius: 50px; // Estilo píldora/ovalado
+      border: 1px solid #e2e8f0;
+      background-color: white;
+      font-size: 0.92rem;
+      color: #334155;
+      outline: none;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease-in-out;
+
+      &:focus {
+        border-color: $primary-teal;
+        box-shadow: 0 2px 10px rgba(0, 95, 84, 0.08);
+      }
+
+      &::placeholder {
+        color: #94a3b8;
+      }
+    }
+  }
+
+  .header-actions {
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 24px;
-  }
+    gap: 16px;
 
-  .card-data {
-    h3 {
-      font-size: 28px;
-      font-weight: 700;
-      color: #0f172a;
-      margin: 0;
+    @media (max-width: 576px) {
+      justify-content: space-between;
     }
 
-    p {
-      font-size: 14px;
+    .icon-btn {
+      background: white;
+      border: 1px solid #e2e8f0;
+      padding: 10px;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
       color: #64748b;
-      margin: 4px 0 0 0;
-    }
-  }
+      transition: all 0.2s;
 
-  // Variaciones de colores limpios
-  &.cyan {
-    .card-icon {
-      background-color: #e3fafc;
-      color: #0c8599;
+      &:hover {
+        background-color: #f8fafc;
+        color: $primary-teal;
+      }
     }
-  }
 
-  &.blue {
-    .card-icon {
-      background-color: #e0f2fe;
-      color: #0284c7;
-    }
-  }
-
-  &.green {
-    .card-icon {
-      background-color: #dcfce7;
-      color: #16a34a;
+    .header-date {
+      font-size: 0.85rem;
+      color: $text-muted;
+      font-weight: 600;
     }
   }
 }
 
-// Sección de estados de WhatsApp
-.status-section {
-  h2 {
-    font-size: 18px;
-    font-weight: 600;
-    color: #0f172a;
-    margin-bottom: 16px;
+// BIENVENIDA (Bajado con espaciado limpio)
+.welcome-section {
+  margin-top: 8px;
+
+  h1 {
+    margin: 0 0 6px 0;
+    font-size: 1.65rem;
+    font-weight: 700;
+    color: $text-dark;
+  }
+  p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: $text-muted;
+  }
+}
+
+// TARJETAS DE MÉTRICAS (GRID CON PORCENTAJES CIRCULARES)
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+
+  .metric-card {
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.01);
+    border: 1px solid #f1f5f9;
+
+    // Indicador de Progreso Circular SVG
+    .progress-indicator {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      .progress-ring {
+        transform: rotate(-90deg);
+        transform-origin: 50% 50%;
+      }
+
+      .progress-ring__background {
+        fill: transparent;
+        stroke: #f1f5f9;
+        stroke-width: 4px;
+      }
+
+      .progress-ring__circle {
+        fill: transparent;
+        stroke-width: 4px;
+        stroke-linecap: round;
+        transition: stroke-dashoffset 0.35s;
+
+        &.progress-blue { stroke: #1A73E8; }
+        &.progress-green { stroke: #1E8E3E; }
+        &.progress-teal { stroke: $primary-teal; }
+      }
+
+      // Icono en el centro del círculo
+      .progress-inner-icon {
+        position: absolute;
+        font-size: 1.15rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &.blue-text { color: #1A73E8; }
+        &.green-text { color: #1E8E3E; }
+        &.teal-text { color: $primary-teal; }
+      }
+    }
+
+    .metric-data {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .metric-value {
+      font-size: 1.55rem;
+      font-weight: 700;
+      color: $text-dark;
+      line-height: 1.1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      // Badges de porcentaje interior
+      .percentage-badge {
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 2px 6px;
+        border-radius: 6px;
+
+        &.blue-badge { background-color: #E8F0FE; color: #1A73E8; }
+        &.green-badge { background-color: #E6F4EA; color: #1E8E3E; }
+        &.teal-badge { background-color: #E2F2F0; color: $primary-teal; }
+      }
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: $text-muted;
+      letter-spacing: 0.6px;
+    }
+  }
+}
+
+// SECCIONES DE TARJETAS
+.section-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.01);
+  border: 1px solid #f1f5f9;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: $text-muted;
+      letter-spacing: 0.5px;
+    }
+
+    .view-all-link {
+      font-size: 0.85rem;
+      color: $primary-teal;
+      text-decoration: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+  }
+}
+
+// DISEÑO DE TABLA
+.table-container {
+  overflow-x: auto;
+}
+
+.dashboard-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+
+  th {
+    padding: 12px 16px;
+    color: $text-muted;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-bottom: 1px solid #f1f5f9;
   }
 
-  .status-card {
-    background: #ffffff;
-    border-radius: 12px;
-    padding: 20px;
-    border: 1px solid #f1f5f9;
+  td {
+    padding: 16px;
+    font-size: 0.88rem;
+    color: #4a5568;
+    border-bottom: 1px solid #f8fafc;
+  }
+
+  tr:last-child td {
+    border-bottom: none;
+  }
+
+  .time-col {
+    font-weight: 600;
+    color: $text-dark;
+  }
+
+  .patient-col {
+    font-weight: 600;
+    color: $text-dark;
+  }
+
+  .reason-col {
+    color: #64748b;
+  }
+
+  // Badges
+  .status-badge {
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    display: inline-block;
+
+    &.status-completed {
+      background-color: #E6F4EA;
+      color: #137333;
+    }
+
+    &.status-consultation {
+      background-color: #FEF7E0;
+      color: #B06000;
+    }
+
+    &.status-waiting {
+      background-color: #E8F0FE;
+      color: #1A73E8;
+    }
+  }
+}
+
+// WHATSAPP
+.whatsapp-section {
+  .section-header-simple {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+
+    h2 {
+      margin: 0;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: $text-muted;
+    }
+
+    .info-icon {
+      font-size: 1.1rem;
+      color: $text-muted;
+    }
+  }
+
+  .reminder-list {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
+  }
 
-    .status-item {
+  .reminder-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 0;
+    cursor: pointer;
+
+    .reminder-left {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .circle-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+
+      &.success-circle {
+        background-color: #E6F4EA;
+        color: #137333;
+      }
+
+      &.warning-circle {
+        background-color: #FEF7E0;
+        color: #B06000;
+      }
+    }
+
+    .reminder-info {
+      h3 {
+        margin: 0 0 2px 0;
+        font-size: 0.88rem;
+        font-weight: 600;
+        color: $text-dark;
+      }
+      p {
+        margin: 0;
+        font-size: 0.75rem;
+        color: $text-muted;
+      }
+    }
+
+    .arrow-icon {
+      color: #94a3b8;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+// SIDEBAR CARDS
+.sidebar-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.01);
+  border: 1px solid #f1f5f9;
+
+  .sidebar-card-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: $text-muted;
+    letter-spacing: 0.5px;
+  }
+
+  .card-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+}
+
+// Próxima Cita Card
+.next-appointment-card {
+  .appointment-time {
+    color: $primary-teal;
+    font-weight: 700;
+    font-size: 0.95rem;
+  }
+
+  .patient-detail-box {
+    margin-bottom: 20px;
+
+    h3 {
+      margin: 0 0 4px 0;
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: $text-dark;
+    }
+
+    .subtitle {
+      margin: 0 0 16px 0;
+      font-size: 0.78rem;
+      color: $text-muted;
+    }
+
+    .reason-banner {
+      background-color: #F4FBF9;
+      border: 1px solid #E2F2F0;
+      border-radius: 8px;
+      padding: 12px;
       display: flex;
       align-items: center;
       gap: 10px;
-      font-size: 14px;
-      color: #334155;
+      font-size: 0.82rem;
+      color: $text-dark;
 
       ion-icon {
-        font-size: 20px;
+        color: $primary-teal;
+        font-size: 1.1rem;
+      }
+    }
+  }
+
+  .btn {
+    width: 100%;
+    border-radius: 8px;
+    padding: 12px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: all 0.2s;
+
+    &.btn-primary {
+      background-color: $primary-teal;
+      color: white;
+      margin-bottom: 12px;
+    }
+
+    &.btn-secondary {
+      background-color: white;
+      border: 1px solid #E2E8F0;
+      color: $primary-teal;
+    }
+
+    &.btn-icon-only {
+      background-color: white;
+      border: 1px solid #E2E8F0;
+      color: #64748b;
+      width: 42px;
+      flex-shrink: 0;
+    }
+  }
+
+  .action-buttons-row {
+    display: flex;
+    gap: 12px;
+  }
+
+  .flex-grow {
+    flex-grow: 1;
+  }
+}
+
+// Actividad Reciente
+.recent-activity-card {
+  .sidebar-card-title {
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .activity-timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 10px;
+      bottom: 10px;
+      width: 2px;
+      background-color: #F1F3F9;
+    }
+  }
+
+  .timeline-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    position: relative;
+    z-index: 1;
+
+    .timeline-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+
+      &.green-bg { background-color: #E6F4EA; color: #137333; }
+      &.red-bg { background-color: #FCE8E6; color: #C5221F; }
+      &.blue-bg { background-color: #E8F0FE; color: #1A73E8; }
+    }
+
+    .timeline-info {
+      h4 {
+        margin: 0 0 2px 0;
+        font-size: 0.82rem;
+        font-weight: 600;
+        color: $text-dark;
+      }
+      p {
+        margin: 0;
+        font-size: 0.72rem;
+        color: $text-muted;
+      }
+    }
+  }
+}
+
+// Calendario Rápido
+.quick-calendar-card {
+  .calendar-month {
+    color: $primary-teal;
+    font-weight: 700;
+    font-size: 0.85rem;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 8px;
+    text-align: center;
+
+    .day-label {
+      font-size: 0.68rem;
+      font-weight: 600;
+      color: $text-muted;
+      padding-bottom: 4px;
+    }
+
+    .day-number {
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: #64748b;
+      padding: 6px 0;
+      border-radius: 8px;
+      cursor: pointer;
+
+      &.active {
+        background-color: $primary-teal;
+        color: white;
+        font-weight: 700;
       }
 
-      .success-icon {
-        color: #16a34a;
-      }
-
-      .pending-icon {
-        color: #ca8a04;
+      &.sunday {
+        color: #C5221F;
+        font-weight: 600;
       }
     }
   }

@@ -39,7 +39,7 @@ ion-content {
     letter-spacing: -0.5px;
   }
 
-  // Campanita con control de color dinámico interactivo
+  // Campanita notificaciones
   .notif-btn {
     --color: #003366 !important;
     color: #003366 !important;
@@ -96,13 +96,11 @@ ion-button[color="inverted"] {
 .chat-container {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 85px); // Ajustado perfectamente con la cápsula superior
+  height: calc(100vh - 85px);
   position: relative;
 }
 
-// ... (Mantén el resto del código SCSS igual, modificando solo esta sección)
-
-// ESTILOS DE LA PANTALLA DE BIENVENIDA (EMPTY STATE DE LA IMAGEN)
+// ESTILOS DE LA PANTALLA DE BIENVENIDA
 .welcome-container {
   flex: 1;
   display: flex;
@@ -117,16 +115,16 @@ ion-button[color="inverted"] {
     width: 80px;
     height: 80px;
     border-radius: 50%;
-    background-color: #001f3f; // Azul oscuro profundo de fondo
+    background-color: #001f3f;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-bottom: 24px;
     box-shadow: 0 10px 25px rgba(0, 31, 63, 0.15);
-    overflow: hidden; // Evita desbordamiento de la imagen
+    overflow: hidden;
 
     .welcome-symbol {
-      width: 50%;  // Ajusta este porcentaje según qué tan grande quieras que se vea dentro del círculo
+      width: 50%;
       height: 50%;
       object-fit: contain;
     }
@@ -148,9 +146,7 @@ ion-button[color="inverted"] {
   }
 }
 
-// ... (El resto del archivo SCSS permanece idéntico)
-
-// 1. ÁREA DE MENSAJES CON SCROLL INDEPENDIENTE
+// ÁREA DE MENSAJES CON SCROLL INDEPENDIENTE
 .chat-messages {
   flex: 1;
   overflow-y: auto;
@@ -268,7 +264,7 @@ ion-button[color="inverted"] {
 }
 
 // ==========================================
-// BLOQUE INFERIOR UNIFICADO (FIJO ABAJO)
+// BLOQUE INFERIOR UNIFICADO
 // ==========================================
 .fixed-bottom-bar {
   display: flex;
@@ -277,7 +273,7 @@ ion-button[color="inverted"] {
   padding-bottom: 85px;
 }
 
-// 2. SUGERENCIAS HORIZONTALES (PEGADAS AL INPUT)
+// SUGERENCIAS HORIZONTALES
 .suggestions-container {
   padding: 4px 0;
 
@@ -318,7 +314,7 @@ ion-button[color="inverted"] {
   }
 }
 
-// 3. BARRA DE ESCRITURA ESTILO CÁPSULA FLOTANTE INTERNA
+// BARRA DE ESCRITURA ESTILO CÁPSULA FLOTANTE INTERNA
 .chat-input-bar {
   display: flex;
   align-items: center;
