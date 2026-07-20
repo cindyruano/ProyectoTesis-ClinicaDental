@@ -21,24 +21,19 @@ interface Cita {
 }
 
 @Component({
-  selector: 'app-tab2-web',
-  templateUrl: './tab2.page.html',
-  styleUrls: ['./tab2.page.scss'],
+  selector: 'app-adm2-web',
+  templateUrl: './adm2.page.html',
+  styleUrls: ['./adm2.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class Tab2Page implements OnInit {
+export class Adm2Page implements OnInit {
   private router = inject(Router);
 
-  // Signals para Filtros y Búsqueda
   public buscarTexto = signal<string>('');
   public doctorFiltro = signal<string>('todos');
-
-  // Signals para Paginación
   public paginaActual = signal<number>(1);
   public registrosPorPagina = 3;
-
-  // Dataset
   public citas = signal<Cita[]>([
     {
       id: 1,
@@ -101,7 +96,6 @@ export class Tab2Page implements OnInit {
 
   ngOnInit() {}
 
-  // 1. Filtrar citas por odontólogo y búsqueda
   public citasFiltradas = computed(() => {
     return this.citas().filter(cita => {
       const cumpleTexto =
@@ -116,14 +110,12 @@ export class Tab2Page implements OnInit {
     });
   });
 
-  // 2. Segmentar las citas para mostrar solo las de la página actual
   public citasPaginadas = computed(() => {
     const inicio = (this.paginaActual() - 1) * this.registrosPorPagina;
     const fin = inicio + this.registrosPorPagina;
     return this.citasFiltradas().slice(inicio, fin);
   });
 
-  // 3. Cálculos de control de paginación
   public totalRegistrosFiltrados = computed(() => this.citasFiltradas().length);
 
   public totalPaginas = computed(() => {
@@ -145,7 +137,6 @@ export class Tab2Page implements OnInit {
     return finEstimado > this.totalRegistrosFiltrados() ? this.totalRegistrosFiltrados() : finEstimado;
   });
 
-  // Generador de iniciales
   public obtenerIniciales(nombre: string): string {
     if (!nombre) return '';
     const partes = nombre.trim().split(/\s+/);
@@ -154,13 +145,11 @@ export class Tab2Page implements OnInit {
     return (primera + segunda).toUpperCase();
   }
 
-  // Selector de colores de Avatar
   public obtenerColorAvatar(id: number): string {
     const colores = ['teal', 'amber', 'indigo'];
     return colores[id % colores.length];
   }
 
-  // Actualizadores de Estado
   public actualizarBusqueda(evento: any) {
     this.buscarTexto.set(evento.target.value);
     this.paginaActual.set(1);
