@@ -1,4 +1,4 @@
-.agenda-content {
+.pacientes-content {
   --background: #f1f5f9;
 }
 
@@ -252,7 +252,7 @@
 }
 
 /* ==========================================================================
-   CONTENIDO DE TRABAJO
+   CONTENIDO DE TRABAJO (TABLA ENCAPSULADA)
    ========================================================================== */
 .directorio-workspace-content {
   flex: 1;
@@ -313,18 +313,10 @@
     padding: 10px 16px;
     border-bottom: 1px solid #f1f5f9;
     color: #334155;
-    vertical-align: middle;
   }
 
   tr:hover td {
     background-color: #f8fafc;
-  }
-
-  // Estilo de Hora Cita destacado
-  .time-col-highlight {
-    font-weight: 700;
-    color: #0c8599;
-    font-size: 13px;
   }
 
   .paciente-cell {
@@ -343,11 +335,9 @@
       font-weight: 700;
       background-color: #e0f2fe;
       color: #0c8599;
-      flex-shrink: 0;
 
       &.teal { background-color: #e3fafc; color: #0b7285; }
       &.amber { background-color: #fffbeb; color: #92400e; }
-      &.indigo { background-color: #e0e7ff; color: #4338ca; }
     }
 
     .p-meta {
@@ -366,61 +356,19 @@
     }
   }
 
-  .treatment-text {
-    font-weight: 500;
-    color: #475569;
-  }
-
-  .doctor-name {
-    font-weight: 500;
-    color: #475569;
-  }
-
-  // Badges estilizados para WhatsApp
-  .badge-whatsapp {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    padding: 4px 10px;
-    border-radius: 12px;
-    font-size: 11px;
-    font-weight: 500;
-
-    &.confirmed {
-      background-color: #dcfce7;
-      color: #16a34a;
-    }
-
-    &.pending {
-      background-color: #fef9c3;
-      color: #ca8a04;
-    }
-
-    &.failed {
-      background-color: #fee2e2;
-      color: #ef4444;
-    }
-
-    ion-icon {
-      font-size: 13px;
-    }
-  }
-
-  // Badge Estado Cita
   .p-status-badge {
-    display: inline-block;
     padding: 4px 8px;
     border-radius: 12px;
     font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
 
-    &.scheduled {
+    &.activo {
       background-color: #dcfce7;
       color: #16a34a;
     }
 
-    &.cancelled {
+    &.inactivo {
       background-color: #f1f5f9;
       color: #64748b;
     }
@@ -443,9 +391,6 @@
       cursor: pointer;
       color: #94a3b8;
       transition: all 0.2s;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
 
       &.edit:hover {
         background-color: #e0f2fe;
