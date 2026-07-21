@@ -1,155 +1,130 @@
-import { Component, OnInit, inject, signal, computed } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, AlertController } from '@ionic/angular';
-import { Router, RouterModule } from '@angular/router';
+import { IonicModule, ToastController } from '@ionic/angular';
+import { Router, ActivatedRoute } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { searchOutline, personAddOutline, documentTextOutline, trashOutline, chevronBackOutline, chevronForwardOutline, medicalSharp, notificationsOutline, shieldCheckmarkOutline } from 'ionicons/icons';
+import {
+  notificationsOutline, shieldCheckmarkOutline, calendarOutline,
+  arrowBackOutline, addCircleOutline, personOutline, callOutline,
+  medkitOutline, pulseOutline, documentTextOutline, calendarClearOutline,
+  timeOutline, checkmarkOutline, alertCircleOutline, chevronBackOutline
+} from 'ionicons/icons';
 
-interface Paciente {
-  id: number;
-  codigo: string;
-  nombre: string;
-  edad: number;
-  tipo: string;
-  dpi: string;
-  ultimaConsulta: string;
-  estado: 'Activo' | 'Inactivo';
+interface NuevaCitaForm {
+  pacienteNombre: string;
+  telefono: string;
+  doctorKey: string;
+  tratamiento: string;
+  categoria: 'orthodontics' | 'surgery' | 'cleaning' | 'reserved';
+  fechaStr: string;
+  hora: string;
+  notas?: string;
 }
 
 @Component({
-  selector: 'app-adm3',
+  selector: 'app-adm3-web',
   templateUrl: './adm3.page.html',
   styleUrls: ['./adm3.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterModule]
+  imports: [IonicModule, CommonModule, FormsModule]
 })
 export class Adm3Page implements OnInit {
   private router = inject(Router);
-  private alertController = inject(AlertController);
+  private route = inject(ActivatedRoute);
+  private toastController = inject(ToastController);
 
-  public pacientes = signal<Paciente[]>([
-    { id: 1, codigo: '28441-A', nombre: 'Carlos Antonio Mendoza Ruiz', edad: 28, tipo: 'Particular', dpi: '2841-3312', ultimaConsulta: '15/07/2026', estado: 'Activo' },
-    { id: 2, codigo: '10922-B', nombre: 'Ana María Velásquez', edad: 34, tipo: 'Seguro Dental', dpi: '1092-2210', ultimaConsulta: '01/06/2026', estado: 'Activo' },
-    { id: 3, codigo: '88412-C', nombre: 'Jorge Mario Hernández', edad: 45, tipo: 'Particular', dpi: '8841-2109', ultimaConsulta: '28/05/2026', estado: 'Inactivo' }
-  ]);
+  public cargandoPaciente: boolean = false;
 
-  public buscarTexto = signal<string>('');
-  public estadoFiltro = signal<string>('Todos los Estados');
-  public institucionFiltro = signal<string>('Todas las Instituciones');
+  public nuevaCitaData: NuevaCitaForm = {
+    pacienteNombre: '',
+    telefono: '',
+    doctorKey: 'melissa',
+    tratamiento: '',
+    categoria: 'orthodontics',
+    fechaStr: '2026-07-21',
+    hora: '09:00 AM',
+    notas: ''
+  };
 
-  public paginaActual = signal<number>(1);
-  public registrosPorPagina = 3;
+  private pacientesRegistrados = [
+    { nombre: 'Carlos Mendoza', telefono: '5544-1234' },
+    { nombre: 'Alice Thompson', telefono: '4122-8899' },
+    { nombre: 'Mark Johnson', telefono: '3001-4567' },
+    { nombre: 'Sophia Martinez', telefono: '5890-1122' },
+    { nombre: 'Robert Black', telefono: '4789-3344' }
+  ];
 
   constructor() {
     addIcons({
-      searchOutline,
-      personAddOutline,
-      documentTextOutline,
-      trashOutline,
-      chevronBackOutline,
-      chevronForwardOutline,
-      medicalSharp,
-      notificationsOutline,
-      shieldCheckmarkOutline
+      notificationsOutline, shieldCheckmarkOutline, calendarOutline,
+      arrowBackOutline, addCircleOutline, personOutline, callOutline,
+      medkitOutline, pulseOutline, documentTextOutline, calendarClearOutline,
+      timeOutline, checkmarkOutline, alertCircleOutline, chevronBackOutline
     });
   }
 
-  ngOnInit() {}
-
-  public pacientesFiltrados = computed(() => {
-    return this.pacientes().filter(p => {
-      const cumpleTexto = p.nombre.toLowerCase().includes(this.buscarTexto().toLowerCase()) ||
-                          p.codigo.toLowerCase().includes(this.buscarTexto().toLowerCase()) ||
-                          p.dpi.includes(this.buscarTexto());
-
-      const cumpleEstado = this.estadoFiltro() === 'Todos los Estados' || p.estado === this.estadoFiltro();
-      const cumpleInst = this.institucionFiltro() === 'Todas las Instituciones' || p.tipo === this.institucionFiltro();
-
-      return cumpleTexto && cumpleEstado && cumpleInst;
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+      if (params['fecha']) this.nuevaCitaData.fechaStr = params['fecha'];
+      if (params['hora']) this.nuevaCitaData.hora = params['hora'];
     });
-  });
-
-  public pacientesPaginados = computed(() => {
-    const inicio = (this.paginaActual() - 1) * this.registrosPorPagina;
-    const fin = inicio + this.registrosPorPagina;
-    return this.pacientesFiltrados().slice(inicio, fin);
-  });
-
-  public totalRegistrosFiltrados = computed(() => this.pacientesFiltrados().length);
-
-  public totalPaginas = computed(() => {
-    const paginas = Math.ceil(this.totalRegistrosFiltrados() / this.registrosPorPagina);
-    return paginas > 0 ? paginas : 1;
-  });
-
-  public totalPaginasArray = computed(() => {
-    return Array.from({ length: this.totalPaginas() }, (_, i) => i + 1);
-  });
-
-  public registroInicio = computed(() => {
-    if (this.totalRegistrosFiltrados() === 0) return 0;
-    return (this.paginaActual() - 1) * this.registrosPorPagina + 1;
-  });
-
-  public registroFin = computed(() => {
-    const finEstimado = this.paginaActual() * this.registrosPorPagina;
-    return finEstimado > this.totalRegistrosFiltrados() ? this.totalRegistrosFiltrados() : finEstimado;
-  });
-
-  public actualizarBusqueda(evento: any) {
-    this.buscarTexto.set(evento.target.value);
-    this.paginaActual.set(1);
   }
 
-  public actualizarFiltroEstado(evento: any) {
-    this.estadoFiltro.set(evento.target.value);
-    this.paginaActual.set(1);
+  public async buscarYAutocompletarPaciente() {
+    const busqueda = this.nuevaCitaData.pacienteNombre.trim().toLowerCase();
+    if (!busqueda) return;
+
+    this.cargandoPaciente = true;
+
+    setTimeout(async () => {
+      this.cargandoPaciente = false;
+
+      const encontrado = this.pacientesRegistrados.find(p =>
+        p.nombre.toLowerCase().includes(busqueda)
+      );
+
+      if (encontrado) {
+        this.nuevaCitaData.pacienteNombre = encontrado.nombre;
+        this.nuevaCitaData.telefono = encontrado.telefono;
+        this.mostrarToast('Paciente encontrado y datos autocompletados', 'success');
+      } else {
+        this.mostrarToast('Paciente no encontrado. Puedes registrar sus datos o crear su Ficha Clínica.', 'warning');
+      }
+    }, 400);
   }
 
-  public actualizarFiltroInstitucion(evento: any) {
-    this.institucionFiltro.set(evento.target.value);
-    this.paginaActual.set(1);
+  public irACrearFichaClinica() {
+    this.router.navigate(['/admin/adm5']);
   }
 
-  public irAPagina(pagina: number) {
-    if (pagina >= 1 && pagina <= this.totalPaginas()) {
-      this.paginaActual.set(pagina);
+  public async guardarCita() {
+    if (!this.nuevaCitaData.pacienteNombre || !this.nuevaCitaData.telefono || !this.nuevaCitaData.tratamiento) {
+      this.mostrarToast('Por favor, completa todos los campos obligatorios del formulario.', 'danger');
+      return;
     }
+
+    await this.mostrarToast('Cita agendada exitosamente en el sistema.', 'success');
+    this.router.navigate(['/admin/adm2']);
   }
 
-  async eliminarPaciente(id: number, nombre: string) {
-    const alert = await this.alertController.create({
-      header: 'Confirmar Eliminación',
-      message: `¿Estás seguro de que deseas eliminar permanentemente al paciente ${nombre}? Esta acción no se puede deshacer.`,
+  public cancelar() {
+    this.router.navigate(['/admin/adm4']); // Redirecciona al directorio de pacientes
+  }
+
+  private async mostrarToast(mensaje: string, color: 'success' | 'warning' | 'danger') {
+    const toast = await this.toastController.create({
+      message: mensaje,
+      duration: 3000,
+      position: 'top',
+      color: color,
       buttons: [
         {
-          text: 'Cancelar',
-          role: 'cancel',
-          cssClass: 'secondary'
-        },
-        {
-          text: 'Eliminar',
-          role: 'destructive',
-          handler: () => {
-            this.pacientes.set(this.pacientes().filter(p => p.id !== id));
-
-            if (this.paginaActual() > this.totalPaginas()) {
-              this.paginaActual.set(this.totalPaginas());
-            }
-          }
+          text: 'OK',
+          role: 'cancel'
         }
       ]
     });
-
-    await alert.present();
-  }
-
-  nuevoExpediente() {
-    this.router.navigate(['/admin/adm4']);
-  }
-
-  verExpediente(pacienteId: number) {
-    this.router.navigate(['/admin/adm4', pacienteId]);
+    await toast.present();
   }
 }

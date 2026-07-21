@@ -1,305 +1,65 @@
-<ion-content [fullscreen]="true" class="doctores-content">
-  <div class="dashboard-viewport">
-    <main class="main-workspace">
+<ion-content [fullscreen]="true" class="perfil-content">
+  <div class="perfil-container">
+    <div class="section-header">
+      <h1>Mi Perfil</h1>
+      <p>Configuración de cuenta y preferencias</p>
+    </div>
 
-      <!-- CABECERA GLOBAL SUPERIOR -->
-      <header class="global-app-header">
-        <div class="header-left-empty"></div>
-
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text"
-                   placeholder="Buscar doctores..."
-                   class="search-input"
-                   [value]="buscarTexto()"
-                   (input)="actualizarBusqueda($event)" />
-          </div>
-
-          <button class="icon-btn notification-btn">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
+    <div class="profile-card">
+      <div class="profile-header">
+        <div class="avatar-large">
+          <span>MM</span>
         </div>
-      </header>
-
-      <!-- SUBBARRA CONTENEDORA DE MARCA -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="people-outline"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>DIRECTORIO DE ESPECIALISTAS</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>SUPERVISIÓN Y RENDIMIENTO CLÍNICO</h3>
-          </div>
-        </div>
-
-        <div class="active-status-container header-actions-relocated">
-          <div class="filter-group">
-            <select class="filter-select" (change)="actualizarFiltroEspecialidad($event)">
-              <option value="Todas">Todas las Especialidades</option>
-              <option value="Ortodoncia">Ortodoncia</option>
-              <option value="Cirujano Dentista">Cirugía Dental</option>
-              <option value="Endodoncia">Endodoncia</option>
-              <option value="Odontopediatría">Odontopediatría</option>
-            </select>
-            <select class="filter-select" (change)="actualizarFiltroEstado($event)">
-              <option value="Todos">Todos los Estados</option>
-              <option value="Activo">Activo</option>
-              <option value="En Consulta">En Consulta</option>
-              <option value="Fuera de Servicio">Fuera de Servicio</option>
-            </select>
-          </div>
-
-          <button class="btn-primary" (click)="registrarDoctor()">
-            <ion-icon name="person-add-outline"></ion-icon>
-            Registrar Doctor
-          </button>
+        <div class="profile-info">
+          <h2>Dra. Montenegro</h2>
+          <span class="role-badge">ADMINISTRADOR</span>
         </div>
       </div>
 
-      <!-- WORKSPACE PRINCIPAL -->
-      <div class="directorio-workspace-content">
-
-        <!-- BLOQUE SUPERIOR DASHBOARD -->
-        <div class="top-dashboard-row">
-          <div class="banner-teal-card">
-            <div class="banner-text">
-              <h2>RESUMEN DE OPERACIÓN DIARIA</h2>
-              <p>4 doctores programados para hoy • 24 consultas totales asignadas en la jornada.</p>
-            </div>
-            <div class="banner-kpis">
-              <div class="kpi-mini-card">
-                <span class="kpi-label">EFICIENCIA CLÍNICA</span>
-                <span class="kpi-val">94%</span>
-              </div>
-              <div class="kpi-mini-card">
-                <span class="kpi-label">SATISFACCIÓN PROMEDIO</span>
-                <span class="kpi-val">4.8/5</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="revenue-card-header">
-            <div class="card-title-row">
-              <h3>Meta de Ingresos</h3>
-              <span class="sub-target">OBJETIVO: $240,000 / MES</span>
-            </div>
-
-            <div class="revenue-circle-box">
-              <div class="donut-chart">
-                <span class="donut-val">78%</span>
-              </div>
-              <div class="revenue-vals">
-                <h4>$187,200</h4>
-                <span class="growth-tag">
-                  <ion-icon name="trending-up-outline"></ion-icon> +12% respecto al mes anterior
-                </span>
-              </div>
-            </div>
-
-            <p class="revenue-footer">4 especialistas están superando sus objetivos esta semana.</p>
+      <div class="profile-details">
+        <div class="detail-item">
+          <ion-icon name="person-outline" class="detail-icon"></ion-icon>
+          <div>
+            <label>Nombre completo</label>
+            <p>Dra. María Montenegro</p>
           </div>
         </div>
 
-        <!-- BARRA DE PESTAÑAS -->
-        <div class="tabs-navigation-bar">
-          <button class="tab-nav-btn" [class.active]="tabActiva() === 'overview'" (click)="setTab('overview')">
-            Resumen de Especialistas
-          </button>
-          <button class="tab-nav-btn" [class.active]="tabActiva() === 'timeline'" (click)="setTab('timeline')">
-            Línea de Tiempo en Tiempo Real
-          </button>
-          <button class="tab-nav-btn" [class.active]="tabActiva() === 'queue'" (click)="setTab('queue')">
-            Cola de Citas
-          </button>
-        </div>
-
-        <!-- VISTA 1: RESUMEN DE ESPECIALISTAS -->
-        <div class="doctors-cards-grid" *ngIf="tabActiva() === 'overview'">
-          <div class="doc-card-unified" *ngFor="let doc of doctoresFiltrados()">
-
-            <div class="doc-top">
-              <div class="doc-avatar">
-                {{ doc.iniciales }}
-              </div>
-              <div class="doc-titles">
-                <h4>{{ doc.nombre }}</h4>
-                <span class="doc-sub">{{ doc.especialidad }}</span>
-              </div>
-              <span class="p-status-badge" [ngClass]="doc.estadoClass">{{ doc.estado }}</span>
-            </div>
-
-            <div class="satisfaction-row">
-              <span class="star-label"><ion-icon name="star-outline"></ion-icon> Satisfacción</span>
-              <span class="score-val">{{ doc.satisfaccion }}/5.0</span>
-            </div>
-
-            <div class="progress-bar-block">
-              <div class="progress-labels">
-                <span>PROGRESO DE META</span>
-                <span>{{ doc.metaProgreso }}%</span>
-              </div>
-              <div class="progress-track">
-                <div class="progress-fill" [style.width.%]="doc.metaProgreso"></div>
-              </div>
-            </div>
-
-            <div class="next-patient-row">
-              <div class="avatar-stack">
-                <span class="mini-avatar" *ngFor="let p of doc.pacientesPrevios">{{ p }}</span>
-                <span class="mini-avatar count" *ngIf="doc.pacientesExtra > 0">+{{ doc.pacientesExtra }}</span>
-              </div>
-              <div class="next-time">
-                <span>{{ doc.proximaCita ? 'Próximo: ' + doc.proximaCita : doc.mensajeEspecial }}</span>
-              </div>
-            </div>
-
-            <!-- CAMBIO 1: SE CAMBIÓ HORARIO POR EDITAR -->
-            <div class="doc-actions-row">
-              <button class="btn-action link" (click)="editarDoctor(doc.id)">
-                <ion-icon name="create-outline"></ion-icon> Editar
-              </button>
-              <button class="btn-action edit" (click)="verMetricas(doc.id)">
-                <ion-icon name="bar-chart-outline"></ion-icon> Métricas
-              </button>
-              <button class="btn-action edit" (click)="contactarDoctor(doc.id)">
-                <ion-icon name="chatbubble-outline"></ion-icon> Contacto
-              </button>
-            </div>
-
-          </div>
-
-          <div *ngIf="doctoresFiltrados().length === 0" class="empty-state">
-            No se encontraron doctores que coincidan con la búsqueda o filtro.
+        <div class="detail-item">
+          <ion-icon name="mail-outline" class="detail-icon"></ion-icon>
+          <div>
+            <label>Correo electrónico</label>
+            <p>admin@modent.clinic</p>
           </div>
         </div>
 
-        <!-- CAMBIO 2: LÍNEA DE TIEMPO CON FORMATO LIMPIO, FUENTE PAREJA Y SIN ENCIMAR -->
-        <div class="table-container timeline-container" *ngIf="tabActiva() === 'timeline'">
-          <div class="timeline-header">
-            <div>
-              <h3>Línea de Tiempo Interactiva</h3>
-              <p>Supervisión del flujo diario de consultas</p>
-            </div>
-            <div class="timeline-controls">
-              <button class="btn-pager"><ion-icon name="chevron-back-outline"></ion-icon></button>
-              <button class="btn-pager active">Hoy</button>
-              <button class="btn-pager"><ion-icon name="chevron-forward-outline"></ion-icon></button>
-            </div>
-          </div>
-
-          <div class="timeline-table-scroll">
-            <table class="pacientes-table timeline-table">
-              <thead>
-                <tr>
-                  <th class="spec-col-header">Especialista</th>
-                  <th class="center-col">09:00</th>
-                  <th class="center-col">10:00</th>
-                  <th class="center-col">11:00</th>
-                  <th class="center-col">12:00</th>
-                  <th class="center-col">13:00</th>
-                  <th class="center-col">14:00</th>
-                  <th class="center-col">15:00</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let doc of doctoresFiltradosTimeline()">
-                  <!-- Celda de Especialista estructurada exactamente igual que en tab2 -->
-                  <td class="spec-cell-clean">
-                    <div class="paciente-cell">
-                      <div class="p-avatar teal">{{ doc.iniciales }}</div>
-                      <div class="p-meta">
-                        <span class="p-name">{{ doc.nombre }}</span>
-                        <span class="p-sub">{{ doc.especialidad }}</span>
-                      </div>
-                    </div>
-                  </td>
-
-                  <ng-container *ngFor="let b of doc.bloques">
-                    <td [attr.colspan]="b.colspan || 1" [class.empty-slot]="b.tipo === 'vacio'">
-                      <div *ngIf="b.tipo !== 'vacio'" class="time-block" [ngClass]="b.tipo">
-                        {{ b.titulo }}
-                      </div>
-                    </td>
-                  </ng-container>
-                </tr>
-
-                <tr *ngIf="doctoresFiltradosTimeline().length === 0">
-                  <td colspan="8" class="empty-state">
-                    No hay médicos registrados para el filtro seleccionado.
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+        <div class="detail-item">
+          <ion-icon name="lock-closed-outline" class="detail-icon"></ion-icon>
+          <div>
+            <label>Cambiar contraseña</label>
+            <p>Última actualización: hace 30 días</p>
           </div>
         </div>
 
-        <!-- CAMBIO 3: COLA DE CITAS COMPLETA -->
-        <div class="table-container queue-container" *ngIf="tabActiva() === 'queue'">
-          <div class="timeline-header">
-            <div>
-              <h3>Cola de Atención en Sala de Espera</h3>
-              <p>Monitoreo de pacientes ingresados en recepción</p>
-            </div>
+        <div class="detail-item">
+          <ion-icon name="notifications-outline" class="detail-icon"></ion-icon>
+          <div>
+            <label>Notificaciones</label>
+            <p>Activadas para alertas críticas</p>
           </div>
-
-          <table class="pacientes-table">
-            <thead>
-              <tr>
-                <th class="number-col">#</th>
-                <th>Paciente</th>
-                <th>Especialista Asignado</th>
-                <th class="center-col">Hora Llegada</th>
-                <th class="center-col">Tiempo Espera</th>
-                <th class="center-col">Estado</th>
-                <th class="center-col">Acción</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let paciente of colaPacientes(); let i = index">
-                <td class="number-col">{{ i + 1 }}</td>
-                <td>
-                  <div class="paciente-cell">
-                    <div class="p-avatar" [ngClass]="paciente.avatarColor">{{ paciente.iniciales }}</div>
-                    <div class="p-meta">
-                      <span class="p-name">{{ paciente.nombre }}</span>
-                      <span class="p-sub">{{ paciente.motivo }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  <span class="doctor-name">{{ paciente.doctor }}</span>
-                </td>
-                <td class="center-col time-col-highlight">{{ paciente.horaLlegada }}</td>
-                <td class="center-col">
-                  <span class="treatment-text">{{ paciente.tiempoEspera }}</span>
-                </td>
-                <td class="center-col">
-                  <span class="p-status-badge" [ngClass]="paciente.estadoClass">{{ paciente.estado }}</span>
-                </td>
-                <td class="actions-col">
-                  <div class="action-buttons">
-                    <button class="btn-icon edit" title="Llamar a Consultorio" (click)="llamarPaciente(paciente.id)">
-                      <ion-icon name="megaphone-outline"></ion-icon>
-                    </button>
-                    <button class="btn-icon delete" title="Cancelar Espera" (click)="cancelarCola(paciente.id)">
-                      <ion-icon name="close-circle-outline"></ion-icon>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
         </div>
-
       </div>
 
-    </main>
+      <div class="profile-actions">
+        <button class="btn-secondary" (click)="editProfile()">
+          <ion-icon name="settings-outline"></ion-icon>
+          Editar Perfil
+        </button>
+        <button class="btn-danger" (click)="logout()">
+          <ion-icon name="log-out-outline"></ion-icon>
+          Cerrar Sesión
+        </button>
+      </div>
+    </div>
   </div>
 </ion-content>

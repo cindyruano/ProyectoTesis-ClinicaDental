@@ -1,0 +1,172 @@
+<ion-content [fullscreen]="true" class="registro-content">
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
+
+      <!-- CABECERA GLOBAL SUPERIOR -->
+      <header class="global-app-header">
+        <div class="header-left-empty">
+          <button (click)="regresar()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #0c8599; display: flex; align-items: center; padding: 10px;">
+            <ion-icon name="chevron-back-outline"></ion-icon>
+            <span style="font-size: 14px; margin-left: 5px; font-weight: 500;">Volver al Directorio</span>
+          </button>
+        </div>
+
+        <div class="header-right-actions">
+          <div class="search-box">
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+            <input type="text" placeholder="Buscar usuario..." class="search-input" />
+          </div>
+
+          <button class="icon-btn notification-btn">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span class="notification-dot"></span>
+          </button>
+          <button class="icon-btn shield-btn">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+          </button>
+        </div>
+      </header>
+
+      <!-- SUBBARRA CONTENEDORA DE BRANDING -->
+      <div class="clinical-subheader-row">
+        <div class="header-left-brand">
+          <div class="brand-logo-circle">
+            <ion-icon name="medical-sharp"></ion-icon>
+          </div>
+          <div class="brand-titles-stack">
+            <h1>ODONTOLOGÍA INCLUSIVA</h1>
+            <h2>Odontólogos Sociales y Comunitarios</h2>
+            <h3>REGISTRO DE PERSONAL CLÍNICO — ALTA DE MÉDICOS Y AUXILIARES</h3>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKSPACE CONTENIDO -->
+      <div class="registro-workspace-content">
+        <main class="form-card">
+
+          <!-- SELECTOR DE TIPO DE PERSONAL (DOCTOR / AUXILIAR) -->
+          <div class="role-selector-box">
+            <label class="section-label">TIPO DE REGISTRO</label>
+            <div class="role-toggle">
+              <button
+                type="button"
+                class="toggle-btn"
+                [class.active]="tipoPersonal() === 'Doctor'"
+                (click)="setTipoPersonal('Doctor')">
+                <ion-icon name="medical-outline"></ion-icon>
+                Doctor / Odontólogo
+              </button>
+              <button
+                type="button"
+                class="toggle-btn"
+                [class.active]="tipoPersonal() === 'Auxiliar'"
+                (click)="setTipoPersonal('Auxiliar')">
+                <ion-icon name="people-outline"></ion-icon>
+                Auxiliar / Asistente
+              </button>
+            </div>
+          </div>
+
+          <form (ngSubmit)="guardarRegistro()" class="registro-form">
+
+            <!-- SECCIÓN 1: DATOS PERSONALES -->
+            <div class="form-section">
+              <h3>
+                <ion-icon name="person-outline"></ion-icon>
+                Información Personal
+              </h3>
+
+              <div class="grid-2-cols">
+                <div class="field-group">
+                  <label>Nombres y Apellidos *</label>
+                  <input type="text" [(ngModel)]="form.nombre" name="nombre" placeholder="Ej. Dr. Julián Thorne" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Correo Electrónico *</label>
+                  <input type="email" [(ngModel)]="form.email" name="email" placeholder="ejemplo@clinica.com" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Teléfono de Contacto *</label>
+                  <input type="tel" [(ngModel)]="form.telefono" name="telefono" placeholder="+502 0000-0000" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Documento de Identidad (DPI) *</label>
+                  <input type="text" [(ngModel)]="form.dpi" name="dpi" placeholder="1234 56789 0101" required />
+                </div>
+              </div>
+            </div>
+
+            <!-- SECCIÓN 2: INFORMACIÓN PROFESIONAL -->
+            <div class="form-section">
+              <h3>
+                <ion-icon name="briefcase-outline"></ion-icon>
+                Datos Profesionales
+              </h3>
+
+              <div class="grid-2-cols">
+
+                <div class="field-group">
+                  <label>Especialidad / Área *</label>
+                  <select [(ngModel)]="form.especialidad" name="especialidad" required>
+                    <option value="" disabled selected>Seleccione una opción</option>
+                    <ng-container *ngIf="tipoPersonal() === 'Doctor'">
+                      <option value="Ortodoncia">Ortodoncia</option>
+                      <option value="Cirujano Dentista">Cirugía Dental</option>
+                      <option value="Endodoncia">Endodoncia</option>
+                      <option value="Odontopediatría">Odontopediatría</option>
+                    </ng-container>
+                    <ng-container *ngIf="tipoPersonal() === 'Auxiliar'">
+                      <option value="Asistencia Clínica">Asistencia Clínica</option>
+                      <option value="Soporte Odontológico">Soporte Odontológico</option>
+                      <option value="Esterilización y Materiales">Esterilización y Materiales</option>
+                    </ng-container>
+                  </select>
+                </div>
+
+                <!-- CAMPO EXCLUSIVO DOCTOR -->
+                <div class="field-group" *ngIf="tipoPersonal() === 'Doctor'">
+                  <label>Número de Colegiado *</label>
+                  <input type="text" [(ngModel)]="form.colegiado" name="colegiado" placeholder="Ej. COL-84920" required />
+                </div>
+
+                <!-- CAMPO EXCLUSIVO AUXILIAR -->
+                <div class="field-group" *ngIf="tipoPersonal() === 'Auxiliar'">
+                  <label>Doctor Asignado (Opcional)</label>
+                  <select [(ngModel)]="form.doctorAsignado" name="doctorAsignado">
+                    <option value="General">Sin asignación fija (General)</option>
+                    <option value="Dr. Julian Thorne">Dr. Julian Thorne</option>
+                    <option value="Dra. Elena Rodríguez">Dra. Elena Rodríguez</option>
+                    <option value="Dr. Marcus Vance">Dr. Marcus Vance</option>
+                  </select>
+                </div>
+
+                <div class="field-group">
+                  <label>Estado Inicial</label>
+                  <select [(ngModel)]="form.estado" name="estado">
+                    <option value="ACTIVO">Activo</option>
+                    <option value="FUERA DE SERVICIO">Fuera de Servicio</option>
+                  </select>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- BOTÓN ÚNICO DE ACCIÓN -->
+            <div class="form-actions">
+              <button type="submit" class="btn-submit">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                Registrar {{ tipoPersonal() }}
+              </button>
+            </div>
+
+          </form>
+        </main>
+      </div>
+
+    </main>
+  </div>
+</ion-content>

@@ -1,29 +1,24 @@
+
 # 🦷 PROYECTO CLÍNICA DENTAL
 
-Este apartado documenta el Frontend Web, desarrollado con Angular e Ionic, diseñado específicamente para el personal administrativo y los odontólogos de la Clínica Dental. Permite la gestión digitalizada, control de citas, expedientes y reportería financiera.
+Plataforma Web desarrollada con *Angular* e *Ionic*, diseñada para la digitalización integral, control de citas, expedientes clínicos y gestión administrativa de la Clínica Dental.
+La arquitectura está modularizada en *3 paneles independientes según el rol de usuario*, garantizando seguridad, permisos claros y una experiencia personalizada:
 
 ---
 
-## 📂 Distribución del Frontend
-La plataforma web está organizada en un sistema simétrico de tabs (pestañas de escritorio) que estructuran el flujo administrativo:
-
-| Carpeta | Nombre          | Funcionalidad Clínica / Administrativa                                   |
-|---------|-----------------|--------------------------------------------------------------------------|
-| Tab1    | Dashboard       | Panel general con métricas clave del día, accesos rápidos y alertas.     | 
-| Tab2    | Agendas         | Gestión, asignación y confirmación de citas para los odontólogos.        | 
-| Tab3    | Pacientes       | Expediente clínico digital, historial de tratamientos y radiografías.    | 
-| Tab4    | Doctores        | Gestión de perfiles médicos, especialidades y horarios rotativos.        |
-| Tab5    | Finanzas        | Control de ingresos, saldos pendientes y liquidación de comisiones.      | 
-| Tab6    | Menú / Sidebar  | Contenedor principal y barra lateral de navegación para administración.  | 
-| Login   | Login Admin     | Módulo de autenticación seguro para administradores y doctores.          |
+## 📂 Módulos de la Plataforma Web
+  - **[Módulo Administrador](./src/app/frontendWeb/admin/README.md):**   Supervisión global, finanzas, presupuestos, auditoría y gestión de personal.
+  - **[Módulo Doctor](./src/app/frontendWeb/doctor/README.md):**         Consulta médica, odontograma, agenda personal, fichas clínicas y recetario.
+  - **[Módulo Auxiliar](./src/app/frontendWeb/auxiliar/README.md):**     Apoyo clínico, flujo de sala de espera, desinfección de boxes e inventario.
 
 ---
 
 ## 🚀 Tecnologías utilizadas (Frontend Web)
 - **Framework principal:** Angular  
-- **UI Components:** Ionic (Adaptado para entornos Desktop / Web responsive)
+- **UI Components:** Ionic Framework (Adaptado para entornos Desktop / Web responsive)
 - **Estilos:** Sass (SCSS) / Flexbox & Grid  
 - **Navegación:** Angular Router (Estructura jerárquica /admin/*)
+- **Enrutamiento:** Angular Router (Lazy Loading por roles)
 - **Integraciones:** Conectores API REST para el backend integral de la clínica
 
 ---
@@ -32,3 +27,9 @@ La plataforma web está organizada en un sistema simétrico de tabs (pestañas d
 1. Clonar el repositorio  
    ```bash
    git clone https://github.com/cindyruano/ProyectoTesis-ClinicaDental.git
+
+2. Instalar dependencias
+  *npm install*
+
+3. Ejecutar servidor de desarrollo 
+  *ng serve*

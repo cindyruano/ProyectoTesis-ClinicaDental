@@ -4,20 +4,33 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { addOutline, searchOutline, checkmarkCircleOutline, timeOutline, closeCircleOutline, createOutline, trashOutline, syncOutline, calendarOutline, notificationsOutline, shieldCheckmarkOutline, chevronBackOutline, chevronForwardOutline } from 'ionicons/icons';
+import {
+  addOutline, searchOutline, checkmarkCircleOutline, timeOutline,
+  closeCircleOutline, createOutline, trashOutline, syncOutline,
+  calendarOutline, notificationsOutline, shieldCheckmarkOutline,
+  chevronBackOutline, chevronForwardOutline, warningOutline,
+  peopleOutline, cashOutline, closeOutline
+} from 'ionicons/icons';
 
-interface Cita {
+interface CitaCalendar {
   id: number;
+  fechaStr: string;
   hora: string;
   pacienteNombre: string;
-  pacienteDpi: string;
-  tratamiento: string;
-  doctorKey: string;
   doctorNombre: string;
-  whatsappEstado: 'confirmed' | 'pending' | 'failed';
-  whatsappTexto: string;
-  estado: 'scheduled' | 'cancelled';
-  estadoTexto: string;
+  doctorKey: string;
+  tratamiento: string;
+  categoria: 'orthodontics' | 'surgery' | 'cleaning' | 'reserved';
+  estado: 'pending' | 'in-progress' | 'completed';
+  alerta?: boolean;
+}
+
+interface DiaCalendario {
+  nombre: string;
+  numero: number;
+  fechaStr: string;
+  esHoy: boolean;
+  esDelMesActual?: boolean;
 }
 
 @Component({
@@ -30,143 +43,304 @@ interface Cita {
 export class Adm2Page implements OnInit {
   private router = inject(Router);
 
+  public rolUsuario: 'admin' | 'doctor' | 'auxiliar' = 'admin';
+  public doctorAsignadoKey: string = 'melissa';
+
   public buscarTexto = signal<string>('');
   public doctorFiltro = signal<string>('todos');
-  public paginaActual = signal<number>(1);
-  public registrosPorPagina = 3;
-  public citas = signal<Cita[]>([
+  public vistaCalendar = signal<'day' | 'week' | 'month'>('month');
+
+  public fechaReferencia = signal<Date>(new Date(2026, 6, 21));
+
+  // Estado del Modal
+  public modalDiaAbierto = signal<boolean>(false);
+  public diaSeleccionado = signal<DiaCalendario | null>(null);
+
+  public horasDia: string[] = [
+    '08:00 AM', '09:00 AM', '10:00 AM', '11:00 AM',
+    '12:00 PM', '01:00 PM', '02:00 PM', '03:00 PM', '04:00 PM'
+  ];
+
+  public citas = signal<CitaCalendar[]>([
     {
       id: 1,
+      fechaStr: '2026-07-20',
       hora: '09:00 AM',
-      pacienteNombre: 'Carlos Mendoza',
-      pacienteDpi: '2981-3312',
-      tratamiento: 'Limpieza Dental Profunda',
-      doctorKey: 'melissa',
+      pacienteNombre: 'Alice Thompson',
       doctorNombre: 'Dra. Melissa Montenegro',
-      whatsappEstado: 'confirmed',
-      whatsappTexto: 'Confirmado',
-      estado: 'scheduled',
-      estadoTexto: 'Programada'
+      doctorKey: 'melissa',
+      tratamiento: 'ORTODONCIA',
+      categoria: 'orthodontics',
+      estado: 'completed'
     },
     {
       id: 2,
-      hora: '10:30 AM',
-      pacienteNombre: 'Sofía Herrera',
-      pacienteDpi: '1045-8921',
-      tratamiento: 'Evaluación Ortodoncia',
-      doctorKey: 'doctor3',
+      fechaStr: '2026-07-21',
+      hora: '09:00 AM',
+      pacienteNombre: 'Mark Johnson',
       doctorNombre: 'Dra. Ana Gómez',
-      whatsappEstado: 'pending',
-      whatsappTexto: 'Enviado (Sin resp.)',
-      estado: 'scheduled',
-      estadoTexto: 'Programada'
+      doctorKey: 'doctor3',
+      tratamiento: 'LIMPIEZA',
+      categoria: 'cleaning',
+      estado: 'completed'
     },
     {
       id: 3,
-      hora: '12:00 PM',
-      pacienteNombre: 'Jorge Ortega',
-      pacienteDpi: '3122-4541',
-      tratamiento: 'Extracción Tercer Molar',
-      doctorKey: 'doctor4',
+      fechaStr: '2026-07-21',
+      hora: '11:00 AM',
+      pacienteNombre: 'Sophia Martinez',
+      doctorNombre: 'Dra. Melissa Montenegro',
+      doctorKey: 'melissa',
+      tratamiento: 'ORTODONCIA',
+      categoria: 'orthodontics',
+      estado: 'in-progress'
+    },
+    {
+      id: 4,
+      fechaStr: '2026-07-21',
+      hora: '02:00 PM',
+      pacienteNombre: 'David Villa',
+      doctorNombre: 'Dr. Juan Pérez',
+      doctorKey: 'doctor2',
+      tratamiento: 'RESERVADO',
+      categoria: 'reserved',
+      estado: 'pending'
+    },
+    {
+      id: 5,
+      fechaStr: '2026-07-22',
+      hora: '09:00 AM',
+      pacienteNombre: 'Robert Black',
       doctorNombre: 'Dr. Carlos Ruíz',
-      whatsappEstado: 'failed',
-      whatsappTexto: 'Canceló Cita',
-      estado: 'cancelled',
-      estadoTexto: 'Cancelada'
+      doctorKey: 'doctor4',
+      tratamiento: 'CIRUGÍA',
+      categoria: 'surgery',
+      estado: 'pending',
+      alerta: true
     }
   ]);
 
   constructor() {
     addIcons({
-      addOutline,
-      searchOutline,
-      checkmarkCircleOutline,
-      timeOutline,
-      closeCircleOutline,
-      createOutline,
-      trashOutline,
-      syncOutline,
-      calendarOutline,
-      notificationsOutline,
-      shieldCheckmarkOutline,
-      chevronBackOutline,
-      chevronForwardOutline
+      addOutline, searchOutline, checkmarkCircleOutline, timeOutline,
+      closeCircleOutline, createOutline, trashOutline, syncOutline,
+      calendarOutline, notificationsOutline, shieldCheckmarkOutline,
+      chevronBackOutline, chevronForwardOutline, warningOutline,
+      peopleOutline, cashOutline, closeOutline
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.rolUsuario !== 'admin') {
+      this.doctorFiltro.set(this.doctorAsignadoKey);
+    }
+  }
 
-  public citasFiltradas = computed(() => {
+  // =========================================================================
+  // SIGNALS COMPUTADOS PARA LA LEYENDA Y MÉTRICAS
+  // =========================================================================
+  public citasFiltradasGenerales = computed(() => {
     return this.citas().filter(cita => {
-      const cumpleTexto =
-        cita.pacienteNombre.toLowerCase().includes(this.buscarTexto().toLowerCase()) ||
-        cita.pacienteDpi.includes(this.buscarTexto());
-
-      const cumpleDoctor =
-        this.doctorFiltro() === 'todos' ||
-        cita.doctorKey === this.doctorFiltro();
-
-      return cumpleTexto && cumpleDoctor;
+      const coincideDoctor = this.doctorFiltro() === 'todos' || cita.doctorKey === this.doctorFiltro();
+      const coincideBusqueda = cita.pacienteNombre.toLowerCase().includes(this.buscarTexto().toLowerCase());
+      return coincideDoctor && coincideBusqueda;
     });
   });
 
-  public citasPaginadas = computed(() => {
-    const inicio = (this.paginaActual() - 1) * this.registrosPorPagina;
-    const fin = inicio + this.registrosPorPagina;
-    return this.citasFiltradas().slice(inicio, fin);
+  public totalOrtodoncia = computed(() =>
+    this.citasFiltradasGenerales().filter(c => c.categoria === 'orthodontics').length
+  );
+
+  public totalCirugia = computed(() =>
+    this.citasFiltradasGenerales().filter(c => c.categoria === 'surgery').length
+  );
+
+  public totalLimpieza = computed(() =>
+    this.citasFiltradasGenerales().filter(c => c.categoria === 'cleaning').length
+  );
+
+  public totalReservado = computed(() =>
+    this.citasFiltradasGenerales().filter(c => c.categoria === 'reserved').length
+  );
+
+  // =========================================================================
+  // LÓGICA DE FECHAS Y NAVEGACIÓN
+  // =========================================================================
+  public diasVisibles = computed<DiaCalendario[]>(() => {
+    const ref = new Date(this.fechaReferencia());
+    const hoyStr = new Date().toISOString().split('T')[0];
+    const dias: DiaCalendario[] = [];
+    const nombresDias = ['DOM', 'LUN', 'MAR', 'MIÉ', 'JUE', 'VIE', 'SÁB'];
+
+    if (this.vistaCalendar() === 'day') {
+      dias.push({
+        nombre: nombresDias[ref.getDay()],
+        numero: ref.getDate(),
+        fechaStr: this.formatearFechaISO(ref),
+        esHoy: this.formatearFechaISO(ref) === hoyStr,
+        esDelMesActual: true
+      });
+    } else if (this.vistaCalendar() === 'week') {
+      const dayOfWeek = ref.getDay();
+      const diffToMonday = ref.getDate() - dayOfWeek + (dayOfWeek === 0 ? -6 : 1);
+      const lunes = new Date(ref.setDate(diffToMonday));
+
+      for (let i = 0; i < 5; i++) {
+        const d = new Date(lunes);
+        d.setDate(lunes.getDate() + i);
+        dias.push({
+          nombre: nombresDias[d.getDay()],
+          numero: d.getDate(),
+          fechaStr: this.formatearFechaISO(d),
+          esHoy: this.formatearFechaISO(d) === hoyStr,
+          esDelMesActual: true
+        });
+      }
+    } else if (this.vistaCalendar() === 'month') {
+      const año = ref.getFullYear();
+      const mes = ref.getMonth();
+
+      const primerDiaMes = new Date(año, mes, 1);
+      const ultimoDiaMes = new Date(año, mes + 1, 0);
+
+      const diaSemanaInicio = primerDiaMes.getDay();
+      const totalDiasMes = ultimoDiaMes.getDate();
+
+      for (let i = 0; i < diaSemanaInicio; i++) {
+        dias.push({ nombre: '', numero: 0, fechaStr: '', esHoy: false, esDelMesActual: false });
+      }
+
+      for (let day = 1; day <= totalDiasMes; day++) {
+        const d = new Date(año, mes, day);
+        const iso = this.formatearFechaISO(d);
+        dias.push({
+          nombre: nombresDias[d.getDay()],
+          numero: day,
+          fechaStr: iso,
+          esHoy: iso === hoyStr,
+          esDelMesActual: true
+        });
+      }
+    }
+
+    return dias;
   });
 
-  public totalRegistrosFiltrados = computed(() => this.citasFiltradas().length);
+  public rangoFechaTexto = computed(() => {
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    const ref = this.fechaReferencia();
+    const mesNombre = meses[ref.getMonth()];
+    const año = ref.getFullYear();
 
-  public totalPaginas = computed(() => {
-    const paginas = Math.ceil(this.totalRegistrosFiltrados() / this.registrosPorPagina);
-    return paginas > 0 ? paginas : 1;
+    if (this.vistaCalendar() === 'month') {
+      return `${mesNombre} ${año}`;
+    }
+
+    const dias = this.diasVisibles();
+    if (dias.length === 0) return '';
+
+    if (this.vistaCalendar() === 'day') {
+      return `${mesNombre} ${dias[0].numero}, ${año}`;
+    } else {
+      const primerDia = dias[0].numero;
+      const ultimoDia = dias[dias.length - 1].numero;
+      return `${mesNombre} ${primerDia} – ${ultimoDia}, ${año}`;
+    }
   });
 
-  public totalPaginasArray = computed(() => {
-    return Array.from({ length: this.totalPaginas() }, (_, i) => i + 1);
+  public mesActualTexto = computed(() => {
+    const meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+    return meses[this.fechaReferencia().getMonth()];
   });
 
-  public registroInicio = computed(() => {
-    if (this.totalRegistrosFiltrados() === 0) return 0;
-    return (this.paginaActual() - 1) * this.registrosPorPagina + 1;
-  });
-
-  public registroFin = computed(() => {
-    const finEstimado = this.paginaActual() * this.registrosPorPagina;
-    return finEstimado > this.totalRegistrosFiltrados() ? this.totalRegistrosFiltrados() : finEstimado;
-  });
-
-  public obtenerIniciales(nombre: string): string {
-    if (!nombre) return '';
-    const partes = nombre.trim().split(/\s+/);
-    const primera = partes[0] ? partes[0].charAt(0) : '';
-    const segunda = partes[1] ? partes[1].charAt(0) : '';
-    return (primera + segunda).toUpperCase();
+  // Modal handlers
+  public abrirModalDia(dia: DiaCalendario) {
+    this.diaSeleccionado.set(dia);
+    this.modalDiaAbierto.set(true);
   }
 
-  public obtenerColorAvatar(id: number): string {
-    const colores = ['teal', 'amber', 'indigo'];
-    return colores[id % colores.length];
+  public cerrarModalDia() {
+    this.modalDiaAbierto.set(false);
+    this.diaSeleccionado.set(null);
+  }
+
+  public citasDiaSeleccionado = computed(() => {
+    const dia = this.diaSeleccionado();
+    if (!dia || !dia.fechaStr) return [];
+    return this.obtenerCitasDelDia(dia.fechaStr);
+  });
+
+  public irAVistaDiaDesdeModal() {
+    const dia = this.diaSeleccionado();
+    if (dia) {
+      const [año, mes, d] = dia.fechaStr.split('-').map(Number);
+      this.fechaReferencia.set(new Date(año, mes - 1, d));
+      this.vistaCalendar.set('day');
+      this.cerrarModalDia();
+    }
+  }
+
+  public cambiarVista(vista: 'day' | 'week' | 'month') {
+    this.vistaCalendar.set(vista);
+  }
+
+  public navegarFecha(direccion: number) {
+    const actual = new Date(this.fechaReferencia());
+
+    if (this.vistaCalendar() === 'day') {
+      actual.setDate(actual.getDate() + direccion);
+    } else if (this.vistaCalendar() === 'week') {
+      actual.setDate(actual.getDate() + (direccion * 7));
+    } else if (this.vistaCalendar() === 'month') {
+      actual.setMonth(actual.getMonth() + direccion);
+    }
+
+    this.fechaReferencia.set(actual);
+  }
+
+  public irHoy() {
+    this.fechaReferencia.set(new Date());
+  }
+
+  public obtenerCitasPorDiaYHora(fechaStr: string, hora: string): CitaCalendar[] {
+    return this.citas().filter(cita => {
+      const coincideFechaHora = cita.fechaStr === fechaStr && cita.hora === hora;
+      const coincideDoctor = this.doctorFiltro() === 'todos' || cita.doctorKey === this.doctorFiltro();
+      const coincideBusqueda = cita.pacienteNombre.toLowerCase().includes(this.buscarTexto().toLowerCase());
+
+      return coincideFechaHora && coincideDoctor && coincideBusqueda;
+    });
+  }
+
+  public obtenerCitasDelDia(fechaStr: string): CitaCalendar[] {
+    if (!fechaStr) return [];
+    return this.citas().filter(cita => {
+      const coincideFecha = cita.fechaStr === fechaStr;
+      const coincideDoctor = this.doctorFiltro() === 'todos' || cita.doctorKey === this.doctorFiltro();
+      const coincideBusqueda = cita.pacienteNombre.toLowerCase().includes(this.buscarTexto().toLowerCase());
+
+      return coincideFecha && coincideDoctor && coincideBusqueda;
+    });
+  }
+
+  private formatearFechaISO(date: Date): string {
+    const y = date.getFullYear();
+    const m = String(date.getMonth() + 1).padStart(2, '0');
+    const d = String(date.getDate()).padStart(2, '0');
+    return `${y}-${m}-${d}`;
   }
 
   public actualizarBusqueda(evento: any) {
     this.buscarTexto.set(evento.target.value);
-    this.paginaActual.set(1);
   }
 
   public actualizarFiltroDoctor(evento: any) {
-    this.doctorFiltro.set(evento.target.value);
-    this.paginaActual.set(1);
-  }
-
-  public irAPagina(pagina: number) {
-    if (pagina >= 1 && pagina <= this.totalPaginas()) {
-      this.paginaActual.set(pagina);
+    if (this.rolUsuario === 'admin') {
+      this.doctorFiltro.set(evento.target.value);
     }
   }
 
   public nuevaCita() {
-    console.log('Navegar a creación de cita');
+    this.router.navigate(['/admin/adm3']);
   }
 }

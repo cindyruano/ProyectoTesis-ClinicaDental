@@ -1,5 +1,11 @@
-.pacientes-content {
-  --background: #f1f5f9;
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.perfil-content {
+  --background: #f8fafc;
 }
 
 .dashboard-viewport {
@@ -7,7 +13,7 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-color: #f1f5f9;
+  background-color: #f8fafc;
 }
 
 .main-workspace {
@@ -18,9 +24,7 @@
   overflow: hidden;
 }
 
-/* ==========================================================================
-   NUEVA CABECERA GLOBAL EXTENDIDA
-   ========================================================================== */
+/* CABECERA GLOBAL SUPERIOR */
 .global-app-header {
   display: flex;
   justify-content: space-between;
@@ -29,56 +33,16 @@
   background-color: #ffffff;
   border-bottom: 1px solid #e2e8f0;
   flex-shrink: 0;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 
   .header-left-empty {
     flex: 1;
   }
 
-  /* Área derecha: Acciones */
   .header-right-actions {
     display: flex;
     align-items: center;
     gap: 16px;
 
-    /* Input de búsqueda estilo Configuración */
-    .search-box {
-      position: relative;
-      display: flex;
-      align-items: center;
-
-      .search-icon {
-        position: absolute;
-        left: 14px;
-        color: #94a3b8;
-        font-size: 18px;
-      }
-
-      .search-input {
-        width: 280px;
-        height: 38px;
-        padding: 0 16px 0 42px;
-        border-radius: 30px;
-        border: 1px solid #e2e8f0;
-        background-color: #f8fafc;
-        font-size: 12px;
-        color: #334155;
-        outline: none;
-        transition: all 0.2s ease;
-
-        &::placeholder {
-          color: #94a3b8;
-        }
-
-        &:focus {
-          border-color: #0c8599;
-          background-color: #ffffff;
-          box-shadow: 0 0 0 3px rgba(12, 133, 153, 0.1);
-        }
-      }
-    }
-
-    /* Botones redondos de acción */
     .icon-btn {
       position: relative;
       width: 38px;
@@ -90,53 +54,32 @@
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: all 0.2s ease;
 
-      ion-icon {
-        font-size: 20px;
-        color: #64748b;
-      }
-
-      &:hover {
-        background-color: #f8fafc;
-        transform: translateY(-1px);
-      }
+      ion-icon { font-size: 20px; color: #64748b; }
 
       .notification-dot {
         position: absolute;
-        top: 10px;
-        right: 10px;
-        width: 8px;
-        height: 8px;
+        top: 8px; right: 8px;
+        width: 8px; height: 8px;
         background-color: #ef4444;
         border-radius: 50%;
-        border: 2px solid #ffffff;
       }
 
       &.shield-btn {
         background-color: #e0f2fe;
         border: none;
-
-        ion-icon {
-          color: #0c8599;
-        }
-
-        &:hover {
-          background-color: #bae6fd;
-        }
+        ion-icon { color: #0c8599; }
       }
     }
   }
 }
 
-/* ==========================================================================
-   SUBBARRA CONTENEDORA (TÍTULO AL RAS IZQUIERDO Y BADGE AL EXTREMO DERECHO)
-   ========================================================================== */
+/* SUBBARRA DE BRANDING */
 .clinical-subheader-row {
   display: flex !important;
   justify-content: space-between !important;
   align-items: center !important;
-  padding: 16px 20px 0 20px !important;
+  padding: 16px 24px 8px 24px !important;
   flex-shrink: 0;
   width: 100%;
 
@@ -146,8 +89,8 @@
     gap: 16px;
 
     .brand-logo-circle {
-      width: 46px;
-      height: 46px;
+      width: 44px;
+      height: 44px;
       background-color: #ffffff;
       color: #0c8599;
       border-radius: 50%;
@@ -186,44 +129,18 @@
 
       h3 {
         margin: 0;
-        font-size: 9px;
+        font-size: 10px;
         color: #64748b;
-        font-weight: 700;
-        letter-spacing: 0.3px;
+        font-weight: 600;
+        letter-spacing: 0.2px;
         line-height: 1.2;
       }
     }
   }
 }
 
-.active-status-container {
-  display: flex;
-  align-items: center;
-
-  .paciente-activo-badge {
-    background-color: #dcfce7;
-    color: #15803d;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 11px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-
-    .pulse-dot {
-      width: 8px;
-      height: 8px;
-      background-color: #22c55e;
-      border-radius: 50%;
-      animation: pulseAnim 1.5s infinite;
-    }
-  }
-}
-
-/* WORKSPACE DEL FORMULARIO CON MÁS ALTURA Y ESPACIO VERTICAL */
-.registro-workspace-content {
+/* WORKSPACE DEL FORMULARIO */
+.perfil-workspace-content {
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -233,66 +150,114 @@
 
 .form-card {
   background: #ffffff;
-  border-radius: 28px;
+  border-radius: 16px;
   border: 1px solid #e2e8f0;
-  padding: 26px 36px;
+  padding: 24px 32px;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  max-width: 900px;
+  gap: 20px;
+  max-width: 850px;
   width: 100%;
   margin: 0 auto;
 }
 
-/* TOGGLE DOCTOR / AUXILIAR */
-.role-selector-box {
+/* AVATAR Y BOTÓN DE CÁMARA */
+.profile-header-box {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
 
-  .section-label {
-    font-size: 10px;
-    font-weight: 800;
-    color: #94a3b8;
-    letter-spacing: 0.5px;
-  }
-
-  .role-toggle {
+  .avatar-large {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background-color: #0c8599;
+    color: #ffffff;
     display: flex;
-    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 800;
+    overflow: visible;
 
-    .toggle-btn {
-      flex: 1;
-      height: 42px;
-      border-radius: 8px;
-      border: 1.5px solid #e2e8f0;
-      background: #f8fafc;
-      color: #64748b;
-      font-size: 13px;
-      font-weight: 700;
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .btn-change-avatar {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0c8599;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 8px;
       cursor: pointer;
       transition: all 0.2s ease;
 
       ion-icon {
-        font-size: 18px;
+        font-size: 15px;
       }
 
-      &.active {
+      &:hover:not(.disabled) {
         background-color: #e0f2fe;
         border-color: #0c8599;
-        color: #0c8599;
+      }
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #f1f5f9;
+        color: #94a3b8;
+      }
+    }
+  }
+
+  .user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0c8599;
+      background-color: #e0f2fe;
+      padding: 4px 10px;
+      border-radius: 12px;
+      width: fit-content;
+
+      ion-icon {
+        font-size: 14px;
       }
     }
   }
 }
 
-/* FORMULARIO Y CAMPOS MÁS AMPLIOS */
-.registro-form {
+/* FORMULARIO Y CAMPOS */
+.perfil-form {
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -301,22 +266,22 @@
 .form-section {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 
   h3 {
     margin: 0;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 800;
     color: #0f172a;
     display: flex;
     align-items: center;
     gap: 8px;
-    padding-bottom: 8px;
+    padding-bottom: 6px;
     border-bottom: 1px solid #f1f5f9;
 
     ion-icon {
       color: #0c8599;
-      font-size: 18px;
+      font-size: 16px;
     }
   }
 }
@@ -324,13 +289,13 @@
 .grid-2-cols {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 16px 20px;
+  gap: 14px 20px;
 }
 
 .field-group {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 5px;
 
   label {
     font-size: 11px;
@@ -338,55 +303,100 @@
     color: #475569;
   }
 
-  input, select {
+  input {
     width: 100%;
-    height: 40px;
+    height: 38px;
     border-radius: 8px;
     border: 1px solid #cbd5e1;
     padding: 0 14px;
-    font-size: 13px;
+    font-size: 12px;
     color: #0f172a;
     background-color: #ffffff;
     box-sizing: border-box;
     outline: none;
-    transition: border-color 0.2s;
+    transition: all 0.2s ease;
 
     &:focus {
       border-color: #0c8599;
       box-shadow: 0 0 0 3px rgba(12, 133, 153, 0.1);
     }
 
-    &::placeholder {
-      color: #94a3b8;
+    &:disabled {
+      background-color: #f8fafc;
+      color: #64748b;
+      border-color: #e2e8f0;
+      cursor: not-allowed;
     }
   }
 }
 
-/* BOTÓN DE ACCIÓN */
+/* BOTONES DE ACCIÓN */
 .form-actions {
   display: flex;
   justify-content: flex-end;
   align-items: center;
-  padding-top: 8px;
+  gap: 12px;
+  padding-top: 14px;
   border-top: 1px solid #f1f5f9;
 
-  .btn-submit {
+  .btn-edit {
     background-color: #0c8599;
     color: #ffffff;
     border: none;
-    height: 42px;
-    padding: 0 28px;
+    height: 38px;
+    padding: 0 24px;
     border-radius: 8px;
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 700;
     display: flex;
     align-items: center;
     gap: 8px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color 0.2s ease;
 
     ion-icon {
-      font-size: 18px;
+      font-size: 16px;
+    }
+
+    &:hover {
+      background-color: #096a7a;
+    }
+  }
+
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    height: 38px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f1f5f9;
+    }
+  }
+
+  .btn-submit {
+    background-color: #0c8599;
+    color: #ffffff;
+    border: none;
+    height: 38px;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    ion-icon {
+      font-size: 16px;
     }
 
     &:hover {

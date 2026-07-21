@@ -2,6 +2,7 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
+      <!-- CABECERA GLOBAL EXTENDIDA -->
       <header class="global-app-header">
         <div class="header-left-empty"></div>
 
@@ -9,22 +10,23 @@
           <div class="search-box">
             <ion-icon name="search-outline" class="search-icon"></ion-icon>
             <input type="text"
-                   placeholder="Buscar paciente..."
+                   placeholder="Buscar cita..."
                    class="search-input"
                    [value]="buscarTexto()"
                    (input)="actualizarBusqueda($event)" />
           </div>
 
-          <button class="icon-btn notification-btn">
+          <button class="icon-btn notification-btn" title="Notificaciones">
             <ion-icon name="notifications-outline"></ion-icon>
             <span class="notification-dot"></span>
           </button>
-          <button class="icon-btn shield-btn">
+          <button class="icon-btn shield-btn" title="Seguridad">
             <ion-icon name="shield-checkmark-outline"></ion-icon>
           </button>
         </div>
       </header>
 
+      <!-- SUBBARRA CLÍNICA -->
       <div class="clinical-subheader-row">
         <div class="header-left-brand">
           <div class="brand-logo-circle">
@@ -41,9 +43,10 @@
           <div class="filter-group">
             <select id="doctor-select"
                     class="filter-select"
+                    [disabled]="rolUsuario !== 'admin'"
                     [value]="doctorFiltro()"
                     (change)="actualizarFiltroDoctor($event)">
-              <option value="todos">Todos los doctores (4)</option>
+              <option value="todos" *ngIf="rolUsuario === 'admin'">Todos los doctores (4)</option>
               <option value="melissa">Dra. Melissa Montenegro</option>
               <option value="doctor2">Dr. Juan Pérez (Endodoncia)</option>
               <option value="doctor3">Dra. Ana Gómez (Ortodoncia)</option>
@@ -51,122 +54,229 @@
             </select>
           </div>
 
-          <button class="btn-primary" (click)="nuevaCita()">
+          <button class="btn-primary"
+                  *ngIf="rolUsuario === 'admin' || rolUsuario === 'doctor'"
+                  (click)="nuevaCita()">
             <ion-icon name="add-outline"></ion-icon>
             Nueva Cita
           </button>
         </div>
       </div>
 
-      <div class="directorio-workspace-content">
-        <main class="table-container">
-          <table class="pacientes-table">
-            <thead>
-              <tr>
-                <th class="number-col">No.</th>
-                <th style="width: 110px;">Hora</th>
-                <th>Paciente</th>
-                <th>Tratamiento / Especialidad</th>
-                <th>Doctor Asignado</th>
-                <th>WhatsApp</th>
-                <th class="center-col">Estado</th>
-                <th class="actions-col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let cita of citasPaginadas(); let i = index">
-                <td class="number-col">
-                  {{ (paginaActual() - 1) * registrosPorPagina + i + 1 }}
-                </td>
+      <!-- WORKSPACE CALENDARIO -->
+      <div class="calendar-workspace-content">
 
-                <td class="time-col-highlight">
-                  {{ cita.hora }}
-                </td>
-
-                <td>
-                  <div class="paciente-cell">
-                    <div class="p-avatar" [ngClass]="obtenerColorAvatar(cita.id)">
-                      {{ obtenerIniciales(cita.pacienteNombre) }}
-                    </div>
-                    <div class="p-meta">
-                      <span class="p-name">{{ cita.pacienteNombre }}</span>
-                      <span class="p-sub">DPI: {{ cita.pacienteDpi }}</span>
-                    </div>
-                  </div>
-                </td>
-
-                <td>
-                  <span class="treatment-text">{{ cita.tratamiento }}</span>
-                </td>
-
-                <td>
-                  <span class="doctor-name">{{ cita.doctorNombre }}</span>
-                </td>
-
-                <td>
-                  <span class="badge-whatsapp" [ngClass]="cita.whatsappEstado">
-                    <ion-icon *ngIf="cita.whatsappEstado === 'confirmed'" name="checkmark-circle-outline"></ion-icon>
-                    <ion-icon *ngIf="cita.whatsappEstado === 'pending'" name="time-outline"></ion-icon>
-                    <ion-icon *ngIf="cita.whatsappEstado === 'failed'" name="close-circle-outline"></ion-icon>
-                    {{ cita.whatsappTexto }}
-                  </span>
-                </td>
-
-                <td class="center-col">
-                  <span class="p-status-badge" [ngClass]="cita.estado">
-                    {{ cita.estadoTexto }}
-                  </span>
-                </td>
-
-                <td>
-                  <div class="action-buttons">
-                    <button class="btn-icon edit" title="Editar">
-                      <ion-icon name="create-outline"></ion-icon>
-                    </button>
-                    <button class="btn-icon delete" title="Cancelar">
-                      <ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-
-              <tr *ngIf="citasFiltradas().length === 0">
-                <td colspan="8" class="center-col" style="padding: 3rem; color: #64748b; font-weight: 500;">
-                  No se encontraron citas con los filtros seleccionados.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </main>
-
-        <footer class="directorio-footer">
-          <div class="pagination-info">
-            Mostrando {{ registroInicio() }} a {{ registroFin() }} de {{ totalRegistrosFiltrados() }} registros
+        <!-- BARRA SUPERIOR DE NAVEGACIÓN -->
+        <div class="calendar-controls-bar">
+          <div class="view-toggle-group">
+            <button class="toggle-btn"
+                    [class.active]="vistaCalendar() === 'day'"
+                    (click)="cambiarVista('day')">
+              Día
+            </button>
+            <button class="toggle-btn"
+                    [class.active]="vistaCalendar() === 'week'"
+                    (click)="cambiarVista('week')">
+              Semana
+            </button>
+            <button class="toggle-btn"
+                    [class.active]="vistaCalendar() === 'month'"
+                    (click)="cambiarVista('month')">
+              Mes
+            </button>
           </div>
 
-          <div class="pagination-buttons">
-            <button class="btn-pager"
-                    [disabled]="paginaActual() === 1"
-                    (click)="irAPagina(paginaActual() - 1)">
+          <div class="calendar-date-title">
+            <span>{{ rangoFechaTexto() }}</span>
+          </div>
+
+          <div class="calendar-nav-actions">
+            <button class="btn-nav" (click)="navegarFecha(-1)" title="Anterior">
               <ion-icon name="chevron-back-outline"></ion-icon>
             </button>
-
-            <button *ngFor="let pagina of totalPaginasArray()"
-                    class="btn-pager"
-                    [class.active]="paginaActual() === pagina"
-                    (click)="irAPagina(pagina)">
-              {{ pagina }}
-            </button>
-
-            <button class="btn-pager"
-                    [disabled]="paginaActual() === totalPaginas()"
-                    (click)="irAPagina(paginaActual() + 1)">
+            <button class="btn-today" (click)="irHoy()">Hoy</button>
+            <button class="btn-nav" (click)="navegarFecha(1)" title="Siguiente">
               <ion-icon name="chevron-forward-outline"></ion-icon>
             </button>
           </div>
-        </footer>
-      </div>
+        </div>
 
+        <!-- ÁREA SCROLLABLE PRINCIPAL -->
+        <div class="calendar-scroll-area">
+
+          <!-- OPCIÓN A: VISTA DÍA / SEMANA -->
+          <div *ngIf="vistaCalendar() !== 'month'"
+               class="calendar-grid"
+               [ngClass]="'grid-' + vistaCalendar()">
+
+            <div class="time-header-cell"></div>
+
+            <div *ngFor="let dia of diasVisibles()"
+                 class="day-header-cell"
+                 [class.today]="dia.esHoy">
+              <span class="day-name">{{ dia.nombre }}</span>
+              <span class="day-number">{{ dia.numero }}</span>
+            </div>
+
+            <ng-container *ngFor="let hora of horasDia">
+              <div class="time-label-cell">{{ hora }}</div>
+
+              <div *ngFor="let dia of diasVisibles()" class="calendar-slot-cell">
+                <div *ngFor="let cita of obtenerCitasPorDiaYHora(dia.fechaStr, hora)"
+                     class="appointment-card"
+                     [ngClass]="[cita.categoria, cita.estado]">
+
+                  <div class="card-header-row">
+                    <span class="category-tag">{{ cita.tratamiento }}</span>
+                    <span *ngIf="cita.estado === 'completed'" class="status-pill">✓ Completada</span>
+                    <ion-icon *ngIf="cita.alerta && cita.estado !== 'completed'" name="warning-outline" class="alert-icon"></ion-icon>
+                  </div>
+
+                  <div class="patient-name">{{ cita.pacienteNombre }}</div>
+                  <div class="doctor-subtext">{{ cita.doctorNombre }}</div>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+
+          <!-- OPCIÓN B: VISTA MES (CLIC EN CELDA ABRE VENTANA) -->
+          <div *ngIf="vistaCalendar() === 'month'" class="month-grid-container">
+            <div class="month-header-row">
+              <div>DOM</div><div>LUN</div><div>MAR</div><div>MIÉ</div><div>JUE</div><div>VIE</div><div>SÁB</div>
+            </div>
+
+            <div class="month-days-grid">
+              <div *ngFor="let dia of diasVisibles()"
+                   class="month-cell"
+                   [class.today]="dia.esHoy"
+                   [class.empty]="!dia.esDelMesActual"
+                   (click)="dia.numero > 0 && abrirModalDia(dia)">
+
+                <div class="month-day-number" *ngIf="dia.numero > 0">
+                  {{ dia.numero }}
+                </div>
+
+                <div class="month-appointments-wrapper" *ngIf="dia.numero > 0">
+                  <div *ngFor="let cita of obtenerCitasDelDia(dia.fechaStr) | slice:0:2"
+                       class="appointment-card month-style"
+                       [ngClass]="[cita.categoria, cita.estado]">
+                    <div class="month-card-header">
+                      <span class="cita-time">{{ cita.hora }}</span>
+                      <span class="category-tag">{{ cita.tratamiento }}</span>
+                    </div>
+                    <div class="patient-name">{{ cita.pacienteNombre }}</div>
+                  </div>
+
+                  <div *ngIf="obtenerCitasDelDia(dia.fechaStr).length > 2" class="more-citas-badge">
+                    + {{ obtenerCitasDelDia(dia.fechaStr).length - 2 }} más...
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- FOOTER -->
+        <footer class="calendar-footer">
+          <div class="legend-group">
+            <span class="legend-item">
+              <span class="dot orthodontics"></span>
+              Ortodoncia ({{ totalOrtodoncia() }})
+            </span>
+            <span class="legend-item">
+              <span class="dot surgery"></span>
+              Cirugía ({{ totalCirugia() }})
+            </span>
+            <span class="legend-item">
+              <span class="dot cleaning"></span>
+              Limpieza ({{ totalLimpieza() }})
+            </span>
+            <span class="legend-item">
+              <span class="dot reserved"></span>
+              Reservado ({{ totalReservado() }})
+            </span>
+          </div>
+
+          <div class="stats-group">
+            <div class="stat-card">
+              <span class="stat-label">CARGA DEL PERIODO</span>
+              <div class="stat-value">
+                <ion-icon name="people-outline"></ion-icon>
+                {{ citasFiltradasGenerales().length }} Citas
+              </div>
+            </div>
+            <div class="stat-card highlight">
+              <span class="stat-label">EST. INGRESOS</span>
+              <div class="stat-value green">
+                <ion-icon name="cash-outline"></ion-icon> Q 12,450.00
+              </div>
+            </div>
+          </div>
+        </footer>
+
+      </div>
     </main>
   </div>
+
+  <!-- =================================================================== -->
+  <!-- MODAL FLOTANTE DE CITAS DEL DÍA SELECCIONADO                        -->
+  <!-- =================================================================== -->
+  <div class="modal-backdrop" *ngIf="modalDiaAbierto()" (click)="cerrarModalDia()">
+    <div class="day-details-modal" (click)="$event.stopPropagation()">
+
+      <!-- ENCABEZADO DEL MODAL -->
+      <div class="modal-header">
+        <div class="modal-title-group">
+          <ion-icon name="calendar-outline" class="modal-icon"></ion-icon>
+          <div>
+            <h3>Citas del Día</h3>
+            <p>{{ diaSeleccionado()?.nombre }} {{ diaSeleccionado()?.numero }} de {{ mesActualTexto() }}</p>
+          </div>
+        </div>
+        <button class="close-modal-btn" (click)="cerrarModalDia()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <!-- CUERPO DEL MODAL CON LISTA DE CITAS -->
+      <div class="modal-body">
+        <div *ngIf="citasDiaSeleccionado().length === 0" class="empty-day-state">
+          <ion-icon name="time-outline"></ion-icon>
+          <p>No hay citas programadas para este día.</p>
+        </div>
+
+        <div *ngFor="let cita of citasDiaSeleccionado()"
+             class="modal-cita-card"
+             [ngClass]="[cita.categoria, cita.estado]">
+
+          <div class="modal-cita-time-col">
+            <span class="cita-time-bold">{{ cita.hora }}</span>
+            <span class="status-badge" [ngClass]="cita.estado">
+              {{ cita.estado === 'completed' ? '✓ Atendido' : (cita.estado === 'in-progress' ? 'En atención' : 'Pendiente') }}
+            </span>
+          </div>
+
+          <div class="modal-cita-info-col">
+            <div class="cita-top-info">
+              <span class="category-tag-modal">{{ cita.tratamiento }}</span>
+              <span class="doctor-name-tag">{{ cita.doctorNombre }}</span>
+            </div>
+            <div class="patient-title">{{ cita.pacienteNombre }}</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- PIE DEL MODAL -->
+      <div class="modal-footer">
+        <button class="btn-secondary" (click)="irAVistaDiaDesdeModal()">
+          Ver vista ampliada del Día
+        </button>
+      </div>
+
+    </div>
+  </div>
+
 </ion-content>

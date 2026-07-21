@@ -1,0 +1,181 @@
+<ion-content [fullscreen]="true" class="doctores-content">
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
+
+      <!-- CABECERA GLOBAL SUPERIOR -->
+      <header class="global-app-header">
+        <div class="header-left-empty"></div>
+
+        <div class="header-right-actions">
+          <div class="search-box">
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+            <input type="text"
+                   placeholder="Buscar usuario..."
+                   class="search-input"
+                   [value]="buscarTexto()"
+                   (input)="actualizarBusqueda($event)" />
+          </div>
+
+          <button class="icon-btn notification-btn" title="Notificaciones">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span class="notification-dot"></span>
+          </button>
+          <button class="icon-btn shield-btn" title="Seguridad">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+          </button>
+        </div>
+      </header>
+
+      <!-- SUBBARRA CONTENEDORA DE BRANDING -->
+      <div class="clinical-subheader-row">
+        <div class="header-left-brand">
+          <div class="brand-logo-circle">
+            <ion-icon name="people-outline"></ion-icon>
+          </div>
+          <div class="brand-titles-stack">
+            <h1>DIRECTORIO DE PERSONAL CLÍNICO</h1>
+            <h2>Odontólogos Sociales y Comunitarios</h2>
+            <h3>SUPERVISIÓN Y CONTROL DE ASISTENCIA DEL EQUIPO MÉDICO Y SOPORTE</h3>
+          </div>
+        </div>
+
+        <!-- SELECTOR DE ROL: DOCTOR / AUXILIAR -->
+        <div class="role-segment-toggle">
+          <button class="segment-btn"
+                  [class.active]="rolActivo() === 'Doctor'"
+                  (click)="setRolActivo('Doctor')">
+            Doctores
+          </button>
+          <button class="segment-btn"
+                  [class.active]="rolActivo() === 'Auxiliar'"
+                  (click)="setRolActivo('Auxiliar')">
+            Auxiliares
+          </button>
+        </div>
+      </div>
+
+      <!-- WORKSPACE PRINCIPAL -->
+      <div class="directorio-workspace-content">
+
+        <!-- CONTROLES DE FILTRADO Y TARJETA DE CAPACIDAD -->
+        <div class="top-controls-card">
+          <div class="filters-inline-group">
+
+            <!-- DESPLEGABLE ESPECIALIDAD -->
+            <div class="filter-field">
+              <label>Especialidad</label>
+              <select class="filter-select" (change)="actualizarFiltroEspecialidad($event)">
+                <option value="Todas">Todas las Especialidades</option>
+                <option value="Ortodoncia">Ortodoncia</option>
+                <option value="Cirujano Dentista">Cirugía Dental</option>
+                <option value="Endodoncia">Endodoncia</option>
+                <option value="Odontopediatría">Odontopediatría</option>
+                <option value="Odontológica">Asistencia Clínica</option>
+              </select>
+            </div>
+
+            <!-- DESPLEGABLE ESTADO -->
+            <div class="filter-field">
+              <label>Estado</label>
+              <select class="filter-select" (change)="actualizarFiltroEstado($event)">
+                <option value="Todos">Todos los Estados</option>
+                <option value="Activo">Activo</option>
+                <option value="En Consulta">En Consulta</option>
+                <option value="Fuera de Servicio">Fuera de Servicio</option>
+              </select>
+            </div>
+
+            <!-- BOTÓN DINÁMICO DE REGISTRO -->
+            <div class="action-btn-wrapper">
+              <button class="btn-primary-action" (click)="registrarPersonal()">
+                <ion-icon name="add-circle-outline"></ion-icon>
+                <span>Registrar {{ rolActivo() }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- BANNER DE CAPACIDAD OPERATIVA -->
+          <div class="capacity-mini-card">
+            <div class="capacity-info">
+              <span class="cap-label">CAPACIDAD OPERATIVA</span>
+              <h3 class="cap-val">94%</h3>
+              <p class="cap-sub">Óptimo hoy • 24 consultas</p>
+            </div>
+            <div class="cap-icon-circle">
+              <ion-icon name="trending-up-outline"></ion-icon>
+            </div>
+          </div>
+        </div>
+
+        <!-- REJILLA DE TARJETAS DE PERSONAL -->
+        <div class="doctors-cards-grid">
+          <div class="doc-card-modern" *ngFor="let p of personalFiltrado()">
+
+            <!-- ENCABEZADO DE TARJETA -->
+            <div class="card-head">
+              <div class="avatar-box">
+                <div class="avatar-circle" [class.aux-bg]="p.rol === 'Auxiliar'">
+                  {{ p.iniciales }}
+                </div>
+              </div>
+              <div class="titles-box">
+                <h4>{{ p.nombre }}</h4>
+                <span class="role-spec-sub">{{ p.rol | uppercase }} • {{ p.especialidad }}</span>
+              </div>
+              <span class="status-pill" [ngClass]="p.estadoClass">{{ p.estado }}</span>
+            </div>
+
+            <!-- FILA DE SATISFACCIÓN -->
+            <div class="metric-row">
+              <span class="m-label">
+                <ion-icon name="star-outline"></ion-icon> Satisfacción
+              </span>
+              <span class="m-val">{{ p.satisfaccion }}/5.0</span>
+            </div>
+
+            <!-- BARRA DE PROGRESO DE EFICIENCIA -->
+            <div class="progress-block">
+              <div class="p-header">
+                <span>EFICIENCIA MENSUAL</span>
+                <span class="p-pct">{{ p.metaProgreso }}%</span>
+              </div>
+              <div class="p-track">
+                <div class="p-fill" [style.width.%]="p.metaProgreso"></div>
+              </div>
+            </div>
+
+            <!-- PIE DE TARJETA CON ASIGNACIÓN / CITAS -->
+            <div class="card-footer-info">
+              <span class="next-txt" *ngIf="p.rol === 'Doctor'">
+                Próximo: {{ p.proximaCita || p.mensajeEspecial || 'Disponible' }}
+              </span>
+              <span class="next-txt" *ngIf="p.rol === 'Auxiliar'">
+                Asist. {{ p.doctorAsignado || 'General' }}
+              </span>
+
+              <div class="mini-avatars-row">
+                <span class="mini-av" *ngFor="let pac of p.pacientesPrevios">{{ pac }}</span>
+              </div>
+            </div>
+
+            <!-- ACCIONES DE TARJETA SIMPLIFICADAS -->
+            <div class="card-bottom-actions">
+              <button class="btn-card-action" (click)="verPerfil(p.id)">
+                Ver Perfil
+              </button>
+              <div class="action-divider"></div>
+              <button class="btn-card-action" (click)="verMetricas(p.id)">
+                Métricas
+              </button>
+            </div>
+          </div>
+
+          <!-- ESTADO VACÍO EN CASO DE NO HABER COINCIDENCIAS -->
+          <div *ngIf="personalFiltrado().length === 0" class="empty-state">
+            No se encontró {{ rolActivo().toLowerCase() }}s que coincidan con los filtros aplicados.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</ion-content>

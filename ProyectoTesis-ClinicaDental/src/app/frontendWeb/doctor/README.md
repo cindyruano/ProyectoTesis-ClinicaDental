@@ -1,9 +1,13 @@
 
+# 🦷 PROYECTO CLÍNICA DENTAL - PLATAFORMA WEB
 
+Este apartado documenta el Frontend Web del Módulo Doctor, desarrollado con Angular e Ionic, diseñado para optimizar el flujo de trabajo en la consulta médica. Este panel permite la gestión directa de la agenda del odontólogo, atención de la cola de espera, edición de la ficha clínica con odontograma interactivo, formulación de planes de tratamiento y generación de recetarios digitales.
 
+---
 
+## 📂 Estructura del Módulo Doctor (`/doctor/*`)
 
-
+El perfil de Doctor está optimizado para la atención clínica directa, gestión de expedientes, odontogramas y seguimiento médico del paciente:
 
 | Carpeta | Nombre                      | Funcionalidad Clínica / Administrativa                                                                                     |
 |---------|-----------------------------|----------------------------------------------------------------------------------------------------------------------------|

@@ -1,0 +1,414 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.finanzas-content {
+  --background: #f8fafc;
+}
+
+.dashboard-viewport {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+
+.main-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* CABECERA GLOBAL SUPERIOR */
+.global-app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 24px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e2e8f0;
+  flex-shrink: 0;
+
+  .header-left-empty {
+    flex: 1;
+  }
+
+  .header-right-actions {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .search-box {
+      position: relative;
+      display: flex;
+      align-items: center;
+
+      .search-icon {
+        position: absolute;
+        left: 14px;
+        color: #94a3b8;
+        font-size: 18px;
+      }
+
+      .search-input {
+        width: 280px;
+        height: 38px;
+        padding: 0 16px 0 42px;
+        border-radius: 30px;
+        border: 1px solid #e2e8f0;
+        background-color: #f8fafc;
+        font-size: 12px;
+        color: #334155;
+        outline: none;
+
+        &:focus { border-color: #0c8599; }
+      }
+    }
+
+    .icon-btn {
+      position: relative;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      border: 1px solid #e2e8f0;
+      background-color: #ffffff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      ion-icon { font-size: 20px; color: #64748b; }
+
+      .notification-dot {
+        position: absolute;
+        top: 8px; right: 8px;
+        width: 8px; height: 8px;
+        background-color: #ef4444;
+        border-radius: 50%;
+      }
+
+      &.shield-btn {
+        background-color: #e0f2fe;
+        border: none;
+        ion-icon { color: #0c8599; }
+      }
+    }
+  }
+}
+
+/* SUBBARRA DE BRANDING Y ACCIÓN */
+.clinical-subheader-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 16px 24px 8px 24px !important;
+  flex-shrink: 0;
+  width: 100%;
+
+  .header-left-brand {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    .brand-logo-circle {
+      width: 44px;
+      height: 44px;
+      background-color: #ffffff;
+      color: #0c8599;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+
+      ion-icon { font-size: 22px; }
+    }
+
+    .brand-titles-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+
+      h1 {
+        margin: 0;
+        font-size: 16px;
+        font-weight: 800;
+        color: #0f172a;
+        letter-spacing: -0.3px;
+      }
+
+      h2 {
+        margin: 0;
+        font-size: 11px;
+        color: #0c8599;
+        font-weight: 600;
+      }
+
+      h3 {
+        margin: 0;
+        font-size: 10px;
+        color: #64748b;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .btn-primary-action {
+    background-color: #0c8599;
+    color: #ffffff;
+    border: none;
+    height: 38px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    ion-icon { font-size: 18px; }
+
+    &:hover { background-color: #096a7a; }
+  }
+}
+
+/* WORKSPACE CONTENIDO */
+.finanzas-workspace-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 24px 24px;
+  gap: 20px;
+  overflow-y: auto;
+}
+
+/* TARJETAS DE KPIS */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+
+  .kpi-card {
+    background: #ffffff;
+    border-radius: 14px;
+    border: 1px solid #e2e8f0;
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+
+    .kpi-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      ion-icon { font-size: 24px; }
+    }
+
+    .kpi-info {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .kpi-label {
+        font-size: 11px;
+        font-weight: 700;
+        color: #64748b;
+      }
+
+      .kpi-value {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 800;
+        color: #0f172a;
+      }
+
+      .kpi-trend {
+        font-size: 10px;
+        font-weight: 700;
+        &.positive { color: #16a34a; }
+        &.negative { color: #dc2626; }
+      }
+
+      .kpi-badge {
+        font-size: 10px;
+        font-weight: 700;
+        color: #0c8599;
+        background-color: #e0f2fe;
+        padding: 2px 8px;
+        border-radius: 10px;
+        width: fit-content;
+      }
+
+      .kpi-subtext {
+        font-size: 10px;
+        color: #94a3b8;
+      }
+    }
+
+    &.ingresos .kpi-icon { background-color: #dcfce7; color: #16a34a; }
+    &.gastos .kpi-icon { background-color: #fee2e2; color: #dc2626; }
+    &.balance .kpi-icon { background-color: #e0f2fe; color: #0c8599; }
+    &.pendientes .kpi-icon { background-color: #fef3c7; color: #d97706; }
+  }
+}
+
+/* TABLA CONTENEDORA */
+.table-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 20px 24px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+
+  .table-header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .table-title {
+      h2 {
+        margin: 0;
+        font-size: 15px;
+        font-weight: 800;
+        color: #0f172a;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        ion-icon { color: #0c8599; font-size: 18px; }
+      }
+
+      p {
+        margin: 2px 0 0 0;
+        font-size: 11px;
+        color: #64748b;
+      }
+    }
+
+    .table-filters {
+      display: flex;
+      gap: 6px;
+
+      .filter-chip {
+        background: #f8fafc;
+        border: 1px solid #cbd5e1;
+        color: #64748b;
+        font-size: 11px;
+        font-weight: 700;
+        padding: 6px 14px;
+        border-radius: 20px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+
+        &.active {
+          background-color: #0c8599;
+          border-color: #0c8599;
+          color: #ffffff;
+        }
+
+        &:hover:not(.active) {
+          background-color: #f1f5f9;
+        }
+      }
+    }
+  }
+
+  .table-responsive {
+    overflow-x: auto;
+  }
+
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th {
+      text-align: left;
+      font-size: 10px;
+      font-weight: 800;
+      color: #94a3b8;
+      letter-spacing: 0.5px;
+      padding: 10px 12px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    td {
+      padding: 12px;
+      font-size: 12px;
+      color: #334155;
+      border-bottom: 1px solid #f1f5f9;
+    }
+
+    .date-cell {
+      font-weight: 600;
+      color: #64748b;
+    }
+
+    .concept-cell {
+      display: flex;
+      flex-direction: column;
+
+      strong { color: #0f172a; font-weight: 700; }
+      small { color: #94a3b8; font-size: 10px; }
+    }
+
+    .pay-method {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #64748b;
+      ion-icon { font-size: 14px; }
+    }
+
+    .type-badge {
+      font-size: 10px;
+      font-weight: 800;
+      padding: 3px 8px;
+      border-radius: 6px;
+
+      &.ingreso { background-color: #dcfce7; color: #15803d; }
+      &.gasto { background-color: #fee2e2; color: #b91c1c; }
+    }
+
+    .status-badge {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 10px;
+
+      &.completado { background-color: #f1f5f9; color: #475569; }
+      &.pendiente { background-color: #fef3c7; color: #b45309; }
+    }
+
+    .amount-cell {
+      font-weight: 800;
+      &.positive { color: #16a34a; }
+      &.negative { color: #dc2626; }
+    }
+
+    .text-right { text-align: right; }
+
+    .empty-row {
+      text-align: center;
+      padding: 24px;
+      color: #94a3b8;
+      font-style: italic;
+    }
+  }
+}

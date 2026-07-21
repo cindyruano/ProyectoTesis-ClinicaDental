@@ -1,32 +1,25 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
-import { ActivatedRoute, Router } from '@angular/router';
+import { IonicModule, AlertController, ToastController } from '@ionic/angular';
+import { Router, RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { medicalSharp, personOutline, pulseOutline, documentTextOutline, gridOutline, trendingUpOutline, createOutline, saveOutline, trashOutline, searchOutline, notificationsOutline, shieldCheckmarkOutline, chevronBackOutline } from 'ionicons/icons';
+import {
+  searchOutline, personAddOutline, documentTextOutline, trashOutline,
+  chevronBackOutline, chevronForwardOutline, medicalSharp, notificationsOutline,
+  shieldCheckmarkOutline, peopleOutline, medkitOutline, cashOutline
+} from 'ionicons/icons';
 
-interface ExpedientePaciente {
+interface Paciente {
   id: number;
-  nombreCompleto: string;
-  fechaExamen: string;
-  edad: number | null;
-  sexo: string;
-  fechaNacimiento: string;
-  discapacidad: string;
-  institucion: string;
-  operador: string;
-  asistente: string;
-  pielAnexos: string;
-  ulceras: string;
-  leucoplasia: string;
-  cuello: string;
-  queilitis: string;
-  eritroplasia: string;
-  atm: string;
-  candidiasis: string;
-  otros: string;
+  codigo: string;
+  nombre: string;
+  edad: number;
+  tipo: string;
+  ultimaConsulta: string;
   estado: 'Activo' | 'Inactivo';
+  doctorKey: string;
+  saldo: number;
 }
 
 @Component({
@@ -34,144 +27,197 @@ interface ExpedientePaciente {
   templateUrl: './adm4.page.html',
   styleUrls: ['./adm4.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })
 export class Adm4Page implements OnInit {
-  private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private alertController = inject(AlertController);
+  private toastController = inject(ToastController);
 
-  public esFichaNueva = signal<boolean>(true);
-  public modoEdicion = signal<boolean>(true);
-
-  public formulario = signal<ExpedientePaciente>({
-    id: 0,
-    nombreCompleto: '',
-    fechaExamen: new Date().toISOString().split('T')[0],
-    edad: null,
-    sexo: '',
-    fechaNacimiento: '',
-    discapacidad: '',
-    institucion: '',
-    operador: '',
-    asistente: '',
-    pielAnexos: '',
-    ulceras: '',
-    leucoplasia: '',
-    cuello: '',
-    queilitis: '',
-    eritroplasia: '',
-    atm: '',
-    candidiasis: '',
-    otros: '',
-    estado: 'Activo'
-  });
-
-  private pacientesMock: Record<number, ExpedientePaciente> = {
-    1: {
+  public pacientes = signal<Paciente[]>([
+    {
       id: 1,
-      nombreCompleto: 'Carlos Antonio Mendoza Ruiz',
-      fechaExamen: '2026-07-15',
+      codigo: '28441-A',
+      nombre: 'Carlos Antonio Mendoza Ruiz',
       edad: 28,
-      sexo: 'Masculino',
-      fechaNacimiento: '1998-04-12',
-      discapacidad: 'Ninguna',
-      institucion: 'Particular',
-      operador: 'Dr. Gómez',
-      asistente: '',
-      pielAnexos: 'Sana',
-      ulceras: 'No presenta',
-      leucoplasia: 'No presenta',
-      cuello: 'Sin anomalías',
-      queilitis: 'No presenta',
-      eritroplasia: 'No presenta',
-      atm: 'Normal',
-      candidiasis: 'No presenta',
-      otros: '',
-      estado: 'Activo'
+      tipo: 'Particular',
+      ultimaConsulta: '15/07/2026',
+      estado: 'Activo',
+      doctorKey: 'melissa',
+      saldo: -350.00
+    },
+    {
+      id: 2,
+      codigo: '10922-B',
+      nombre: 'Ana María Velásquez',
+      edad: 34,
+      tipo: 'Seguro Dental',
+      ultimaConsulta: '01/06/2026',
+      estado: 'Activo',
+      doctorKey: 'doctor3',
+      saldo: 0.00
+    },
+    {
+      id: 3,
+      codigo: '88412-C',
+      nombre: 'Jorge Mario Hernández',
+      edad: 45,
+      tipo: 'Particular',
+      ultimaConsulta: '28/05/2026',
+      estado: 'Inactivo',
+      doctorKey: 'doctor2',
+      saldo: -1200.00
     }
-  };
+  ]);
+
+  public buscarTexto = signal<string>('');
+  public estadoFiltro = signal<string>('Todos los Estados');
+  public institucionFiltro = signal<string>('Todas las Instituciones');
+
+  public paginaActual = signal<number>(1);
+  public registrosPorPagina = 5;
 
   constructor() {
     addIcons({
-      medicalSharp,
-      personOutline,
-      pulseOutline,
-      documentTextOutline,
-      gridOutline,
-      trendingUpOutline,
-      createOutline,
-      saveOutline,
-      trashOutline,
       searchOutline,
+      personAddOutline,
+      documentTextOutline,
+      trashOutline,
+      chevronBackOutline,
+      chevronForwardOutline,
+      medicalSharp,
       notificationsOutline,
       shieldCheckmarkOutline,
-      chevronBackOutline
+      peopleOutline,
+      medkitOutline,
+      cashOutline
     });
   }
 
-  ngOnInit() {
-    this.route.paramMap.subscribe(params => {
-      const idParam = params.get('id');
+  ngOnInit() {}
 
-      if (idParam) {
-        const id = parseInt(idParam, 10);
-        const pacienteEncontrado = this.pacientesMock[id];
+  public obtenerNombreDoctor(doctorKey: string): string {
+    const medicos: Record<string, string> = {
+      'melissa': 'Dra. Melissa Montenegro',
+      'doctor2': 'Dr. Juan Pérez',
+      'doctor3': 'Dra. Ana Gómez',
+      'doctor4': 'Dr. Carlos Ruíz'
+    };
+    return medicos[doctorKey] || 'Sin Asignar';
+  }
 
-        if (pacienteEncontrado) {
-          this.esFichaNueva.set(false);
-          this.modoEdicion.set(false);
-          this.formulario.set({ ...pacienteEncontrado });
-        } else {
-          this.inicializarFichaVacia();
-        }
+  public pacientesFiltrados = computed(() => {
+    return this.pacientes().filter(p => {
+      const cumpleTexto = p.nombre.toLowerCase().includes(this.buscarTexto().toLowerCase()) ||
+                          p.codigo.toLowerCase().includes(this.buscarTexto().toLowerCase());
+
+      let cumpleEstado = false;
+      if (this.estadoFiltro() === 'Todos los Estados') {
+        cumpleEstado = true;
+      } else if (this.estadoFiltro() === 'Con Deuda') {
+        cumpleEstado = p.saldo < 0;
       } else {
-        this.inicializarFichaVacia();
+        cumpleEstado = p.estado.toLowerCase() === this.estadoFiltro().toLowerCase();
       }
+
+      const cumpleInst = this.institucionFiltro() === 'Todas las Instituciones' || p.tipo === this.institucionFiltro();
+
+      return cumpleTexto && cumpleEstado && cumpleInst;
     });
+  });
+
+  public pacientesPaginados = computed(() => {
+    const inicio = (this.paginaActual() - 1) * this.registrosPorPagina;
+    const fin = inicio + this.registrosPorPagina;
+    return this.pacientesFiltrados().slice(inicio, fin);
+  });
+
+  public totalRegistrosFiltrados = computed(() => this.pacientesFiltrados().length);
+
+  public totalPaginas = computed(() => {
+    const paginas = Math.ceil(this.totalRegistrosFiltrados() / this.registrosPorPagina);
+    return paginas > 0 ? paginas : 1;
+  });
+
+  public totalPaginasArray = computed(() => {
+    return Array.from({ length: this.totalPaginas() }, (_, i) => i + 1);
+  });
+
+  public registroInicio = computed(() => {
+    if (this.totalRegistrosFiltrados() === 0) return 0;
+    return (this.paginaActual() - 1) * this.registrosPorPagina + 1;
+  });
+
+  public registroFin = computed(() => {
+    const finEstimado = this.paginaActual() * this.registrosPorPagina;
+    return finEstimado > this.totalRegistrosFiltrados() ? this.totalRegistrosFiltrados() : finEstimado;
+  });
+
+  public actualizarBusqueda(evento: any) {
+    this.buscarTexto.set(evento.target.value);
+    this.paginaActual.set(1);
   }
 
-  private inicializarFichaVacia() {
-    this.esFichaNueva.set(true);
-    this.modoEdicion.set(true);
-    this.formulario.set({
-      id: 0,
-      nombreCompleto: '',
-      fechaExamen: new Date().toISOString().split('T')[0],
-      edad: null,
-      sexo: '',
-      fechaNacimiento: '',
-      discapacidad: '',
-      institucion: '',
-      operador: '',
-      asistente: '',
-      pielAnexos: '',
-      ulceras: '',
-      leucoplasia: '',
-      cuello: '',
-      queilitis: '',
-      eritroplasia: '',
-      atm: '',
-      candidiasis: '',
-      otros: '',
-      estado: 'Activo'
+  public actualizarFiltroEstado(evento: any) {
+    this.estadoFiltro.set(evento.target.value);
+    this.paginaActual.set(1);
+  }
+
+  public actualizarFiltroInstitucion(evento: any) {
+    this.institucionFiltro.set(evento.target.value);
+    this.paginaActual.set(1);
+  }
+
+  public irAPagina(pagina: number) {
+    if (pagina >= 1 && pagina <= this.totalPaginas()) {
+      this.paginaActual.set(pagina);
+    }
+  }
+
+  public toggleEstadoPaciente(paciente: Paciente) {
+    const nuevoEstado = paciente.estado === 'Activo' ? 'Inactivo' : 'Activo';
+    this.pacientes.update(lista =>
+      lista.map(p => p.id === paciente.id ? { ...p, estado: nuevoEstado } : p)
+    );
+  }
+
+  // Sin mensajes flotantes ni alertas innecesarias
+  public verFinanzas(paciente: Paciente) {
+    // Redirección directa cuando tengas la ruta financiera lista
+  }
+
+  async eliminarPaciente(id: number, nombre: string) {
+    const alert = await this.alertController.create({
+      header: 'Confirmar Eliminación',
+      message: `¿Estás seguro de que deseas eliminar permanentemente al paciente ${nombre}? Esta acción no se puede deshacer.`,
+      buttons: [
+        {
+          text: 'Cancelar',
+          role: 'cancel',
+          cssClass: 'secondary'
+        },
+        {
+          text: 'Eliminar',
+          role: 'destructive',
+          handler: () => {
+            this.pacientes.set(this.pacientes().filter(p => p.id !== id));
+
+            if (this.paginaActual() > this.totalPaginas()) {
+              this.paginaActual.set(this.totalPaginas());
+            }
+          }
+        }
+      ]
     });
+
+    await alert.present();
   }
 
-  public activarModificacion() {
-    this.modoEdicion.set(true);
+  nuevoExpediente() {
+    this.router.navigate(['/admin/adm5']);
   }
 
-  public guardarCambios() {
-    this.modoEdicion.set(false);
-    console.log('Guardando datos del expediente:', this.formulario());
-    this.regresarAlListado();
-  }
-
-  public cambiarEstado(nuevoEstado: 'Activo' | 'Inactivo') {
-    this.formulario.update(form => ({ ...form, estado: nuevoEstado }));
-  }
-
-  public regresarAlListado() {
-    this.router.navigate(['/admin/adm3']);
+  verExpediente(pacienteId: number) {
+    this.router.navigate(['/admin/adm5'], { queryParams: { id: pacienteId } });
   }
 }

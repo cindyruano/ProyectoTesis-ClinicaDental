@@ -5,7 +5,21 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import { calendarOutline, peopleOutline, medicalOutline, notificationsOutline, informationCircleOutline, checkmarkSharp, timeOutline, chevronForwardOutline, chevronBackOutline, searchOutline, warningOutline, idCardOutline, chatbubbleOutline } from 'ionicons/icons';
+import {
+  calendarOutline,
+  peopleOutline,
+  medicalOutline,
+  notificationsOutline,
+  informationCircleOutline,
+  checkmarkSharp,
+  timeOutline,
+  chevronForwardOutline,
+  chevronBackOutline,
+  searchOutline,
+  warningOutline,
+  idCardOutline,
+  chatbubbleOutline
+} from 'ionicons/icons';
 
 registerLocaleData(localeEs, 'es');
 
@@ -25,23 +39,18 @@ interface DiaCalendario {
 }
 
 @Component({
-  selector: 'app-tab1-admin',
-  templateUrl: './tab1.page.html',
-  styleUrls: ['./tab1.page.scss'],
+  selector: 'app-adm1',
+  templateUrl: './adm1.page.html',
+  styleUrls: ['./adm1.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule]
 })
-export class Tab1Page implements OnInit {
+export class Adm1Page implements OnInit {
   private router = inject(Router);
 
-  // Fecha de hoy automática
   public fechaHoy: Date = new Date();
   public fechaCalendario: Date = new Date();
-
-  // Búsqueda
   public buscarTexto = signal<string>('');
-
-  // Cantidades dinámicas/vinculadas
   public citasProgramadasCount = signal<number>(8);
   public pacientesRegistradosCount = signal<number>(142);
   public doctoresActivosCount = signal<number>(4);
@@ -151,10 +160,10 @@ export class Tab1Page implements OnInit {
   }
 
   public verTodosPacientes() {
-    this.router.navigate(['/admin/tab3']);
+    this.router.navigate(['/admin/adm3']);
   }
 
   public verDetallePaciente(id: number) {
-    this.router.navigate(['/admin/tab4', id]);
+    this.router.navigate(['/admin/adm4', id]);
   }
 }
