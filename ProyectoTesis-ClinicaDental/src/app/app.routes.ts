@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { TabsPage } from './frontendApp/tabs/tabs.page';
-import { WebTabsPage } from './frontendWeb/tabs/tabs.page' ;
 import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
@@ -64,8 +63,8 @@ export const routes: Routes = [
     loadComponent: () => import('./frontendApp/login/login.page').then(m => m.LoginPage)
   },
 
-// =========================================================
-  // RUTAS DE LA PLATAFORMA WEB (ADMINISTRACIÓN & DOCTORES)
+  // =========================================================
+  // RUTAS DE LA PLATAFORMA WEB (ADMIN, DOCTOR Y AUXILIAR)
   // =========================================================
   {
     path: 'admin/login',
@@ -73,38 +72,15 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
-    component: WebTabsPage,
-    children: [
-      {
-        path: 'tab1',
-        loadComponent: () => import('./frontendWeb/tab1/tab1.page').then(m => m.Tab1Page)
-      },
-      {
-        path: 'tab2',
-        loadComponent: () => import('./frontendWeb/tab2/tab2.page').then(m => m.Tab2Page)
-      },
-      {
-        path: 'tab3',
-        loadComponent: () => import('./frontendWeb/tab3/tab3.page').then(m => m.Tab3Page)
-      },
-      {
-        path: 'tab4',
-        loadComponent: () => import('./frontendWeb/tab4/tab4.page').then(m => m.Tab4Page)
-      },
-      {
-        path: 'tab4/:id',
-        loadComponent: () => import('./frontendWeb/tab4/tab4.page').then(m => m.Tab4Page)
-      },
-      {
-        path: 'tab5',
-        loadComponent: () => import('./frontendWeb/tab5/tab5.page').then(m => m.Tab5Page)
-      },
-      {
-        path: '',
-        redirectTo: '/admin/tab1',
-        pathMatch: 'full'
-      }
-    ]
+    loadChildren: () => import('./frontendWeb/admin/adms/adms.routes').then(m => m.routes)
+  },
+  {
+    path: 'doctor',
+    loadComponent: () => import('./frontendWeb/doctor/doc1/doc1.page').then(m => m.Doc1Page)
+  },
+  {
+    path: 'auxiliar',
+    loadComponent: () => import('./frontendWeb/auxiliar/aux1/aux1.page').then(m => m.Aux1Page)
   },
 
   {

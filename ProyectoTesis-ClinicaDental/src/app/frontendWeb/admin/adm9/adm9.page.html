@@ -1,0 +1,187 @@
+<ion-content [fullscreen]="true" class="finanzas-content">
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
+
+      <!-- CABECERA GLOBAL SUPERIOR -->
+      <header class="global-app-header">
+        <div class="header-left-empty"></div>
+
+        <div class="header-right-actions">
+          <div class="search-box">
+            <ion-icon name="search-outline" class="search-icon"></ion-icon>
+            <input
+              type="text"
+              placeholder="Buscar transacción o factura..."
+              class="search-input"
+              [(ngModel)]="filtroTexto" />
+          </div>
+
+          <button class="icon-btn notification-btn" title="Notificaciones">
+            <ion-icon name="notifications-outline"></ion-icon>
+            <span class="notification-dot"></span>
+          </button>
+          <button class="icon-btn shield-btn" title="Seguridad">
+            <ion-icon name="shield-checkmark-outline"></ion-icon>
+          </button>
+        </div>
+      </header>
+
+      <!-- SUBBARRA CONTENEDORA DE BRANDING -->
+      <div class="clinical-subheader-row">
+        <div class="header-left-brand">
+          <div class="brand-logo-circle">
+            <ion-icon name="medical-sharp"></ion-icon>
+          </div>
+          <div class="brand-titles-stack">
+            <h1>ODONTOLOGÍA INCLUSIVA</h1>
+            <h2>Odontólogos Sociales y Comunitarios</h2>
+            <h3>GESTIÓN FINANCIERA Y REGISTRO DE TRANSACCIONES</h3>
+          </div>
+        </div>
+
+        <div class="header-actions-right">
+          <button class="btn-primary-action" (click)="registrarIngresoGasto()">
+            <ion-icon name="add-circle-outline"></ion-icon>
+            Registrar Movimiento
+          </button>
+        </div>
+      </div>
+
+      <!-- WORKSPACE DE FINANZAS -->
+      <div class="finanzas-workspace-content">
+
+        <!-- TARJETAS DE MÉTRICAS CLAVE (KPIs) -->
+        <div class="kpi-grid">
+          <div class="kpi-card ingresos">
+            <div class="kpi-icon">
+              <ion-icon name="trending-up-outline"></ion-icon>
+            </div>
+            <div class="kpi-info">
+              <span class="kpi-label">Ingresos del Mes</span>
+              <h3 class="kpi-value">Q {{ kpis.ingresos | number:'1.2-2' }}</h3>
+              <span class="kpi-trend positive">+12% vs mes anterior</span>
+            </div>
+          </div>
+
+          <div class="kpi-card gastos">
+            <div class="kpi-icon">
+              <ion-icon name="trending-down-outline"></ion-icon>
+            </div>
+            <div class="kpi-info">
+              <span class="kpi-label">Gastos Operativos</span>
+              <h3 class="kpi-value">Q {{ kpis.gastos | number:'1.2-2' }}</h3>
+              <span class="kpi-trend negative">-3% vs mes anterior</span>
+            </div>
+          </div>
+
+          <div class="kpi-card balance">
+            <div class="kpi-icon">
+              <ion-icon name="wallet-outline"></ion-icon>
+            </div>
+            <div class="kpi-info">
+              <span class="kpi-label">Balance Neto</span>
+              <h3 class="kpi-value">Q {{ (kpis.ingresos - kpis.gastos) | number:'1.2-2' }}</h3>
+              <span class="kpi-badge">Óptimo</span>
+            </div>
+          </div>
+
+          <div class="kpi-card pendientes">
+            <div class="kpi-icon">
+              <ion-icon name="receipt-outline"></ion-icon>
+            </div>
+            <div class="kpi-info">
+              <span class="kpi-label">Cobros Pendientes</span>
+              <h3 class="kpi-value">Q {{ kpis.pendientes | number:'1.2-2' }}</h3>
+              <span class="kpi-subtext">5 facturas por cobrar</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA DE TRANSACCIONES -->
+        <div class="table-card">
+          <div class="table-header-box">
+            <div class="table-title">
+              <h2>
+                <ion-icon name="cash-outline"></ion-icon>
+                Histórico de Transacciones
+              </h2>
+              <p>Registro contable de tratamientos, consultas y gastos clínicos.</p>
+            </div>
+
+            <!-- FILTROS RÁPIDOS -->
+            <div class="table-filters">
+              <button
+                class="filter-chip"
+                [class.active]="filtroTipo === 'TODOS'"
+                (click)="setFiltroTipo('TODOS')">
+                Todos
+              </button>
+              <button
+                class="filter-chip"
+                [class.active]="filtroTipo === 'INGRESO'"
+                (click)="setFiltroTipo('INGRESO')">
+                Ingresos
+              </button>
+              <button
+                class="filter-chip"
+                [class.active]="filtroTipo === 'GASTO'"
+                (click)="setFiltroTipo('GASTO')">
+                Gastos
+              </button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>FECHA</th>
+                  <th>DESCRIPCIÓN / CONCEPTO</th>
+                  <th>PACIENTE / PROVEEDOR</th>
+                  <th>MÉTODO DE PAGO</th>
+                  <th>TIPO</th>
+                  <th>ESTADO</th>
+                  <th class="text-right">MONTO</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of transaccionesFiltradas()">
+                  <td class="date-cell">{{ item.fecha }}</td>
+                  <td class="concept-cell">
+                    <strong>{{ item.concepto }}</strong>
+                    <small>{{ item.categoria }}</small>
+                  </td>
+                  <td>{{ item.entidad }}</td>
+                  <td>
+                    <span class="pay-method">
+                      <ion-icon name="card-outline"></ion-icon>
+                      {{ item.metodoPago }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="type-badge" [class.ingreso]="item.tipo === 'INGRESO'" [class.gasto]="item.tipo === 'GASTO'">
+                      {{ item.tipo }}
+                    </span>
+                  </td>
+                  <td>
+                    <span class="status-badge" [class.completado]="item.estado === 'Completado'" [class.pendiente]="item.estado === 'Pendiente'">
+                      {{ item.estado }}
+                    </span>
+                  </td>
+                  <td class="text-right amount-cell" [class.positive]="item.tipo === 'INGRESO'" [class.negative]="item.tipo === 'GASTO'">
+                    {{ item.tipo === 'INGRESO' ? '+' : '-' }} Q {{ item.monto | number:'1.2-2' }}
+                  </td>
+                </tr>
+                <tr *ngIf="transaccionesFiltradas().length === 0">
+                  <td colspan="7" class="empty-row">
+                    No se encontraron registros financieros con los criterios seleccionados.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+</ion-content>

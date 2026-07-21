@@ -18,7 +18,7 @@ $primary-teal: #0c8599;
 }
 
 /* ==========================================================================
-   1. BARRA SUPERIOR ORIGINAL
+   1. BARRA SUPERIOR
    ========================================================================== */
 .dashboard-top-bar {
   display: flex;
@@ -98,7 +98,7 @@ $primary-teal: #0c8599;
 }
 
 /* ==========================================================================
-   GRID PRINCIPAL DE DOS COLUMNAS
+   2. GRID PRINCIPAL DE DOS COLUMNAS
    ========================================================================== */
 .dashboard-grid-layout {
   display: grid;
@@ -124,7 +124,7 @@ $primary-teal: #0c8599;
 }
 
 /* ==========================================================================
-   SALUDO Y LÍNEA DIVISORA HORIZONTAL
+   3. SALUDO Y LÍNEA DIVISORA
    ========================================================================== */
 .welcome-section {
   h1 {
@@ -133,6 +133,7 @@ $primary-teal: #0c8599;
     font-weight: 700;
     color: $text-dark;
   }
+
   p {
     margin: 0 0 14px 0;
     font-size: 0.9rem;
@@ -149,7 +150,7 @@ $primary-teal: #0c8599;
 }
 
 /* ==========================================================================
-   3. CUADROS ESTADÍSTICOS
+   4. CUADROS ESTADÍSTICOS (KPIs)
    ========================================================================== */
 .metrics-grid {
   display: grid;
@@ -208,7 +209,7 @@ $primary-teal: #0c8599;
 }
 
 /* ==========================================================================
-   TABLA DE PACIENTES DE HOY
+   5. TABLA DE PACIENTES DE HOY
    ========================================================================== */
 .section-card {
   background: white;
@@ -311,7 +312,7 @@ $primary-teal: #0c8599;
 }
 
 /* ==========================================================================
-   PRÓXIMA CITA
+   6. WIDGET PRÓXIMA CITA
    ========================================================================== */
 .next-appointment-card-v2 {
   background-color: $primary-teal;
@@ -422,7 +423,7 @@ $primary-teal: #0c8599;
 }
 
 /* ==========================================================================
-   CALENDARIO
+   7. CALENDARIO
    ========================================================================== */
 .quick-calendar-card {
   background: white;

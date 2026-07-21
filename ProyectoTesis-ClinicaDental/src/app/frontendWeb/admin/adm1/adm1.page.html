@@ -1,12 +1,12 @@
 <ion-content [fullscreen]="true" class="dashboard-content">
   <div class="dashboard-container">
 
-    <!-- 1. BARRA SUPERIOR ORIGINAL INTACTA -->
+    <!-- 1. BARRA SUPERIOR CON BÚSQUEDA Y FECHA DINÁMICA -->
     <header class="dashboard-top-bar">
       <div class="search-container">
         <ion-icon name="search-outline" class="search-icon"></ion-icon>
         <input type="text"
-               placeholder="Buscar paciente..."
+               placeholder="Buscar acciones..."
                class="custom-search-input"
                [value]="buscarTexto()"
                (input)="actualizarBusqueda($event)">
@@ -22,6 +22,8 @@
 
     <!-- ESTRUCTURA PRINCIPAL DE DOS COLUMNAS -->
     <div class="dashboard-grid-layout">
+
+      <!-- COLUMNA PRINCIPAL (IZQUIERDA) -->
       <main class="main-content">
 
         <!-- SALUDO Y LÍNEA DIVISORA -->
@@ -31,8 +33,9 @@
           <hr class="welcome-divider" />
         </section>
 
-        <!-- TRES CUADROS ESTADÍSTICOS CON TAMAÑO AJUSTADO -->
+        <!-- TRES CUADROS ESTADÍSTICOS (KPIs) -->
         <section class="metrics-grid">
+
           <div class="metric-card">
             <div class="kpi-icon-wrapper">
               <ion-icon name="calendar-outline"></ion-icon>
@@ -62,6 +65,7 @@
               <span class="metric-label">DOCTORES ACTIVOS</span>
             </div>
           </div>
+
         </section>
 
         <!-- TABLA DE PACIENTES DE HOY -->
@@ -101,10 +105,13 @@
             </table>
           </div>
         </section>
+
       </main>
 
+      <!-- BARRA LATERAL (DERECHA) -->
       <aside class="sidebar-content">
-        <!-- PRÓXIMA CITA -->
+
+        <!-- CARD PRÓXIMA CITA -->
         <section class="sidebar-card next-appointment-card-v2">
           <div class="next-card-top-row">
             <span class="badge-proximo">PRÓXIMO: 10:30 AM</span>
@@ -132,7 +139,7 @@
           </div>
         </section>
 
-        <!-- CALENDARIO -->
+        <!-- CARD CALENDARIO NAVEGABLE -->
         <section class="sidebar-card quick-calendar-card">
           <div class="card-header-row">
             <span class="sidebar-card-title">CALENDARIO</span>
@@ -160,7 +167,9 @@
             </div>
           </div>
         </section>
+
       </aside>
+
     </div>
   </div>
 </ion-content>

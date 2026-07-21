@@ -1,154 +1,209 @@
-<ion-content [fullscreen]="true" class="pacientes-content">
+<ion-content [fullscreen]="true" class="agenda-content">
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
+      <!-- CABECERA GLOBAL CON BOTÓN DE RETORNO AL DIRECTORIO (Estilo Imagen 2) -->
       <header class="global-app-header">
-        <div class="header-left-empty"></div>
+  <div class="header-left-empty">
+    <button (click)="cancelar()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #0c8599; display: flex; align-items: center; padding: 10px;">
+      <ion-icon name="chevron-back-outline"></ion-icon>
+      <span style="font-size: 14px; margin-left: 5px; font-weight: 500;">Volver al Directorio</span>
+    </button>
+  </div>
 
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text"
-                   placeholder="Buscar pacientes..."
-                   class="search-input"
-                   [value]="buscarTexto()"
-                   (input)="actualizarBusqueda($event)" />
-          </div>
+  <div class="header-right-actions">
+    <button class="icon-btn notification-btn" title="Notificaciones">
+      <ion-icon name="notifications-outline"></ion-icon>
+      <span class="notification-dot"></span>
+    </button>
+    <button class="icon-btn shield-btn" title="Seguridad">
+      <ion-icon name="shield-checkmark-outline"></ion-icon>
+    </button>
+  </div>
+</header>
 
-          <button class="icon-btn notification-btn">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
+      <!-- SUBBARRA CLÍNICA CON BANNER REUBICADO EN LA DERECHA -->
       <div class="clinical-subheader-row">
         <div class="header-left-brand">
           <div class="brand-logo-circle">
-            <ion-icon name="medical-sharp"></ion-icon>
+            <ion-icon name="calendar-outline"></ion-icon>
           </div>
           <div class="brand-titles-stack">
-            <h1>DIRECTORIO DE PACIENTES</h1>
+            <h1>AGENDA MÉDICA</h1>
             <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>BUSCAR, FILTRAR Y GESTIONAR EXPEDIENTES</h3>
+            <h3>REGISTRO Y PROGRAMACIÓN DE NUEVA CITA</h3>
           </div>
         </div>
 
-        <div class="active-status-container header-actions-relocated">
-          <div class="filter-group">
-            <select class="filter-select" (change)="actualizarFiltroEstado($event)">
-              <option value="Todos los Estados">Todos los Estados</option>
-              <option value="Activo">Activo</option>
-              <option value="Inactivo">Inactivo</option>
-            </select>
-            <select class="filter-select" (change)="actualizarFiltroInstitucion($event)">
-              <option value="Todas las Instituciones">Todas las Instituciones</option>
-              <option value="Particular">Particular</option>
-              <option value="Seguro Dental">Seguro Dental</option>
-            </select>
+        <!-- Pregunta y Botón de Ficha Clínica colocados aquí -->
+        <div class="header-actions-relocated">
+          <div class="unregistered-patient-banner">
+            <div class="banner-info">
+              <ion-icon name="alert-circle-outline"></ion-icon>
+              <span>¿Es la primera vez del paciente?</span>
+            </div>
+            <button type="button" class="btn-create-ficha" (click)="irACrearFichaClinica()">
+              <ion-icon name="document-text-outline"></ion-icon>
+              Crear Ficha Clínica
+            </button>
           </div>
-
-          <button class="btn-primary" (click)="nuevoExpediente()">
-            <ion-icon name="person-add-outline"></ion-icon>
-            Nuevo Registro
-          </button>
         </div>
       </div>
 
-      <div class="directorio-workspace-content">
-        <main class="table-container">
-          <table class="pacientes-table">
-            <thead>
-              <tr>
-                <th class="number-col">No.</th>
-                <th>ID Paciente</th>
-                <th>Nombre Completo</th>
-                <th>DPI / ID</th>
-                <th class="center-col">Última Consulta</th>
-                <th class="center-col">Estado</th>
-                <th class="actions-col">Acciones</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let paciente of pacientesPaginados(); let i = index">
-                <td class="number-col">{{ registroInicio() + i }}</td>
-                <td>
-                  <span (click)="verExpediente(paciente.id)" style="color: #0c8599; font-weight: 600; cursor: pointer; text-decoration: underline;">
-                    ID: {{ paciente.codigo }}
-                  </span>
-                </td>
-                <td>
-                  <div class="paciente-cell">
-                    <div class="p-avatar"
-                         [class.teal]="paciente.id === 2"
-                         [class.amber]="paciente.id === 3">
-                      {{ paciente.nombre.substring(0,2).toUpperCase() }}
-                    </div>
-                    <div class="p-meta">
-                      <span class="p-name">{{ paciente.nombre }}</span>
-                      <span class="p-sub">{{ paciente.edad }} años • {{ paciente.tipo }}</span>
-                    </div>
-                  </div>
-                </td>
-                <td>{{ paciente.dpi }}</td>
-                <td class="center-col">{{ paciente.ultimaConsulta }}</td>
-                <td class="center-col">
-                  <span class="p-status-badge" [ngClass]="paciente.estado.toLowerCase()">
-                    {{ paciente.estado }}
-                  </span>
-                </td>
-                <td>
-                  <div class="action-buttons">
-                    <button class="btn-icon edit" title="Ver Expediente" (click)="verExpediente(paciente.id)">
-                      <ion-icon name="document-text-outline"></ion-icon>
-                    </button>
-                    <button class="btn-icon delete" title="Eliminar Paciente" (click)="eliminarPaciente(paciente.id, paciente.nombre)">
-                      <ion-icon name="trash-outline"></ion-icon>
-                    </button>
-                  </div>
-                </td>
-              </tr>
+      <!-- WORKSPACE DEL FORMULARIO -->
+      <div class="form-workspace-content">
+        <div class="form-card-container">
 
-              <tr *ngIf="pacientesPaginados().length === 0">
-                <td colspan="7" class="center-col" style="padding: 3rem; color: #64748b; font-weight: 500;">
-                  No se encontraron pacientes que coincidan con los criterios de búsqueda.
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </main>
-
-        <footer class="directorio-footer">
-          <div class="pagination-info">
-            Mostrando {{ registroInicio() }} a {{ registroFin() }} de {{ totalRegistrosFiltrados() }} registros
+          <div class="form-card-header">
+            <div class="header-title-box">
+              <h2><ion-icon name="add-circle-outline"></ion-icon> Agendar Nueva Cita</h2>
+              <p>Ingresa los datos del paciente y asigna la cita al profesional correspondiente.</p>
+            </div>
           </div>
 
-          <div class="pagination-buttons">
-            <button class="btn-pager"
-                    [disabled]="paginaActual() === 1"
-                    (click)="irAPagina(paginaActual() - 1)">
-              <ion-icon name="chevron-back-outline"></ion-icon>
-            </button>
+          <form (ngSubmit)="guardarCita()" class="appointment-form">
 
-            <button *ngFor="let num of totalPaginasArray()"
-                    class="btn-pager"
-                    [class.active]="paginaActual() === num"
-                    (click)="irAPagina(num)">
-              {{ num }}
-            </button>
+            <div class="form-grid">
 
-            <button class="btn-pager"
-                    [disabled]="paginaActual() === totalPaginas()"
-                    (click)="irAPagina(paginaActual() + 1)">
-              <ion-icon name="chevron-forward-outline"></ion-icon>
-            </button>
-          </div>
-        </footer>
+              <!-- Paciente con evento Enter para buscar -->
+              <div class="form-group full-width">
+                <label for="paciente">Nombre Completo del Paciente * <span class="helper-text">(Presiona ENTER para buscar paciente)</span></label>
+                <div class="input-icon-wrapper">
+                  <ion-icon name="person-outline"></ion-icon>
+                  <input type="text"
+                         id="paciente"
+                         placeholder="Ej. Carlos Mendoza (Escribe y presiona Enter...)"
+                         [(ngModel)]="nuevaCitaData.pacienteNombre"
+                         (keyup.enter)="buscarYAutocompletarPaciente()"
+                         name="pacienteNombre"
+                         required />
+                  <span *ngIf="cargandoPaciente" class="spinner-inline">
+                    <ion-spinner name="crescent"></ion-spinner>
+                  </span>
+                </div>
+              </div>
+
+              <!-- Teléfono -->
+              <div class="form-group">
+                <label for="telefono">Teléfono / Celular *</label>
+                <div class="input-icon-wrapper">
+                  <ion-icon name="call-outline"></ion-icon>
+                  <input type="tel"
+                         id="telefono"
+                         placeholder="Ej. 5555-1234"
+                         [(ngModel)]="nuevaCitaData.telefono"
+                         name="telefono"
+                         required />
+                </div>
+              </div>
+
+              <!-- Doctor Asignado -->
+              <div class="form-group">
+                <label for="doctor">Doctor / Especialista *</label>
+                <div class="input-icon-wrapper">
+                  <ion-icon name="medkit-outline"></ion-icon>
+                  <select id="doctor"
+                          [(ngModel)]="nuevaCitaData.doctorKey"
+                          name="doctorKey"
+                          required>
+                    <option value="melissa">Dra. Melissa Montenegro (Ortodoncia)</option>
+                    <option value="doctor2">Dr. Juan Pérez (Endodoncia)</option>
+                    <option value="doctor3">Dra. Ana Gómez (Ortodoncia)</option>
+                    <option value="doctor4">Dr. Carlos Ruíz (Cirugía)</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Categoría / Especialidad -->
+              <div class="form-group">
+                <label for="categoria">Categoría / Especialidad *</label>
+                <div class="input-icon-wrapper">
+                  <ion-icon name="pulse-outline"></ion-icon>
+                  <select id="categoria"
+                          [(ngModel)]="nuevaCitaData.categoria"
+                          name="categoria"
+                          required>
+                    <option value="orthodontics">Ortodoncia</option>
+                    <option value="surgery">Cirugía</option>
+                    <option value="cleaning">Limpieza</option>
+                    <option value="reserved">Reservado</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Tratamiento -->
+              <div class="form-group">
+                <label for="tratamiento">Tratamiento / Motivo *</label>
+                <div class="input-icon-wrapper">
+                  <ion-icon name="document-text-outline"></ion-icon>
+                  <input type="text"
+                         id="tratamiento"
+                         placeholder="Ej. Evaluación y Limpieza Dental"
+                         [(ngModel)]="nuevaCitaData.tratamiento"
+                         name="tratamiento"
+                         required />
+                </div>
+              </div>
+
+              <!-- Fecha -->
+              <div class="form-group">
+                <label for="fecha">Fecha de Cita *</label>
+                <div class="input-icon-wrapper">
+                  <ion-icon name="calendar-clear-outline"></ion-icon>
+                  <input type="date"
+                         id="fecha"
+                         [(ngModel)]="nuevaCitaData.fechaStr"
+                         name="fechaStr"
+                         required />
+                </div>
+              </div>
+
+              <!-- Hora -->
+              <div class="form-group">
+                <label for="hora">Horario *</label>
+                <div class="input-icon-wrapper">
+                  <ion-icon name="time-outline"></ion-icon>
+                  <select id="hora"
+                          [(ngModel)]="nuevaCitaData.hora"
+                          name="hora"
+                          required>
+                    <option value="08:00 AM">08:00 AM</option>
+                    <option value="09:00 AM">09:00 AM</option>
+                    <option value="10:00 AM">10:00 AM</option>
+                    <option value="11:00 AM">11:00 AM</option>
+                    <option value="12:00 PM">12:00 PM</option>
+                    <option value="01:00 PM">01:00 PM</option>
+                    <option value="02:00 PM">02:00 PM</option>
+                    <option value="03:00 PM">03:00 PM</option>
+                    <option value="04:00 PM">04:00 PM</option>
+                  </select>
+                </div>
+              </div>
+
+              <!-- Notas -->
+              <div class="form-group full-width">
+                <label for="notas">Notas / Observaciones Médicas</label>
+                <textarea id="notas"
+                          rows="3"
+                          placeholder="Añade observaciones adicionales..."
+                          [(ngModel)]="nuevaCitaData.notas"
+                          name="notas"></textarea>
+              </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="form-actions-row">
+              <button type="button" class="btn-cancel" (click)="cancelar()">
+                Cancelar
+              </button>
+              <button type="submit" class="btn-save">
+                <ion-icon name="checkmark-outline"></ion-icon>
+                Confirmar y Agendar
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
-
     </main>
   </div>
 </ion-content>

@@ -1,0 +1,65 @@
+<div class="web-layout">
+  <!-- BARRA LATERAL (SIDEBAR) FIJA -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <ion-icon name="medical-sharp" class="header-logo-icon"></ion-icon>
+      <div class="header-text">
+        <h2>MODent</h2>
+        <span>Gestión Clínica</span>
+      </div>
+    </div>
+
+    <!-- NAVEGACIÓN -->
+    <nav class="sidebar-menu">
+      <a routerLink="/admin/adm1" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="grid-sharp"></ion-icon>
+        <span>Tablero</span>
+      </a>
+      <a routerLink="/admin/adm2" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="calendar-sharp"></ion-icon>
+        <span>Agenda</span>
+      </a>
+      <a routerLink="/admin/adm4" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="list-sharp"></ion-icon>
+        <span>Pacientes</span>
+      </a>
+      <a routerLink="/admin/adm6" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="people-sharp"></ion-icon>
+        <span>Usuarios</span>
+      </a>
+      <a routerLink="/admin/adm9" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="cash-sharp"></ion-icon>
+        <span>Finanzas</span>
+      </a>
+      <a routerLink="/admin/adm10" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="medkit-sharp"></ion-icon>
+        <span>Recetario</span>
+      </a>
+      <a routerLink="/admin/adm11" routerLinkActive="active-item" class="menu-item">
+        <ion-icon name="person-outline"></ion-icon>
+        <span>Mi Perfil</span>
+      </a>
+    </nav>
+
+    <!-- FOOTER DE USUARIO Y LOGOUT -->
+    <div class="sidebar-footer">
+      <div class="profile-section">
+        <div class="profile-avatar">
+          <span>MM</span>
+        </div>
+        <div class="profile-info">
+          <h4>Dra. Montenegro</h4>
+          <span>ADMINISTRADOR</span>
+        </div>
+        <button class="logout-btn" (click)="onLogout()" title="Cerrar Sesión">
+          <ion-icon name="log-out-outline"></ion-icon>
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ÁREA DE CONTENIDO VARIABLE -->
+  <main class="web-main-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

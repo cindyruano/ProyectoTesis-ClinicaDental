@@ -2,440 +2,189 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
+      <!-- CABECERA GLOBAL -->
       <header class="global-app-header">
-        <div class="header-left-empty">
-          <button (click)="regresarAlListado()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #0c8599; display: flex; align-items: center; padding: 10px;">
-            <ion-icon name="chevron-back-outline"></ion-icon>
-            <span style="font-size: 14px; margin-left: 5px; font-weight: 500;">Volver al Directorio</span>
-          </button>
-        </div>
+        <div class="header-left-empty"></div>
 
         <div class="header-right-actions">
           <div class="search-box">
             <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text" placeholder="Buscar registros..." class="search-input" />
+            <input type="text"
+                   placeholder="Buscar paciente..."
+                   class="search-input"
+                   [value]="buscarTexto()"
+                   (input)="actualizarBusqueda($event)" />
           </div>
 
-          <button class="icon-btn notification-btn">
+          <button class="icon-btn notification-btn" title="Notificaciones">
             <ion-icon name="notifications-outline"></ion-icon>
             <span class="notification-dot"></span>
           </button>
-          <button class="icon-btn shield-btn">
+          <button class="icon-btn shield-btn" title="Seguridad">
             <ion-icon name="shield-checkmark-outline"></ion-icon>
           </button>
         </div>
       </header>
 
+      <!-- SUBBARRA CLÍNICA -->
       <div class="clinical-subheader-row">
         <div class="header-left-brand">
           <div class="brand-logo-circle">
-            <ion-icon name="medical-sharp"></ion-icon>
+            <ion-icon name="people-outline"></ion-icon>
           </div>
           <div class="brand-titles-stack">
-            <h1>ODONTOLOGÍA INCLUSIVA</h1>
+            <h1>DIRECTORIO GENERAL DE PACIENTES</h1>
             <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>{{ esFichaNueva() ? 'CREAR NUEVA FICHA CLÍNICO-EPIDEMIOLÓGICA' : 'FICHA DE EVALUACIÓN CLÍNICO-EPIDEMIOLÓGICA — EXPEDIENTE' }}</h3>
+            <h3>EXPEDIENTES, ESTADO FINANCIERO Y ASIGNACIÓN MÉDICA</h3>
           </div>
         </div>
 
-        <div class="active-status-container" style="display: flex; align-items: center; gap: 15px;">
-          <div *ngIf="modoEdicion() && !esFichaNueva()" class="form-group" style="margin: 0;">
-            <select [ngModel]="formulario().estado" (ngModelChange)="cambiarEstado($event)" style="padding: 6px 12px; border: 1px solid #e11d48; border-radius: 6px; font-weight: 600; font-size: 13px; color: #e11d48; background: white;">
-              <option value="Activo">Estado: Activo</option>
-              <option value="Inactivo">Estado: Inactivo</option>
+        <div class="active-status-container header-actions-relocated">
+          <div class="filter-group">
+            <select class="filter-select" (change)="actualizarFiltroEstado($event)">
+              <option value="Todos los Estados">Todos los Estados</option>
+              <option value="Activo">Activos</option>
+              <option value="Inactivo">Inactivos / Bajas</option>
+              <option value="Con Deuda">Con Deuda Pendiente</option>
+            </select>
+            <select class="filter-select" (change)="actualizarFiltroInstitucion($event)">
+              <option value="Todas las Instituciones">Todas las Instituciones</option>
+              <option value="Particular">Particular</option>
+              <option value="Seguro Dental">Seguro Dental</option>
             </select>
           </div>
 
-          <div class="paciente-activo-badge" [ngClass]="formulario().estado.toLowerCase()">
-            <span class="pulse-dot"></span>
-            Paciente {{ formulario().estado }}
-          </div>
+          <button class="btn-primary" (click)="nuevoExpediente()">
+            <ion-icon name="person-add-outline"></ion-icon>
+            Nuevo Registro
+          </button>
         </div>
       </div>
 
-      <div class="workspace-grid">
-        <section class="workspace-column col-datos">
+      <!-- WORKSPACE CON TABLA EXPANDIDA Y LIMPIA -->
+      <div class="directorio-workspace-content">
+        <main class="table-container">
+          <table class="pacientes-table">
+            <thead>
+              <tr>
+                <th class="number-col">No.</th>
+                <th>ID Paciente</th>
+                <th>Nombre Completo</th>
+                <th>Médico Asignado</th>
+                <th class="center-col">Estado Financiero</th>
+                <th class="center-col">Última Consulta</th>
+                <th class="center-col">Estado</th>
+                <th class="actions-col">Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let paciente of pacientesPaginados(); let i = index">
+                <td class="number-col">{{ registroInicio() + i }}</td>
 
-          <div class="card-clinica">
-            <div class="card-header">
-              <ion-icon name="person-outline"></ion-icon>
-              <h3>Datos de Identificación</h3>
-            </div>
-            <div class="card-body">
-              <div class="form-row-multi">
-                <div class="form-group span-full">
-                  <label>Nombres y Apellidos</label>
-                  <input type="text" [(ngModel)]="formulario().nombreCompleto" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-              </div>
+                <!-- ID Paciente (Texto plano estático) -->
+                <td class="id-text-cell">
+                  ID: {{ paciente.codigo }}
+                </td>
 
-              <div class="form-row-multi pt-2">
-                <div class="form-group">
-                  <label>Fecha de Examen</label>
-                  <input type="date" [(ngModel)]="formulario().fechaExamen" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-                <div class="form-group">
-                  <label>Edad</label>
-                  <input type="number" [(ngModel)]="formulario().edad" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-                <div class="form-group">
-                  <label>Sexo</label>
-                  <select [(ngModel)]="formulario().sexo" [disabled]="!modoEdicion()" class="input-editable" style="background: white; height: 38px;">
-                    <option value="">Seleccione...</option>
-                    <option value="Masculino">Masculino</option>
-                    <option value="Femenino">Femenino</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-row-multi pt-2">
-                <div class="form-group span-2">
-                  <label>Fecha de Nacimiento</label>
-                  <input type="date" [(ngModel)]="formulario().fechaNacimiento" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-                <div class="form-group span-1">
-                  <label>Discapacidad</label>
-                  <input type="text" [(ngModel)]="formulario().discapacidad" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-              </div>
+                <!-- Nombre Completo y Edad (Texto plano estático) -->
+                <td>
+                  <div class="paciente-cell">
+                    <div class="p-avatar"
+                         [class.teal]="paciente.id % 2 === 0"
+                         [class.amber]="paciente.id % 3 === 0">
+                      {{ paciente.nombre.substring(0,2).toUpperCase() }}
+                    </div>
+                    <div class="p-meta">
+                      <span class="p-name">{{ paciente.nombre }}</span>
+                      <span class="p-sub">{{ paciente.edad }} años • {{ paciente.tipo }}</span>
+                    </div>
+                  </div>
+                </td>
 
-              <div class="form-row-multi pt-2">
-                <div class="form-group span-2">
-                  <label>Institución</label>
-                  <input type="text" [(ngModel)]="formulario().institucion" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-                <div class="form-group span-1">
-                  <label>Operador</label>
-                  <input type="text" [(ngModel)]="formulario().operador" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-              </div>
+                <!-- Médico Asignado (Texto Plano Informativo) -->
+                 <td>
+                  <div class="doctor-read-cell">
+                    <ion-icon name="medkit-outline"></ion-icon>
+                    <span class="doctor-name-text">{{ obtenerNombreDoctor(paciente.doctorKey) }}</span>
+                  </div>
+                </td>
 
-              <div class="form-row-multi pt-2">
-                <div class="form-group span-full">
-                  <label>Asistente</label>
-                  <input type="text" placeholder="Nombre del asistente..." [(ngModel)]="formulario().asistente" [disabled]="!modoEdicion()" class="input-editable">
-                </div>
-              </div>
-            </div>
+                <!-- Estado Financiero -->
+                <td class="center-col">
+                  <div class="financial-badge" [class.has-debt]="paciente.saldo < 0" [class.no-debt]="paciente.saldo >= 0">
+                    <span class="amount">{{ paciente.saldo | currency:'GTQ':'symbol':'1.2-2' }}</span>
+                    <small class="financial-label">{{ paciente.saldo < 0 ? 'Deuda Pendiente' : 'Al Día' }}</small>
+                  </div>
+                </td>
+
+                <!-- Última Consulta -->
+                <td class="center-col">{{ paciente.ultimaConsulta }}</td>
+
+                <!-- Estado (Activo / Inactivo) con toggle rápido -->
+                <td class="center-col">
+                  <span class="p-status-badge"
+                        [ngClass]="paciente.estado.toLowerCase()"
+                        (click)="toggleEstadoPaciente(paciente)"
+                        title="Hacer clic para cambiar estado">
+                    {{ paciente.estado }}
+                  </span>
+                </td>
+
+                <!-- Botones de Acción (ÚNICA VÍA DE EDICIÓN Y VER EXPEDIENTE) -->
+                <td>
+                  <div class="action-buttons">
+                    <button class="btn-icon edit" title="Ver / Editar Ficha Clínica" (click)="verExpediente(paciente.id)">
+                      <ion-icon name="document-text-outline"></ion-icon>
+                    </button>
+                    <button class="btn-icon finance" title="Historial Financiero" (click)="verFinanzas(paciente)">
+                      <ion-icon name="cash-outline"></ion-icon>
+                    </button>
+                    <button class="btn-icon delete" title="Dar de baja / Eliminar" (click)="eliminarPaciente(paciente.id, paciente.nombre)">
+                      <ion-icon name="trash-outline"></ion-icon>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+
+              <!-- Mensaje cuando la búsqueda no trae resultados -->
+              <tr *ngIf="pacientesPaginados().length === 0">
+                <td colspan="8" class="center-col empty-state-row">
+                  No se encontraron pacientes que coincidan con los criterios de búsqueda.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </main>
+
+        <!-- PAGINACIÓN -->
+        <footer class="directorio-footer">
+          <div class="pagination-info">
+            Mostrando {{ registroInicio() }} a {{ registroFin() }} de {{ totalRegistrosFiltrados() }} registros
           </div>
 
-          <div class="card-clinica">
-            <div class="card-header">
-              <ion-icon name="pulse-outline"></ion-icon>
-              <h3>Examen Extraoral e Intraoral</h3>
-            </div>
-            <div class="card-body">
-              <div class="form-row-multi">
-                <div class="form-group">
-                  <label>Piel y Anexos</label>
-                  <input type="text" class="input-editable" [(ngModel)]="formulario().pielAnexos" [disabled]="!modoEdicion()">
-                </div>
-                <div class="form-group">
-                  <label>Úlceras</label>
-                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().ulceras" [disabled]="!modoEdicion()">
-                </div>
-                <div class="form-group">
-                  <label>Leucoplasia</label>
-                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().leucoplasia" [disabled]="!modoEdicion()">
-                </div>
-              </div>
+          <div class="pagination-buttons">
+            <button class="btn-pager"
+                    [disabled]="paginaActual() === 1"
+                    (click)="irAPagina(paginaActual() - 1)">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </button>
 
-              <div class="form-row-multi pt-2">
-                <div class="form-group">
-                  <label>Cuello (Ganglios)</label>
-                  <input type="text" class="input-editable" [(ngModel)]="formulario().cuello" [disabled]="!modoEdicion()">
-                </div>
-                <div class="form-group">
-                  <label>Queilitis</label>
-                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().queilitis" [disabled]="!modoEdicion()">
-                </div>
-                <div class="form-group">
-                  <label>Eritroplasia</label>
-                  <input type="text" class="input-editable" placeholder="No presenta" [(ngModel)]="formulario().eritroplasia" [disabled]="!modoEdicion()">
-                </div>
-              </div>
+            <button *ngFor="let num of totalPaginasArray()"
+                    class="btn-pager"
+                    [class.active]="paginaActual() === num"
+                    (click)="irAPagina(num)">
+              {{ num }}
+            </button>
 
-              <div class="form-row-multi pt-2">
-                <div class="form-group">
-                  <label>ATM</label>
-                  <input type="text" class="input-editable" [(ngModel)]="formulario().atm" [disabled]="!modoEdicion()">
-                </div>
-                <div class="form-group">
-                  <label>Candidiasis</label>
-                  <input type="text" class="input-editable" placeholder="Negativo" [(ngModel)]="formulario().candidiasis" [disabled]="!modoEdicion()">
-                </div>
-                <div class="form-group">
-                  <label>Otros</label>
-                  <input type="text" class="input-editable" placeholder="Ninguno" [(ngModel)]="formulario().otros" [disabled]="!modoEdicion()">
-                </div>
-              </div>
-            </div>
+            <button class="btn-pager"
+                    [disabled]="paginaActual() === totalPaginas()"
+                    (click)="irAPagina(paginaActual() + 1)">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
           </div>
-
-          <div class="card-clinica">
-            <div class="card-header">
-              <ion-icon name="shield-checkmark-outline"></ion-icon>
-              <h3>Prótesis y Necesidad de Tratamiento</h3>
-            </div>
-            <div class="card-body grid-split-2">
-              <div class="protesis-section">
-                <h4 class="sub-section-title">Situación y Necesidad de Prótesis</h4>
-                <div class="form-row-multi">
-                  <div class="form-group span-full">
-                    <label>Max. Superior</label>
-                    <input type="text" class="input-editable" [disabled]="!modoEdicion()" placeholder="Situación / Necesidad">
-                  </div>
-                  <div class="form-group span-full pt-1">
-                    <label>Max. Inferior</label>
-                    <input type="text" class="input-editable" [disabled]="!modoEdicion()" placeholder="Situación / Necesidad">
-                  </div>
-                </div>
-              </div>
-
-              <div class="tratamiento-checklist-section">
-                <h4 class="sub-section-title">Necesidad de Tratamiento</h4>
-                <div class="checklist-grid">
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Prevención</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Radiología</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Restauradora</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Odontopediatría</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Endodoncia</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Ortodoncia</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Rehabilitación</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Patología</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Periodoncia</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> APE</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Cirugía</label>
-                  <label class="check-item"><input type="checkbox" [disabled]="!modoEdicion()"> Otro</label>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="workspace-column col-odontograma">
-          <div class="card-clinica">
-            <div class="card-header space-between">
-              <div class="header-left">
-                <ion-icon name="grid-outline"></ion-icon>
-                <h3>Odontograma Anatómico</h3>
-              </div>
-              <div class="legend">
-                <span class="legend-item"><span class="dot red"></span> Caries</span>
-                <span class="legend-item"><span class="dot blue"></span> Calza</span>
-                <span class="legend-item"><span class="dot grey"></span> Ausente</span>
-              </div>
-            </div>
-
-            <div class="card-body">
-              <div class="arcada-section">
-                <span class="arcada-title">Arcada Superior Permanente</span>
-                <div class="teeth-row-scrollable">
-                  <div class="tooth-box caries"><span class="tooth-num">18</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">17</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box obturado"><span class="tooth-num">16</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">15</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">14</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">13</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">12</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">11</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-divider-line"></div>
-                  <div class="tooth-box"><span class="tooth-num">21</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">22</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">23</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">24</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">25</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">26</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">27</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">28</span><div class="tooth-icon">🦷</div></div>
-                </div>
-              </div>
-
-              <div class="arcada-section pt-2">
-                <span class="arcada-title">Arcada Infantil (Temporal Superior)</span>
-                <div class="teeth-row-scrollable">
-                  <div class="tooth-box mini"><span class="tooth-num">55</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">54</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">53</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">52</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">51</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-divider-line"></div>
-                  <div class="tooth-box mini"><span class="tooth-num">61</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">62</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">63</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">64</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">65</span><div class="tooth-icon">🦷</div></div>
-                </div>
-              </div>
-
-              <div class="axis-divider"></div>
-
-              <div class="arcada-section">
-                <span class="arcada-title">Arcada Infantil (Temporal Inferior)</span>
-                <div class="teeth-row-scrollable">
-                  <div class="tooth-box mini"><span class="tooth-num">85</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">84</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">83</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">82</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">81</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-divider-line"></div>
-                  <div class="tooth-box mini"><span class="tooth-num">71</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">72</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">73</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">74</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box mini"><span class="tooth-num">75</span><div class="tooth-icon">🦷</div></div>
-                </div>
-              </div>
-
-              <div class="arcada-section pt-2">
-                <span class="arcada-title">Arcada Inferior Permanente</span>
-                <div class="teeth-row-scrollable">
-                  <div class="tooth-box"><span class="tooth-num">48</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">47</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box caries"><span class="tooth-num">46</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">45</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box ausente"><span class="tooth-num">44</span><div class="tooth-icon">❌</div></div>
-                  <div class="tooth-box"><span class="tooth-num">43</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">42</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">41</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-divider-line"></div>
-                  <div class="tooth-box"><span class="tooth-num">31</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">32</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">33</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">34</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">35</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">36</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">37</span><div class="tooth-icon">🦷</div></div>
-                  <div class="tooth-box"><span class="tooth-num">38</span><div class="tooth-icon">🦷</div></div>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-clinica">
-            <div class="card-header">
-              <ion-icon name="calculator-outline"></ion-icon>
-              <h3>Índice de Higiene Oral - Simplificado (Greene y Vermillion)</h3>
-            </div>
-            <div class="card-body">
-              <div class="iho-container-grid">
-                <div class="iho-table-box">
-                  <span class="iho-table-title">IPB (Placa)</span>
-                  <div class="iho-grid-inputs">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="2">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="2">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
-                  </div>
-                </div>
-
-                <div class="iho-table-box">
-                  <span class="iho-table-title">IPC (Cálculo)</span>
-                  <div class="iho-grid-inputs">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="0">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="0">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="1">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="8">
-                    <input type="number" class="iho-input" [disabled]="!modoEdicion()" value="0">
-                  </div>
-                </div>
-
-                <div class="iho-scores-box">
-                  <div class="score-row">
-                    <span>IPB:</span>
-                    <input type="text" class="score-result" value="1.3" readonly>
-                  </div>
-                  <div class="score-row">
-                    <span>IPC:</span>
-                    <input type="text" class="score-result" value="0.3" readonly>
-                  </div>
-                  <div class="score-row total">
-                    <span>IHO-S:</span>
-                    <input type="text" class="score-result highlight" value="1.6" readonly>
-                  </div>
-                </div>
-              </div>
-
-              <div class="iho-evaluation">
-                <span class="eval-label">Evaluación:</span>
-                <div class="radio-group">
-                  <label class="radio-item"><input type="radio" name="eval" checked [disabled]="!modoEdicion()"> Bueno</label>
-                  <label class="radio-item"><input type="radio" name="eval" [disabled]="!modoEdicion()"> Regular</label>
-                  <label class="radio-item"><input type="radio" name="eval" [disabled]="!modoEdicion()"> Malo</label>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="card-clinica">
-            <div class="card-header">
-              <ion-icon name="document-text-outline"></ion-icon>
-              <h3>Diagnóstico e Indicaciones</h3>
-            </div>
-            <div class="card-body">
-              <div class="form-group">
-                <label>Especificaciones</label>
-                <textarea rows="2" class="input-editable" [disabled]="!modoEdicion()" placeholder="Especificaciones de tratamiento..."></textarea>
-              </div>
-
-              <div class="form-group pt-2">
-                <label>Observaciones</label>
-                <textarea rows="2" class="input-editable" [disabled]="!modoEdicion()" placeholder="Observaciones generales..."></textarea>
-              </div>
-
-              <div class="form-group pt-2">
-                <label>Diagnóstico (CIE-10)</label>
-                <table class="tabla-diagnosticos">
-                  <thead>
-                    <tr>
-                      <th>Descripción Diagnóstica</th>
-                      <th style="width: 80px;">CIE-10</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td><input type="text" class="table-input" [disabled]="!modoEdicion()" value="Caries de la dentina"></td>
-                      <td><input type="text" class="table-input code-center" [disabled]="!modoEdicion()" value="K02.1"></td>
-                    </tr>
-                    <tr>
-                      <td><input type="text" class="table-input" [disabled]="!modoEdicion()" value="Gingivitis crónica, placa inducida"></td>
-                      <td><input type="text" class="table-input code-center" [disabled]="!modoEdicion()" value="K05.1"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        </section>
+        </footer>
       </div>
 
-      <footer class="footer-actions-bar">
-        <div class="footer-left">
-          <p *ngIf="!esFichaNueva()">Ficha clínica editada por última vez el 15/07/2026 por {{ formulario().operador }}</p>
-          <p *ngIf="esFichaNueva()">Modo de creación de registro activado</p>
-        </div>
-        <div class="footer-right">
-          <button *ngIf="!esFichaNueva()" class="btn-action btn-delete">
-            <ion-icon name="trash-outline"></ion-icon>
-            <span>Eliminar Expediente</span>
-          </button>
-
-          <div class="actions-divider" *ngIf="!esFichaNueva()"></div>
-
-          <button *ngIf="!modoEdicion() && !esFichaNueva()" (click)="activarModificacion()" class="btn-action btn-edit">
-            <ion-icon name="create-outline"></ion-icon>
-            <span>Modificar Datos</span>
-          </button>
-
-          <button *ngIf="modoEdicion()" (click)="guardarCambios()" class="btn-action btn-save">
-            <ion-icon name="save-outline"></ion-icon>
-            <span>{{ esFichaNueva() ? 'Registrar Paciente' : 'Guardar Cambios' }}</span>
-          </button>
-        </div>
-      </footer>
     </main>
   </div>
 </ion-content>
-
