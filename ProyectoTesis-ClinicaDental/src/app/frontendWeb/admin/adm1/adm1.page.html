@@ -1,32 +1,20 @@
 <ion-content [fullscreen]="true" class="dashboard-content">
   <div class="dashboard-container">
 
-    <!-- 1. BARRA SUPERIOR CON BÚSQUEDA Y FECHA DINÁMICA -->
+    <!-- 1. BARRA SUPERIOR CON FECHA DINÁMICA Y NOTIFICACIONES -->
     <header class="dashboard-top-bar">
-      <div class="search-container">
-        <ion-icon name="search-outline" class="search-icon"></ion-icon>
-        <input type="text"
-               placeholder="Buscar acciones..."
-               class="custom-search-input"
-               [value]="buscarTexto()"
-               (input)="actualizarBusqueda($event)">
-      </div>
-
       <div class="header-actions">
         <span class="header-date">{{ fechaHoy | date:'MMMM d, yyyy':'':'es' | titlecase }}</span>
-        <button class="icon-btn">
-          <ion-icon name="notifications-outline"></ion-icon>
-        </button>
+
+        <!-- COMPONENTE REUTILIZABLE DE NOTIFICACIONES -->
+        <app-notifications></app-notifications>
       </div>
     </header>
 
     <!-- ESTRUCTURA PRINCIPAL DE DOS COLUMNAS -->
     <div class="dashboard-grid-layout">
-
-      <!-- COLUMNA PRINCIPAL (IZQUIERDA) -->
       <main class="main-content">
 
-        <!-- SALUDO Y LÍNEA DIVISORA -->
         <section class="welcome-section">
           <h1>Hola, Dra. Melissa</h1>
           <p>Este es el resumen de la actividad de la clínica para el día de hoy.</p>
@@ -167,9 +155,7 @@
             </div>
           </div>
         </section>
-
       </aside>
-
     </div>
   </div>
 </ion-content>

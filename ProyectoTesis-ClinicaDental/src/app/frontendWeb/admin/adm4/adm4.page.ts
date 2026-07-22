@@ -4,11 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, AlertController, ToastController } from '@ionic/angular';
 import { Router, RouterModule } from '@angular/router';
 import { addIcons } from 'ionicons';
-import {
-  searchOutline, personAddOutline, documentTextOutline, trashOutline,
-  chevronBackOutline, chevronForwardOutline, medicalSharp, notificationsOutline,
-  shieldCheckmarkOutline, peopleOutline, medkitOutline, cashOutline
-} from 'ionicons/icons';
+import { searchOutline, personAddOutline, documentTextOutline, trashOutline, chevronBackOutline, chevronForwardOutline, medicalSharp, notificationsOutline, shieldCheckmarkOutline, peopleOutline, medkitOutline, cashOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 interface Paciente {
   id: number;
@@ -27,7 +25,7 @@ interface Paciente {
   templateUrl: './adm4.page.html',
   styleUrls: ['./adm4.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule, RouterModule]
+  imports: [IonicModule, CommonModule, FormsModule, RouterModule, NotificationsComponent, HeaderComponent]
 })
 export class Adm4Page implements OnInit {
   private router = inject(Router);
@@ -73,7 +71,6 @@ export class Adm4Page implements OnInit {
   public buscarTexto = signal<string>('');
   public estadoFiltro = signal<string>('Todos los Estados');
   public institucionFiltro = signal<string>('Todas las Instituciones');
-
   public paginaActual = signal<number>(1);
   public registrosPorPagina = 5;
 
@@ -181,9 +178,7 @@ export class Adm4Page implements OnInit {
     );
   }
 
-  // Sin mensajes flotantes ni alertas innecesarias
   public verFinanzas(paciente: Paciente) {
-    // Redirección directa cuando tengas la ruta financiera lista
   }
 
   async eliminarPaciente(id: number, nombre: string) {

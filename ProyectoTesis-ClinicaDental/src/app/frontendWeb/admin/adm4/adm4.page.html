@@ -2,64 +2,35 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- CABECERA GLOBAL -->
-      <header class="global-app-header">
-        <div class="header-left-empty"></div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'DIRECTORIO GENERAL DE PACIENTES'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'EXPEDIENTES, ESTADO FINANCIERO Y ASIGNACIÓN MÉDICA'"
+        [icono]="'people-outline'"
+        [placeholderBuscador]="'Buscar paciente...'"
+        [textoBusqueda]="buscarTexto()"
+        (busquedaChange)="actualizarBusqueda($event)">
 
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text"
-                   placeholder="Buscar paciente..."
-                   class="search-input"
-                   [value]="buscarTexto()"
-                   (input)="actualizarBusqueda($event)" />
-          </div>
-
-          <button class="icon-btn notification-btn" title="Notificaciones">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn" title="Seguridad">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
-      <!-- SUBBARRA CLÍNICA -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="people-outline"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>DIRECTORIO GENERAL DE PACIENTES</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>EXPEDIENTES, ESTADO FINANCIERO Y ASIGNACIÓN MÉDICA</h3>
-          </div>
+        <div class="filter-group">
+          <select class="filter-select" (change)="actualizarFiltroEstado($event)">
+            <option value="Todos los Estados">Todos los Estados</option>
+            <option value="Activo">Activos</option>
+            <option value="Inactivo">Inactivos / Bajas</option>
+            <option value="Con Deuda">Con Deuda Pendiente</option>
+          </select>
+          <select class="filter-select" (change)="actualizarFiltroInstitucion($event)">
+            <option value="Todas las Instituciones">Todas las Instituciones</option>
+            <option value="Particular">Particular</option>
+            <option value="Seguro Dental">Seguro Dental</option>
+          </select>
         </div>
 
-        <div class="active-status-container header-actions-relocated">
-          <div class="filter-group">
-            <select class="filter-select" (change)="actualizarFiltroEstado($event)">
-              <option value="Todos los Estados">Todos los Estados</option>
-              <option value="Activo">Activos</option>
-              <option value="Inactivo">Inactivos / Bajas</option>
-              <option value="Con Deuda">Con Deuda Pendiente</option>
-            </select>
-            <select class="filter-select" (change)="actualizarFiltroInstitucion($event)">
-              <option value="Todas las Instituciones">Todas las Instituciones</option>
-              <option value="Particular">Particular</option>
-              <option value="Seguro Dental">Seguro Dental</option>
-            </select>
-          </div>
-
-          <button class="btn-primary" (click)="nuevoExpediente()">
-            <ion-icon name="person-add-outline"></ion-icon>
-            Nuevo Registro
-          </button>
-        </div>
-      </div>
+        <button class="btn-primary" (click)="nuevoExpediente()">
+          <ion-icon name="person-add-outline"></ion-icon>
+          Nuevo Registro
+        </button>
+      </app-header>
 
       <!-- WORKSPACE CON TABLA EXPANDIDA Y LIMPIA -->
       <div class="directorio-workspace-content">
@@ -81,12 +52,12 @@
               <tr *ngFor="let paciente of pacientesPaginados(); let i = index">
                 <td class="number-col">{{ registroInicio() + i }}</td>
 
-                <!-- ID Paciente (Texto plano estático) -->
+                <!-- ID Paciente -->
                 <td class="id-text-cell">
                   ID: {{ paciente.codigo }}
                 </td>
 
-                <!-- Nombre Completo y Edad (Texto plano estático) -->
+                <!-- Nombre Completo y Edad -->
                 <td>
                   <div class="paciente-cell">
                     <div class="p-avatar"
@@ -101,8 +72,8 @@
                   </div>
                 </td>
 
-                <!-- Médico Asignado (Texto Plano Informativo) -->
-                 <td>
+                <!-- Médico Asignado -->
+                <td>
                   <div class="doctor-read-cell">
                     <ion-icon name="medkit-outline"></ion-icon>
                     <span class="doctor-name-text">{{ obtenerNombreDoctor(paciente.doctorKey) }}</span>
@@ -130,7 +101,7 @@
                   </span>
                 </td>
 
-                <!-- Botones de Acción (ÚNICA VÍA DE EDICIÓN Y VER EXPEDIENTE) -->
+                <!-- Botones de Acción -->
                 <td>
                   <div class="action-buttons">
                     <button class="btn-icon edit" title="Ver / Editar Ficha Clínica" (click)="verExpediente(paciente.id)">
@@ -146,7 +117,6 @@
                 </td>
               </tr>
 
-              <!-- Mensaje cuando la búsqueda no trae resultados -->
               <tr *ngIf="pacientesPaginados().length === 0">
                 <td colspan="8" class="center-col empty-state-row">
                   No se encontraron pacientes que coincidan con los criterios de búsqueda.

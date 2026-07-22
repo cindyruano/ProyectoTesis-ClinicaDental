@@ -5,6 +5,8 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { searchOutline, notificationsOutline, shieldCheckmarkOutline, starOutline, trendingUpOutline, addCircleOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 interface PersonalClinico {
   id: number;
@@ -27,7 +29,7 @@ interface PersonalClinico {
   templateUrl: './adm6.page.html',
   styleUrls: ['./adm6.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent]
 })
 export class Adm6Page implements OnInit {
   private router = inject(Router);

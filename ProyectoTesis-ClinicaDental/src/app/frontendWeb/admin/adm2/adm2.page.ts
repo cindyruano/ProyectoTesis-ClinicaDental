@@ -4,13 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import {
-  addOutline, searchOutline, checkmarkCircleOutline, timeOutline,
-  closeCircleOutline, createOutline, trashOutline, syncOutline,
-  calendarOutline, notificationsOutline, shieldCheckmarkOutline,
-  chevronBackOutline, chevronForwardOutline, warningOutline,
-  peopleOutline, cashOutline, closeOutline
-} from 'ionicons/icons';
+import { addOutline, searchOutline, checkmarkCircleOutline, timeOutline, closeCircleOutline, createOutline, trashOutline, syncOutline, calendarOutline, notificationsOutline, shieldCheckmarkOutline, chevronBackOutline, chevronForwardOutline, warningOutline, peopleOutline, cashOutline, closeOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 interface CitaCalendar {
   id: number;
@@ -38,21 +34,17 @@ interface DiaCalendario {
   templateUrl: './adm2.page.html',
   styleUrls: ['./adm2.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent]
 })
 export class Adm2Page implements OnInit {
   private router = inject(Router);
 
   public rolUsuario: 'admin' | 'doctor' | 'auxiliar' = 'admin';
   public doctorAsignadoKey: string = 'melissa';
-
   public buscarTexto = signal<string>('');
   public doctorFiltro = signal<string>('todos');
   public vistaCalendar = signal<'day' | 'week' | 'month'>('month');
-
   public fechaReferencia = signal<Date>(new Date(2026, 6, 21));
-
-  // Estado del Modal
   public modalDiaAbierto = signal<boolean>(false);
   public diaSeleccionado = signal<DiaCalendario | null>(null);
 
@@ -136,9 +128,6 @@ export class Adm2Page implements OnInit {
     }
   }
 
-  // =========================================================================
-  // SIGNALS COMPUTADOS PARA LA LEYENDA Y MÉTRICAS
-  // =========================================================================
   public citasFiltradasGenerales = computed(() => {
     return this.citas().filter(cita => {
       const coincideDoctor = this.doctorFiltro() === 'todos' || cita.doctorKey === this.doctorFiltro();
@@ -163,9 +152,6 @@ export class Adm2Page implements OnInit {
     this.citasFiltradasGenerales().filter(c => c.categoria === 'reserved').length
   );
 
-  // =========================================================================
-  // LÓGICA DE FECHAS Y NAVEGACIÓN
-  // =========================================================================
   public diasVisibles = computed<DiaCalendario[]>(() => {
     const ref = new Date(this.fechaReferencia());
     const hoyStr = new Date().toISOString().split('T')[0];
@@ -253,7 +239,6 @@ export class Adm2Page implements OnInit {
     return meses[this.fechaReferencia().getMonth()];
   });
 
-  // Modal handlers
   public abrirModalDia(dia: DiaCalendario) {
     this.diaSeleccionado.set(dia);
     this.modalDiaAbierto.set(true);

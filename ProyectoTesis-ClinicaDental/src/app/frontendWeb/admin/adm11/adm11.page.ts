@@ -3,23 +3,16 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import {
-  notificationsOutline,
-  shieldCheckmarkOutline,
-  medicalSharp,
-  personOutline,
-  lockClosedOutline,
-  cameraOutline,
-  saveOutline,
-  createOutline
-} from 'ionicons/icons';
+import { notificationsOutline, shieldCheckmarkOutline, medicalSharp, personOutline, lockClosedOutline, cameraOutline, saveOutline, createOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-adm11',
   templateUrl: './adm11.page.html',
   styleUrls: ['./adm11.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent]
 })
 export class Adm11Page {
   private toastController = inject(ToastController);

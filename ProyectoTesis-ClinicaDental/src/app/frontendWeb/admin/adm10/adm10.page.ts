@@ -5,13 +5,15 @@ import { IonicModule, ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
 import { searchOutline, notificationsOutline, shieldCheckmarkOutline, medicalSharp, chevronBackOutline, personOutline, lockClosedOutline, cameraOutline, saveOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-adm10',
   templateUrl: './adm10.page.html',
   styleUrls: ['./adm10.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent]
 })
 export class Adm10Page implements OnInit {
   private location = inject(Location);

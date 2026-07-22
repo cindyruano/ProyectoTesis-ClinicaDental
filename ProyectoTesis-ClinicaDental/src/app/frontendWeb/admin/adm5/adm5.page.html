@@ -2,42 +2,18 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <header class="global-app-header">
-        <div class="header-left-empty">
-          <button (click)="regresarAlListado()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #0c8599; display: flex; align-items: center; padding: 10px;">
-            <ion-icon name="chevron-back-outline"></ion-icon>
-            <span style="font-size: 14px; margin-left: 5px; font-weight: 500;">Volver al Directorio</span>
-          </button>
-        </div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'ODONTOLOGÍA INCLUSIVA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="esFichaNueva() ? 'CREAR NUEVA FICHA CLÍNICO-EPIDEMIOLÓGICA' : 'FICHA DE EVALUACIÓN CLÍNICO-EPIDEMIOLÓGICA — EXPEDIENTE'"
+        [icono]="'medical-sharp'"
+        [placeholderBuscador]="'Buscar registros...'"
+        [mostrarBotonVolver]="true"
+        [textoVolver]="'Volver al Directorio'"
+        (volverClick)="regresarAlListado()">
 
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text" placeholder="Buscar registros..." class="search-input" />
-          </div>
-
-          <button class="icon-btn notification-btn">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="medical-sharp"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>ODONTOLOGÍA INCLUSIVA</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>{{ esFichaNueva() ? 'CREAR NUEVA FICHA CLÍNICO-EPIDEMIOLÓGICA' : 'FICHA DE EVALUACIÓN CLÍNICO-EPIDEMIOLÓGICA — EXPEDIENTE' }}</h3>
-          </div>
-        </div>
-
+        <!-- Estado del Paciente inyectado a la derecha del subheader -->
         <div class="active-status-container" style="display: flex; align-items: center; gap: 15px;">
           <div *ngIf="modoEdicion() && !esFichaNueva()" class="form-group" style="margin: 0;">
             <select [ngModel]="formulario().estado" (ngModelChange)="cambiarEstado($event)" style="padding: 6px 12px; border: 1px solid #e11d48; border-radius: 6px; font-weight: 600; font-size: 13px; color: #e11d48; background: white;">
@@ -51,8 +27,9 @@
             Paciente {{ formulario().estado }}
           </div>
         </div>
-      </div>
+      </app-header>
 
+      <!-- WORKSPACE PRINCIPAL -->
       <div class="workspace-grid">
         <section class="workspace-column col-datos">
 
@@ -411,6 +388,7 @@
         </section>
       </div>
 
+      <!-- BARRA DE ACCIONES INFERIOR -->
       <footer class="footer-actions-bar">
         <div class="footer-left">
           <p *ngIf="!esFichaNueva()">Ficha clínica editada por última vez el 15/07/2026 por {{ formulario().operador }}</p>
@@ -438,4 +416,3 @@
     </main>
   </div>
 </ion-content>
-

@@ -4,26 +4,16 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { ActivatedRoute, Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import {
-  searchOutline,
-  notificationsOutline,
-  shieldCheckmarkOutline,
-  personAddOutline,
-  chevronBackOutline,
-  medicalOutline,
-  medicalSharp,
-  peopleOutline,
-  personOutline,
-  briefcaseOutline,
-  checkmarkCircleOutline
-} from 'ionicons/icons';
+import { searchOutline, notificationsOutline, shieldCheckmarkOutline, personAddOutline, chevronBackOutline, medicalOutline, medicalSharp, peopleOutline, personOutline, briefcaseOutline, checkmarkCircleOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 @Component({
   selector: 'app-adm7',
   templateUrl: './adm7.page.html',
   styleUrls: ['./adm7.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent]
 })
 export class Adm7Page implements OnInit {
   private router = inject(Router);
@@ -61,7 +51,6 @@ export class Adm7Page implements OnInit {
   }
 
   ngOnInit() {
-    // Lee la variable 'rol' que le mandas desde adm6
     this.route.queryParams.subscribe(params => {
       if (params['rol'] && (params['rol'] === 'Doctor' || params['rol'] === 'Auxiliar')) {
         this.tipoPersonal.set(params['rol']);
@@ -71,7 +60,7 @@ export class Adm7Page implements OnInit {
 
   public setTipoPersonal(tipo: 'Doctor' | 'Auxiliar') {
     this.tipoPersonal.set(tipo);
-    this.form.especialidad = ''; // Resetea el selector de especialidad
+    this.form.especialidad = '';
   }
 
   public async guardarRegistro() {

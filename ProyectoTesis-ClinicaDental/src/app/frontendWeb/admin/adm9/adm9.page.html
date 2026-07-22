@@ -2,50 +2,21 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- CABECERA GLOBAL SUPERIOR -->
-      <header class="global-app-header">
-        <div class="header-left-empty"></div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'ODONTOLOGÍA INCLUSIVA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'GESTIÓN FINANCIERA Y REGISTRO DE TRANSACCIONES'"
+        [icono]="'medical-sharp'"
+        [placeholderBuscador]="'Buscar transacción o factura...'"
+        [textoBusqueda]="filtroTexto"
+        (busquedaChange)="filtroTexto = $event">
 
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input
-              type="text"
-              placeholder="Buscar transacción o factura..."
-              class="search-input"
-              [(ngModel)]="filtroTexto" />
-          </div>
-
-          <button class="icon-btn notification-btn" title="Notificaciones">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn" title="Seguridad">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
-      <!-- SUBBARRA CONTENEDORA DE BRANDING -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="medical-sharp"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>ODONTOLOGÍA INCLUSIVA</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>GESTIÓN FINANCIERA Y REGISTRO DE TRANSACCIONES</h3>
-          </div>
-        </div>
-
-        <div class="header-actions-right">
-          <button class="btn-primary-action" (click)="registrarIngresoGasto()">
-            <ion-icon name="add-circle-outline"></ion-icon>
-            Registrar Movimiento
-          </button>
-        </div>
-      </div>
+        <button class="btn-primary" (click)="registrarIngresoGasto()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          Registrar Movimiento
+        </button>
+      </app-header>
 
       <!-- WORKSPACE DE FINANZAS -->
       <div class="finanzas-workspace-content">
@@ -182,6 +153,7 @@
           </div>
         </div>
       </div>
+
     </main>
   </div>
 </ion-content>

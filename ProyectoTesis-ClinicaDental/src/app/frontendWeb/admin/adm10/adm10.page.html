@@ -1,0 +1,30 @@
+<ion-content [fullscreen]="true" class="adm10-content">
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
+
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'ODONTOLOGÍA INCLUSIVA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'MÓDULO DE GESTIÓN CLÍNICA'"
+        [icono]="'medical-sharp'"
+        [placeholderBuscador]="'Buscar...'">
+
+        <button class="btn-primary">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          Nueva Acción
+        </button>
+      </app-header>
+
+      <!-- WORKSPACE PRINCIPAL -->
+      <div class="workspace-content">
+        <div class="card-placeholder">
+          <ion-icon name="construct-outline" class="placeholder-icon"></ion-icon>
+          <h2>Sección adm10 en desarrollo</h2>
+          <p>Esta vista ya cuenta con el header global y el sistema de notificaciones listo para ser usado.</p>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</ion-content>

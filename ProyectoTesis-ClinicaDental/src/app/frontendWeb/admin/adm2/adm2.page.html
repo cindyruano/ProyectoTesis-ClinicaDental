@@ -2,66 +2,37 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- CABECERA GLOBAL EXTENDIDA -->
-      <header class="global-app-header">
-        <div class="header-left-empty"></div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'AGENDA MÉDICA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'CONTROL Y CONFIRMACIÓN DE CITAS'"
+        [placeholderBuscador]="'Buscar cita...'"
+        [textoBusqueda]="buscarTexto()"
+        (busquedaChange)="actualizarBusqueda($event)">
 
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text"
-                   placeholder="Buscar cita..."
-                   class="search-input"
-                   [value]="buscarTexto()"
-                   (input)="actualizarBusqueda($event)" />
-          </div>
-
-          <button class="icon-btn notification-btn" title="Notificaciones">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn" title="Seguridad">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
-      <!-- SUBBARRA CLÍNICA -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="calendar-outline"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>AGENDA MÉDICA</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>CONTROL Y CONFIRMACIÓN DE CITAS</h3>
-          </div>
+        <!-- Elementos inyectados en la subbarra derecha -->
+        <div class="filter-group">
+          <select id="doctor-select"
+                  class="filter-select"
+                  [disabled]="rolUsuario !== 'admin'"
+                  [value]="doctorFiltro()"
+                  (change)="actualizarFiltroDoctor($event)">
+            <option value="todos" *ngIf="rolUsuario === 'admin'">Todos los doctores (4)</option>
+            <option value="melissa">Dra. Melissa Montenegro</option>
+            <option value="doctor2">Dr. Juan Pérez (Endodoncia)</option>
+            <option value="doctor3">Dra. Ana Gómez (Ortodoncia)</option>
+            <option value="doctor4">Dr. Carlos Ruíz (Cirugía)</option>
+          </select>
         </div>
 
-        <div class="header-actions-relocated">
-          <div class="filter-group">
-            <select id="doctor-select"
-                    class="filter-select"
-                    [disabled]="rolUsuario !== 'admin'"
-                    [value]="doctorFiltro()"
-                    (change)="actualizarFiltroDoctor($event)">
-              <option value="todos" *ngIf="rolUsuario === 'admin'">Todos los doctores (4)</option>
-              <option value="melissa">Dra. Melissa Montenegro</option>
-              <option value="doctor2">Dr. Juan Pérez (Endodoncia)</option>
-              <option value="doctor3">Dra. Ana Gómez (Ortodoncia)</option>
-              <option value="doctor4">Dr. Carlos Ruíz (Cirugía)</option>
-            </select>
-          </div>
-
-          <button class="btn-primary"
-                  *ngIf="rolUsuario === 'admin' || rolUsuario === 'doctor'"
-                  (click)="nuevaCita()">
-            <ion-icon name="add-outline"></ion-icon>
-            Nueva Cita
-          </button>
-        </div>
-      </div>
+        <button class="btn-primary"
+                *ngIf="rolUsuario === 'admin' || rolUsuario === 'doctor'"
+                (click)="nuevaCita()">
+          <ion-icon name="add-outline"></ion-icon>
+          Nueva Cita
+        </button>
+      </app-header>
 
       <!-- WORKSPACE CALENDARIO -->
       <div class="calendar-workspace-content">
@@ -139,7 +110,7 @@
             </ng-container>
           </div>
 
-          <!-- OPCIÓN B: VISTA MES (CLIC EN CELDA ABRE VENTANA) -->
+          <!-- OPCIÓN B: VISTA MES -->
           <div *ngIf="vistaCalendar() === 'month'" class="month-grid-container">
             <div class="month-header-row">
               <div>DOM</div><div>LUN</div><div>MAR</div><div>MIÉ</div><div>JUE</div><div>VIE</div><div>SÁB</div>
@@ -220,9 +191,7 @@
     </main>
   </div>
 
-  <!-- =================================================================== -->
-  <!-- MODAL FLOTANTE DE CITAS DEL DÍA SELECCIONADO                        -->
-  <!-- =================================================================== -->
+  <!-- MODAL FLOTANTE DE CITAS DEL DÍA SELECCIONADO -->
   <div class="modal-backdrop" *ngIf="modalDiaAbierto()" (click)="cerrarModalDia()">
     <div class="day-details-modal" (click)="$event.stopPropagation()">
 

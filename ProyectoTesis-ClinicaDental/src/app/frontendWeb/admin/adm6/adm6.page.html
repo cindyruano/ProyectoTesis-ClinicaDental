@@ -2,44 +2,16 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- CABECERA GLOBAL SUPERIOR -->
-      <header class="global-app-header">
-        <div class="header-left-empty"></div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'DIRECTORIO DE PERSONAL CLÍNICO'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'SUPERVISIÓN Y CONTROL DE ASISTENCIA DEL EQUIPO MÉDICO Y SOPORTE'"
+        [icono]="'people-outline'"
+        [placeholderBuscador]="'Buscar usuario...'"
+        [textoBusqueda]="buscarTexto()"
+        (busquedaChange)="actualizarBusqueda($event)">
 
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text"
-                   placeholder="Buscar usuario..."
-                   class="search-input"
-                   [value]="buscarTexto()"
-                   (input)="actualizarBusqueda($event)" />
-          </div>
-
-          <button class="icon-btn notification-btn" title="Notificaciones">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn" title="Seguridad">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
-      <!-- SUBBARRA CONTENEDORA DE BRANDING -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="people-outline"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>DIRECTORIO DE PERSONAL CLÍNICO</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>SUPERVISIÓN Y CONTROL DE ASISTENCIA DEL EQUIPO MÉDICO Y SOPORTE</h3>
-          </div>
-        </div>
-
-        <!-- SELECTOR DE ROL: DOCTOR / AUXILIAR -->
         <div class="role-segment-toggle">
           <button class="segment-btn"
                   [class.active]="rolActivo() === 'Doctor'"
@@ -52,7 +24,7 @@
             Auxiliares
           </button>
         </div>
-      </div>
+      </app-header>
 
       <!-- WORKSPACE PRINCIPAL -->
       <div class="directorio-workspace-content">

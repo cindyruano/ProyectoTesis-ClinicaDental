@@ -2,50 +2,23 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- CABECERA GLOBAL SUPERIOR -->
-      <header class="global-app-header">
-        <div class="header-left-empty">
-          <button (click)="regresar()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #0c8599; display: flex; align-items: center; padding: 10px;">
-            <ion-icon name="chevron-back-outline"></ion-icon>
-            <span style="font-size: 14px; margin-left: 5px; font-weight: 500;">Volver al Directorio</span>
-          </button>
-        </div>
-
-        <div class="header-right-actions">
-          <div class="search-box">
-            <ion-icon name="search-outline" class="search-icon"></ion-icon>
-            <input type="text" placeholder="Buscar usuario..." class="search-input" />
-          </div>
-
-          <button class="icon-btn notification-btn">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
-      <!-- SUBBARRA CONTENEDORA DE BRANDING -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="medical-sharp"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>ODONTOLOGÍA INCLUSIVA</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>REGISTRO DE PERSONAL CLÍNICO — ALTA DE MÉDICOS Y AUXILIARES</h3>
-          </div>
-        </div>
-      </div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'ODONTOLOGÍA INCLUSIVA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'REGISTRO DE PERSONAL CLÍNICO — ALTA DE MÉDICOS Y AUXILIARES'"
+        [icono]="'medical-sharp'"
+        [placeholderBuscador]="'Buscar usuario...'"
+        [mostrarBotonVolver]="true"
+        [textoVolver]="'Volver al Directorio'"
+        (volverClick)="regresar()">
+      </app-header>
 
       <!-- WORKSPACE CONTENIDO -->
       <div class="registro-workspace-content">
         <main class="form-card">
 
-          <!-- SELECTOR DE TIPO DE PERSONAL (DOCTOR / AUXILIAR) -->
+          <!-- SELECTOR DE TIPO DE PERSONAL -->
           <div class="role-selector-box">
             <label class="section-label">TIPO DE REGISTRO</label>
             <div class="role-toggle">
