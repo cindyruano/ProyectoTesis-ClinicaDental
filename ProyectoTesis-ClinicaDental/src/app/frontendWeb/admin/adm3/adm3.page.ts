@@ -4,12 +4,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { Router, ActivatedRoute } from '@angular/router';
 import { addIcons } from 'ionicons';
-import {
-  notificationsOutline, shieldCheckmarkOutline, calendarOutline,
-  arrowBackOutline, addCircleOutline, personOutline, callOutline,
-  medkitOutline, pulseOutline, documentTextOutline, calendarClearOutline,
-  timeOutline, checkmarkOutline, alertCircleOutline, chevronBackOutline
-} from 'ionicons/icons';
+import { notificationsOutline, shieldCheckmarkOutline, calendarOutline, arrowBackOutline, addCircleOutline, personOutline, callOutline, medkitOutline, pulseOutline, documentTextOutline, calendarClearOutline, timeOutline, checkmarkOutline, alertCircleOutline, chevronBackOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 interface NuevaCitaForm {
   pacienteNombre: string;
@@ -27,7 +24,7 @@ interface NuevaCitaForm {
   templateUrl: './adm3.page.html',
   styleUrls: ['./adm3.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent ]
 })
 export class Adm3Page implements OnInit {
   private router = inject(Router);
@@ -109,7 +106,7 @@ export class Adm3Page implements OnInit {
   }
 
   public cancelar() {
-    this.router.navigate(['/admin/adm4']); // Redirecciona al directorio de pacientes
+    this.router.navigate(['/admin/adm4']);
   }
 
   private async mostrarToast(mensaje: string, color: 'success' | 'warning' | 'danger') {

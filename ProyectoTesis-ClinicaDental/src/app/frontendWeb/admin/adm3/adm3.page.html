@@ -2,53 +2,28 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- CABECERA GLOBAL CON BOTÓN DE RETORNO AL DIRECTORIO (Estilo Imagen 2) -->
-      <header class="global-app-header">
-  <div class="header-left-empty">
-    <button (click)="cancelar()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #0c8599; display: flex; align-items: center; padding: 10px;">
-      <ion-icon name="chevron-back-outline"></ion-icon>
-      <span style="font-size: 14px; margin-left: 5px; font-weight: 500;">Volver al Directorio</span>
-    </button>
-  </div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'AGENDA MÉDICA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'REGISTRO Y PROGRAMACIÓN DE NUEVA CITA'"
+        [icono]="'calendar-outline'"
+        [mostrarBuscador]="false"
+        [mostrarBotonVolver]="true"
+        [textoVolver]="'Volver al Directorio'"
+        (volverClick)="cancelar()">
 
-  <div class="header-right-actions">
-    <button class="icon-btn notification-btn" title="Notificaciones">
-      <ion-icon name="notifications-outline"></ion-icon>
-      <span class="notification-dot"></span>
-    </button>
-    <button class="icon-btn shield-btn" title="Seguridad">
-      <ion-icon name="shield-checkmark-outline"></ion-icon>
-    </button>
-  </div>
-</header>
-
-      <!-- SUBBARRA CLÍNICA CON BANNER REUBICADO EN LA DERECHA -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="calendar-outline"></ion-icon>
+        <div class="unregistered-patient-banner">
+          <div class="banner-info">
+            <ion-icon name="alert-circle-outline"></ion-icon>
+            <span>¿Es la primera vez del paciente?</span>
           </div>
-          <div class="brand-titles-stack">
-            <h1>AGENDA MÉDICA</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>REGISTRO Y PROGRAMACIÓN DE NUEVA CITA</h3>
-          </div>
+          <button type="button" class="btn-create-ficha" (click)="irACrearFichaClinica()">
+            <ion-icon name="document-text-outline"></ion-icon>
+            Crear Ficha Clínica
+          </button>
         </div>
-
-        <!-- Pregunta y Botón de Ficha Clínica colocados aquí -->
-        <div class="header-actions-relocated">
-          <div class="unregistered-patient-banner">
-            <div class="banner-info">
-              <ion-icon name="alert-circle-outline"></ion-icon>
-              <span>¿Es la primera vez del paciente?</span>
-            </div>
-            <button type="button" class="btn-create-ficha" (click)="irACrearFichaClinica()">
-              <ion-icon name="document-text-outline"></ion-icon>
-              Crear Ficha Clínica
-            </button>
-          </div>
-        </div>
-      </div>
+      </app-header>
 
       <!-- WORKSPACE DEL FORMULARIO -->
       <div class="form-workspace-content">
@@ -65,7 +40,6 @@
 
             <div class="form-grid">
 
-              <!-- Paciente con evento Enter para buscar -->
               <div class="form-group full-width">
                 <label for="paciente">Nombre Completo del Paciente * <span class="helper-text">(Presiona ENTER para buscar paciente)</span></label>
                 <div class="input-icon-wrapper">

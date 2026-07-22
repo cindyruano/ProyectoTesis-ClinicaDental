@@ -1,65 +1,78 @@
 <ion-content [fullscreen]="true" class="perfil-content">
-  <div class="perfil-container">
-    <div class="section-header">
-      <h1>Mi Perfil</h1>
-      <p>Configuración de cuenta y preferencias</p>
-    </div>
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
 
-    <div class="profile-card">
-      <div class="profile-header">
-        <div class="avatar-large">
-          <span>MM</span>
-        </div>
-        <div class="profile-info">
-          <h2>Dra. Montenegro</h2>
-          <span class="role-badge">ADMINISTRADOR</span>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'CONFIGURACIÓN DE CUENTA Y PREFERENCIAS'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'GESTIÓN DE PERFIL, CREDENCIALES Y NOTIFICACIONES'"
+        [icono]="'person-circle-outline'"
+        [mostrarBuscador]="false">
+      </app-header>
+
+      <!-- WORKSPACE CONTENIDO -->
+      <div class="perfil-workspace-content">
+        <div class="profile-card">
+
+          <div class="profile-header">
+            <div class="avatar-large">
+              <span>MM</span>
+            </div>
+            <div class="profile-info">
+              <h2>Dra. Montenegro</h2>
+              <span class="role-badge">ADMINISTRADOR</span>
+            </div>
+          </div>
+
+          <div class="profile-details">
+            <div class="detail-item">
+              <ion-icon name="person-outline" class="detail-icon"></ion-icon>
+              <div>
+                <label>Nombre completo</label>
+                <p>Dra. María Montenegro</p>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <ion-icon name="mail-outline" class="detail-icon"></ion-icon>
+              <div>
+                <label>Correo electrónico</label>
+                <p>admin@modent.clinic</p>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <ion-icon name="lock-closed-outline" class="detail-icon"></ion-icon>
+              <div>
+                <label>Cambiar contraseña</label>
+                <p>Última actualización: hace 30 días</p>
+              </div>
+            </div>
+
+            <div class="detail-item">
+              <ion-icon name="notifications-outline" class="detail-icon"></ion-icon>
+              <div>
+                <label>Notificaciones</label>
+                <p>Activadas para alertas críticas</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="profile-actions">
+            <button class="btn-secondary" (click)="editProfile()">
+              <ion-icon name="settings-outline"></ion-icon>
+              Editar Perfil
+            </button>
+            <button class="btn-danger" (click)="logout()">
+              <ion-icon name="log-out-outline"></ion-icon>
+              Cerrar Sesión
+            </button>
+          </div>
+
         </div>
       </div>
 
-      <div class="profile-details">
-        <div class="detail-item">
-          <ion-icon name="person-outline" class="detail-icon"></ion-icon>
-          <div>
-            <label>Nombre completo</label>
-            <p>Dra. María Montenegro</p>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <ion-icon name="mail-outline" class="detail-icon"></ion-icon>
-          <div>
-            <label>Correo electrónico</label>
-            <p>admin@modent.clinic</p>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <ion-icon name="lock-closed-outline" class="detail-icon"></ion-icon>
-          <div>
-            <label>Cambiar contraseña</label>
-            <p>Última actualización: hace 30 días</p>
-          </div>
-        </div>
-
-        <div class="detail-item">
-          <ion-icon name="notifications-outline" class="detail-icon"></ion-icon>
-          <div>
-            <label>Notificaciones</label>
-            <p>Activadas para alertas críticas</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="profile-actions">
-        <button class="btn-secondary" (click)="editProfile()">
-          <ion-icon name="settings-outline"></ion-icon>
-          Editar Perfil
-        </button>
-        <button class="btn-danger" (click)="logout()">
-          <ion-icon name="log-out-outline"></ion-icon>
-          Cerrar Sesión
-        </button>
-      </div>
-    </div>
+    </main>
   </div>
 </ion-content>

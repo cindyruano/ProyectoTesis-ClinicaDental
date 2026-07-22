@@ -4,6 +4,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
 import { searchOutline, notificationsOutline, shieldCheckmarkOutline, medicalSharp, trendingUpOutline, trendingDownOutline, walletOutline, receiptOutline, addCircleOutline, cashOutline, cardOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
+import { HeaderComponent } from '../../components/header/header.component';
 
 export interface Transaccion {
   id: string;
@@ -22,7 +24,7 @@ export interface Transaccion {
   templateUrl: './adm9.page.html',
   styleUrls: ['./adm9.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent]
 })
 export class Adm9Page {
   private toastController = inject(ToastController);

@@ -2,40 +2,19 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- CABECERA GLOBAL SUPERIOR (SIN BOTÓN VOLVER Y SIN BUSCADOR) -->
-      <header class="global-app-header">
-        <div class="header-left-empty"></div>
-
-        <div class="header-right-actions">
-          <button class="icon-btn notification-btn" title="Notificaciones">
-            <ion-icon name="notifications-outline"></ion-icon>
-            <span class="notification-dot"></span>
-          </button>
-          <button class="icon-btn shield-btn" title="Seguridad">
-            <ion-icon name="shield-checkmark-outline"></ion-icon>
-          </button>
-        </div>
-      </header>
-
-      <!-- SUBBARRA CONTENEDORA DE BRANDING -->
-      <div class="clinical-subheader-row">
-        <div class="header-left-brand">
-          <div class="brand-logo-circle">
-            <ion-icon name="medical-sharp"></ion-icon>
-          </div>
-          <div class="brand-titles-stack">
-            <h1>ODONTOLOGÍA INCLUSIVA</h1>
-            <h2>Odontólogos Sociales y Comunitarios</h2>
-            <h3>PERFIL DE ADMINISTRADOR — GESTIÓN DE CUENTA Y SEGURIDAD</h3>
-          </div>
-        </div>
-      </div>
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'ODONTOLOGÍA INCLUSIVA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'PERFIL DE ADMINISTRADOR — GESTIÓN DE CUENTA Y SEGURIDAD'"
+        [icono]="'medical-sharp'"
+        [mostrarBuscador]="false">
+      </app-header>
 
       <!-- WORKSPACE DEL PERFIL -->
       <div class="perfil-workspace-content">
         <main class="form-card">
 
-          <!-- INPUT OCULTO PARA EXPLORADOR DE ARCHIVOS DE ESCRITORIO -->
           <input
             type="file"
             #fileInput
@@ -46,11 +25,9 @@
           <!-- CABECERA DE USUARIO / AVATAR -->
           <div class="profile-header-box">
             <div class="avatar-large">
-              <!-- Muestra la foto cargada o las iniciales por defecto -->
               <img *ngIf="fotoUrl()" [src]="fotoUrl()" alt="Foto de perfil" class="avatar-img" />
               <span *ngIf="!fotoUrl()">{{ obtenerIniciales() }}</span>
 
-              <!-- Botón de cámara (Solo activo en Modo Edición) -->
               <button
                 type="button"
                 class="btn-change-avatar"
@@ -125,7 +102,6 @@
             <!-- BOTONES DE ACCIÓN (EDITAR / GUARDAR / CANCELAR) -->
             <div class="form-actions">
 
-              <!-- Botón Editar (Visible en modo solo lectura) -->
               <button
                 *ngIf="!modoEdicion()"
                 type="button"
@@ -135,7 +111,6 @@
                 Editar Perfil
               </button>
 
-              <!-- Botón Cancelar (Visible al editar) -->
               <button
                 *ngIf="modoEdicion()"
                 type="button"
@@ -144,7 +119,6 @@
                 Cancelar
               </button>
 
-              <!-- Botón Guardar (Visible al editar) -->
               <button
                 *ngIf="modoEdicion()"
                 type="submit"

@@ -5,21 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { addIcons } from 'ionicons';
-import {
-  calendarOutline,
-  peopleOutline,
-  medicalOutline,
-  notificationsOutline,
-  informationCircleOutline,
-  checkmarkSharp,
-  timeOutline,
-  chevronForwardOutline,
-  chevronBackOutline,
-  searchOutline,
-  warningOutline,
-  idCardOutline,
-  chatbubbleOutline
-} from 'ionicons/icons';
+import { calendarOutline, peopleOutline, medicalOutline, notificationsOutline, informationCircleOutline, checkmarkSharp, timeOutline, chevronForwardOutline, chevronBackOutline, warningOutline, idCardOutline, chatbubbleOutline } from 'ionicons/icons';
+import { NotificationsComponent } from '../../components/notificaciones/noti.components';
 
 registerLocaleData(localeEs, 'es');
 
@@ -43,7 +30,7 @@ interface DiaCalendario {
   templateUrl: './adm1.page.html',
   styleUrls: ['./adm1.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule]
+  imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent]
 })
 export class Adm1Page implements OnInit {
   private router = inject(Router);
@@ -92,7 +79,6 @@ export class Adm1Page implements OnInit {
       timeOutline,
       chevronForwardOutline,
       chevronBackOutline,
-      searchOutline,
       warningOutline,
       idCardOutline,
       chatbubbleOutline

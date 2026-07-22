@@ -24,122 +24,9 @@
   overflow: hidden;
 }
 
-/* CABECERA GLOBAL SUPERIOR */
-.global-app-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 12px 24px;
-  background-color: #ffffff;
-  border-bottom: 1px solid #e2e8f0;
-  flex-shrink: 0;
-
-  .header-left-empty {
-    flex: 1;
-  }
-
-  .header-right-actions {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    .icon-btn {
-      position: relative;
-      width: 38px;
-      height: 38px;
-      border-radius: 50%;
-      border: 1px solid #e2e8f0;
-      background-color: #ffffff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-
-      ion-icon { font-size: 20px; color: #64748b; }
-
-      .notification-dot {
-        position: absolute;
-        top: 8px; right: 8px;
-        width: 8px; height: 8px;
-        background-color: #ef4444;
-        border-radius: 50%;
-      }
-
-      &.shield-btn {
-        background-color: #e0f2fe;
-        border: none;
-        ion-icon { color: #0c8599; }
-      }
-    }
-  }
-}
-
-/* SUBBARRA DE BRANDING */
-.clinical-subheader-row {
-  display: flex !important;
-  justify-content: space-between !important;
-  align-items: center !important;
-  padding: 16px 24px 8px 24px !important;
-  flex-shrink: 0;
-  width: 100%;
-
-  .header-left-brand {
-    display: flex;
-    align-items: center;
-    gap: 16px;
-
-    .brand-logo-circle {
-      width: 44px;
-      height: 44px;
-      background-color: #ffffff;
-      color: #0c8599;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
-
-      ion-icon {
-        font-size: 22px;
-      }
-    }
-
-    .brand-titles-stack {
-      display: flex;
-      flex-direction: column;
-      gap: 1px;
-
-      h1 {
-        margin: 0;
-        font-size: 16px;
-        font-weight: 800;
-        color: #0f172a;
-        letter-spacing: -0.3px;
-        line-height: 1.2;
-      }
-
-      h2 {
-        margin: 0;
-        font-size: 11px;
-        color: #0c8599;
-        font-weight: 600;
-        line-height: 1.2;
-      }
-
-      h3 {
-        margin: 0;
-        font-size: 10px;
-        color: #64748b;
-        font-weight: 600;
-        letter-spacing: 0.2px;
-        line-height: 1.2;
-      }
-    }
-  }
-}
-
-/* WORKSPACE DEL FORMULARIO */
+/* ==========================================================================
+   2. WORKSPACE DE PERFIL Y TARJETA CONTENEDORA
+   ========================================================================== */
 .perfil-workspace-content {
   flex: 1;
   display: flex;
@@ -162,7 +49,9 @@
   margin: 0 auto;
 }
 
-/* AVATAR Y BOTÓN DE CÁMARA */
+/* ==========================================================================
+   3. AVATAR Y BOTÓN DE CÁMARA
+   ========================================================================== */
 .profile-header-box {
   display: flex;
   align-items: center;
@@ -256,7 +145,9 @@
   }
 }
 
-/* FORMULARIO Y CAMPOS */
+/* ==========================================================================
+   4. FORMULARIO Y CAMPOS DE ENTRADA
+   ========================================================================== */
 .perfil-form {
   display: flex;
   flex-direction: column;
@@ -330,7 +221,9 @@
   }
 }
 
-/* BOTONES DE ACCIÓN */
+/* ==========================================================================
+   5. BOTONES DE ACCIÓN
+   ========================================================================== */
 .form-actions {
   display: flex;
   justify-content: flex-end;
