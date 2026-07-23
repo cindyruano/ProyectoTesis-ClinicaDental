@@ -1,0 +1,131 @@
+<ion-content [fullscreen]="true" class="registro-content">
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
+
+      <!-- HEADER CENTRALIZADO CON BOTÓN DE REGRESO ARRIBA -->
+      <app-header
+        [titulo]="'ODONTOLOGÍA INCLUSIVA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'CONTROL DE INVENTARIO — ALTA DE PRODUCTOS E INSUMOS'"
+        [icono]="'medical-sharp'"
+        [mostrarBuscador]="false"
+        [mostrarBotonVolver]="true"
+        [textoVolver]="'Volver al Inventario'"
+        (volverClick)="regresar()">
+      </app-header>
+
+      <!-- WORKSPACE CONTENIDO -->
+      <div class="registro-workspace-content">
+        <main class="form-card">
+
+          <!-- SELECTOR DE CATEGORÍA -->
+          <div class="role-selector-box">
+            <label class="section-label">TIPO DE CATEGORÍA</label>
+            <div class="role-toggle">
+              <button
+                type="button"
+                class="toggle-btn"
+                [class.active]="categoria() === 'Materiales'"
+                (click)="setCategoria('Materiales')">
+                <ion-icon name="cube-outline"></ion-icon>
+                Materiales
+              </button>
+              <button
+                type="button"
+                class="toggle-btn"
+                [class.active]="categoria() === 'Anestesia'"
+                (click)="setCategoria('Anestesia')">
+                <ion-icon name="medkit-outline"></ion-icon>
+                Anestesia
+              </button>
+              <button
+                type="button"
+                class="toggle-btn"
+                [class.active]="categoria() === 'Instrumental'"
+                (click)="setCategoria('Instrumental')">
+                <ion-icon name="construct-outline"></ion-icon>
+                Instrumental
+              </button>
+              <button
+                type="button"
+                class="toggle-btn"
+                [class.active]="categoria() === 'Protección'"
+                (click)="setCategoria('Protección')">
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+                Protección
+              </button>
+            </div>
+          </div>
+
+          <form (ngSubmit)="guardarRegistro()" class="registro-form">
+
+            <!-- SECCIÓN 1: DATOS DEL PRODUCTO -->
+            <div class="form-section">
+              <h3>
+                <ion-icon name="cube-outline"></ion-icon>
+                Información del Producto
+              </h3>
+
+              <div class="grid-2-cols">
+                <div class="field-group">
+                  <label>Código Único *</label>
+                  <input type="text" [(ngModel)]="form.codigo" name="codigo" placeholder="Ej. INV-006" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Nombre del Producto *</label>
+                  <input type="text" [(ngModel)]="form.nombre" name="nombre" placeholder="Ej. Resina Fotocurable A2" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Presentación / Empaque *</label>
+                  <input type="text" [(ngModel)]="form.presentacion" name="presentacion" placeholder="Ej. Jeringa 4g" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Ubicación Física *</label>
+                  <input type="text" [(ngModel)]="form.ubicacion" name="ubicacion" placeholder="Ej. Gabinete 1 - Estante A" required />
+                </div>
+              </div>
+            </div>
+
+            <!-- SECCIÓN 2: DATOS DE STOCK Y PRECIO -->
+            <div class="form-section">
+              <h3>
+                <ion-icon name="stats-chart-outline"></ion-icon>
+                Datos de Inventario y Precio
+              </h3>
+
+              <div class="grid-2-cols">
+                <div class="field-group">
+                  <label>Precio Unitario (Q) *</label>
+                  <input type="number" min="0" step="0.01" [(ngModel)]="form.precioUnitario" name="precioUnitario" placeholder="0.00" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Stock Inicial *</label>
+                  <input type="number" min="0" [(ngModel)]="form.stockActual" name="stockActual" placeholder="0" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Stock Mínimo (Límite Alerta) *</label>
+                  <input type="number" min="0" [(ngModel)]="form.stockMinimo" name="stockMinimo" placeholder="0" required />
+                </div>
+              </div>
+            </div>
+
+            <!-- BOTÓN DE ACCIÓN -->
+            <div class="form-actions">
+              <button type="submit" class="btn-submit">
+                <ion-icon name="checkmark-circle-outline"></ion-icon>
+                Registrar Producto
+              </button>
+            </div>
+
+          </form>
+        </main>
+      </div>
+
+    </main>
+  </div>
+</ion-content>

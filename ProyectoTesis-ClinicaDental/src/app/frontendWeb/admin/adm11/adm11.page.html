@@ -1,135 +1,243 @@
-<ion-content [fullscreen]="true" class="perfil-content">
+<ion-content [fullscreen]="true" class="adm11-content">
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <!-- HEADER CENTRALIZADO -->
       <app-header
         [titulo]="'ODONTOLOGÍA INCLUSIVA'"
         [subtitulo]="'Odontólogos Sociales y Comunitarios'"
-        [tag3]="'PERFIL DE ADMINISTRADOR — GESTIÓN DE CUENTA Y SEGURIDAD'"
+        [tag3]="'CONTROL DE INVENTARIO Y STOCK CLÍNICO'"
         [icono]="'medical-sharp'"
-        [mostrarBuscador]="false">
+        [placeholderBuscador]="'Buscar producto...'"
+        [textoBusqueda]="filtroTexto()"
+        (busquedaChange)="actualizarBusqueda($event)">
+
+        <!-- FILTRO DESPLEGABLE EN HEADER -->
+        <div class="filter-group">
+          <select class="filter-select" (change)="actualizarFiltroCategoria($event)">
+            <option value="TODAS">Todas las Categorías</option>
+            <option value="Materiales">Materiales</option>
+            <option value="Anestesia">Anestesia</option>
+            <option value="Instrumental">Instrumental</option>
+            <option value="Protección">Protección</option>
+          </select>
+        </div>
+
+        <!-- BOTÓN NAVEGA A ADM12 -->
+        <button class="btn-primary" (click)="irAAdm12()">
+          <ion-icon name="add-circle-outline"></ion-icon>
+          Agregar Producto
+        </button>
       </app-header>
 
-      <!-- WORKSPACE DEL PERFIL -->
-      <div class="perfil-workspace-content">
-        <main class="form-card">
+      <!-- WORKSPACE PRINCIPAL -->
+      <div class="inventario-workspace-content">
 
-          <input
-            type="file"
-            #fileInput
-            (change)="onFotoSeleccionada($event)"
-            accept="image/*"
-            style="display: none;" />
-
-          <!-- CABECERA DE USUARIO / AVATAR -->
-          <div class="profile-header-box">
-            <div class="avatar-large">
-              <img *ngIf="fotoUrl()" [src]="fotoUrl()" alt="Foto de perfil" class="avatar-img" />
-              <span *ngIf="!fotoUrl()">{{ obtenerIniciales() }}</span>
-
-              <button
-                type="button"
-                class="btn-change-avatar"
-                [class.disabled]="!modoEdicion()"
-                (click)="abrirExploradorArchivos(fileInput)"
-                title="Cambiar foto">
-                <ion-icon name="camera-outline"></ion-icon>
-              </button>
+        <!-- TARJETAS DE MÉTRICAS / KPIS DINÁMICOS -->
+        <div class="kpi-grid">
+          <div class="kpi-card total">
+            <div class="kpi-icon">
+              <ion-icon name="cube-outline"></ion-icon>
             </div>
-
-            <div class="user-meta">
-              <h2>{{ perfil.nombre }}</h2>
-              <span class="role-badge">
-                <ion-icon name="shield-checkmark-outline"></ion-icon>
-                {{ perfil.rol }}
-              </span>
+            <div class="kpi-info">
+              <span class="kpi-label">Total Ítems</span>
+              <h3 class="kpi-value">{{ kpis().totalItems }}</h3>
+              <span class="kpi-subtext">Registrados en catálogo</span>
             </div>
           </div>
 
-          <form (ngSubmit)="guardarPerfil()" class="perfil-form">
-
-            <!-- SECCIÓN 1: DATOS PERSONALES -->
-            <div class="form-section">
-              <h3>
-                <ion-icon name="person-outline"></ion-icon>
-                Información del Administrador
-              </h3>
-
-              <div class="grid-2-cols">
-                <div class="field-group">
-                  <label>Nombre Completo *</label>
-                  <input type="text" [(ngModel)]="perfil.nombre" name="nombre" [disabled]="!modoEdicion()" required />
-                </div>
-
-                <div class="field-group">
-                  <label>Correo Electrónico *</label>
-                  <input type="email" [(ngModel)]="perfil.email" name="email" [disabled]="!modoEdicion()" required />
-                </div>
-
-                <div class="field-group">
-                  <label>Teléfono de Contacto *</label>
-                  <input type="tel" [(ngModel)]="perfil.telefono" name="telefono" [disabled]="!modoEdicion()" required />
-                </div>
-
-                <div class="field-group">
-                  <label>Cargo / Puesto *</label>
-                  <input type="text" [(ngModel)]="perfil.cargo" name="cargo" [disabled]="!modoEdicion()" required />
-                </div>
-              </div>
+          <div class="kpi-card normal">
+            <div class="kpi-icon">
+              <ion-icon name="checkmark-circle-outline"></ion-icon>
             </div>
-
-            <!-- SECCIÓN 2: SEGURIDAD (CAMBIO DE CONTRASEÑA) -->
-            <div class="form-section">
-              <h3>
-                <ion-icon name="lock-closed-outline"></ion-icon>
-                Seguridad de la Cuenta
-              </h3>
-
-              <div class="grid-2-cols">
-                <div class="field-group">
-                  <label>Contraseña Actual</label>
-                  <input type="password" [(ngModel)]="seguridad.passwordActual" name="passwordActual" [disabled]="!modoEdicion()" placeholder="••••••••" />
-                </div>
-
-                <div class="field-group">
-                  <label>Nueva Contraseña</label>
-                  <input type="password" [(ngModel)]="seguridad.passwordNueva" name="passwordNueva" [disabled]="!modoEdicion()" placeholder="Dejar en blanco para mantener" />
-                </div>
-              </div>
+            <div class="kpi-info">
+              <span class="kpi-label">Stock Adecuado</span>
+              <h3 class="kpi-value">{{ kpis().stockAdecuado }}</h3>
+              <span class="kpi-trend positive">Nivel óptimo</span>
             </div>
+          </div>
 
-            <!-- BOTONES DE ACCIÓN (EDITAR / GUARDAR / CANCELAR) -->
-            <div class="form-actions">
-
-              <button
-                *ngIf="!modoEdicion()"
-                type="button"
-                class="btn-edit"
-                (click)="activarEdicion()">
-                <ion-icon name="create-outline"></ion-icon>
-                Editar Perfil
-              </button>
-
-              <button
-                *ngIf="modoEdicion()"
-                type="button"
-                class="btn-cancel"
-                (click)="cancelarEdicion()">
-                Cancelar
-              </button>
-
-              <button
-                *ngIf="modoEdicion()"
-                type="submit"
-                class="btn-submit">
-                <ion-icon name="save-outline"></ion-icon>
-                Guardar Cambios
-              </button>
+          <div class="kpi-card alerta">
+            <div class="kpi-icon">
+              <ion-icon name="alert-circle-outline"></ion-icon>
             </div>
-          </form>
-        </main>
+            <div class="kpi-info">
+              <span class="kpi-label">Stock Bajo</span>
+              <h3 class="kpi-value">{{ kpis().stockBajo }}</h3>
+              <span class="kpi-trend negative">Reequipar pronto</span>
+            </div>
+          </div>
+
+          <div class="kpi-card agotado">
+            <div class="kpi-icon">
+              <ion-icon name="close-circle-outline"></ion-icon>
+            </div>
+            <div class="kpi-info">
+              <span class="kpi-label">Agotados</span>
+              <h3 class="kpi-value">{{ kpis().agotados }}</h3>
+              <span class="kpi-badge negativo" *ngIf="kpis().agotados > 0">Acción Requerida</span>
+              <span class="kpi-subtext" *ngIf="kpis().agotados === 0">Sin faltantes</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA CONTENEDORA DIRECTA -->
+        <div class="table-card">
+          <div class="table-responsive">
+            <table class="custom-table">
+              <thead>
+                <tr>
+                  <th>CÓDIGO</th>
+                  <th>NOMBRE / DESCRIPCIÓN</th>
+                  <th>CATEGORÍA</th>
+                  <th>UBICACIÓN</th>
+                  <th class="text-right">PRECIO (Q)</th>
+                  <th class="text-center">STOCK / MÍN.</th>
+                  <th class="text-center">ESTADO STOCK</th>
+                  <th class="text-center">ACCIONES</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of itemsPaginados()">
+                  <td class="font-bold text-muted">{{ item.codigo }}</td>
+                  <td>
+                    <div class="product-meta">
+                      <span class="product-name">{{ item.nombre }}</span>
+                      <span class="product-sub">{{ item.presentacion }}</span>
+                    </div>
+                  </td>
+                  <td>
+                    <span class="category-tag">{{ item.categoria }}</span>
+                  </td>
+                  <td>{{ item.ubicacion }}</td>
+                  <td class="text-right font-bold">Q {{ item.precioUnitario | number:'1.2-2' }}</td>
+                  <td class="text-center font-bold">
+                    {{ item.stockActual }} <span class="stock-min">/ {{ item.stockMinimo }}</span>
+                  </td>
+                  <td class="text-center">
+                    <span class="status-stock-badge" [ngClass]="item.estadoStock.toLowerCase()">
+                      <span class="dot"></span>
+                      {{ item.estadoStock }}
+                    </span>
+                  </td>
+                  <td class="text-center">
+                    <div class="action-buttons">
+                      <button class="btn-icon edit" title="Editar producto" (click)="abrirEditarModal(item)">
+                        <ion-icon name="create-outline"></ion-icon>
+                      </button>
+                      <button class="btn-icon delete" title="Eliminar producto" (click)="confirmarEliminacion(item)">
+                        <ion-icon name="trash-outline"></ion-icon>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+
+                <tr *ngIf="itemsPaginados().length === 0">
+                  <td colspan="8" class="empty-row">
+                    No se encontraron productos que coincidan con los criterios de búsqueda.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FOOTER DE PAGINACIÓN -->
+        <footer class="directorio-footer">
+          <div class="pagination-info">
+            Mostrando {{ registroInicio() }} a {{ registroFin() }} de {{ totalRegistrosFiltrados() }} registros
+          </div>
+
+          <div class="pagination-buttons">
+            <button class="btn-pager"
+                    [disabled]="paginaActual() === 1"
+                    (click)="irAPagina(paginaActual() - 1)">
+              <ion-icon name="chevron-back-outline"></ion-icon>
+            </button>
+
+            <button *ngFor="let num of totalPaginasArray()"
+                    class="btn-pager"
+                    [class.active]="paginaActual() === num"
+                    (click)="irAPagina(num)">
+              {{ num }}
+            </button>
+
+            <button class="btn-pager"
+                    [disabled]="paginaActual() === totalPaginas()"
+                    (click)="irAPagina(paginaActual() + 1)">
+              <ion-icon name="chevron-forward-outline"></ion-icon>
+            </button>
+          </div>
+        </footer>
+
       </div>
+
     </main>
+  </div>
+
+  <!-- MODAL/PESTAÑA FLOTANTE PARA EDITAR PRODUCTO -->
+  <div class="modal-overlay" *ngIf="mostrarModalEditar()" (click)="cerrarModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <div class="modal-header">
+        <h3>Editar Producto</h3>
+        <button class="btn-close" (click)="cerrarModal()">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+      </div>
+
+      <div class="modal-body" *ngIf="productoEditando">
+        <div class="form-grid">
+          <div class="form-group">
+            <label>Código</label>
+            <input type="text" [(ngModel)]="productoEditando.codigo" class="form-input" readonly />
+          </div>
+
+          <div class="form-group">
+            <label>Categoría</label>
+            <select [(ngModel)]="productoEditando.categoria" class="form-select">
+              <option value="Materiales">Materiales</option>
+              <option value="Anestesia">Anestesia</option>
+              <option value="Instrumental">Instrumental</option>
+              <option value="Protección">Protección</option>
+            </select>
+          </div>
+
+          <div class="form-group full-width">
+            <label>Nombre del Producto</label>
+            <input type="text" [(ngModel)]="productoEditando.nombre" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Presentación</label>
+            <input type="text" [(ngModel)]="productoEditando.presentacion" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Ubicación</label>
+            <input type="text" [(ngModel)]="productoEditando.ubicacion" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Precio Unitario (Q)</label>
+            <input type="number" [(ngModel)]="productoEditando.precioUnitario" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Stock Actual</label>
+            <input type="number" [(ngModel)]="productoEditando.stockActual" class="form-input" />
+          </div>
+
+          <div class="form-group">
+            <label>Stock Mínimo</label>
+            <input type="number" [(ngModel)]="productoEditando.stockMinimo" class="form-input" />
+          </div>
+        </div>
+      </div>
+
+      <!-- FOOTER SIN BOTÓN CANCELAR -->
+      <div class="modal-footer">
+        <button class="btn-primary" (click)="guardarCambiosEdicion()">Guardar Cambios</button>
+      </div>
+    </div>
   </div>
 </ion-content>

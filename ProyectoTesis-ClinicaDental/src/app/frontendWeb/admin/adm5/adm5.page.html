@@ -2,13 +2,13 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE (SIN BARRA DE BÚSQUEDA) -->
       <app-header
         [titulo]="'ODONTOLOGÍA INCLUSIVA'"
         [subtitulo]="'Odontólogos Sociales y Comunitarios'"
         [tag3]="esFichaNueva() ? 'CREAR NUEVA FICHA CLÍNICO-EPIDEMIOLÓGICA' : 'FICHA DE EVALUACIÓN CLÍNICO-EPIDEMIOLÓGICA — EXPEDIENTE'"
         [icono]="'medical-sharp'"
-        [placeholderBuscador]="'Buscar registros...'"
+        [mostrarBuscador]="false"
         [mostrarBotonVolver]="true"
         [textoVolver]="'Volver al Directorio'"
         (volverClick)="regresarAlListado()">

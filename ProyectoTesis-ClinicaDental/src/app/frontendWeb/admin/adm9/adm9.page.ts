@@ -1,23 +1,26 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, OnInit, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { IonicModule, ToastController } from '@ionic/angular';
 import { addIcons } from 'ionicons';
-import { searchOutline, notificationsOutline, shieldCheckmarkOutline, medicalSharp, trendingUpOutline, trendingDownOutline, walletOutline, receiptOutline, addCircleOutline, cashOutline, cardOutline } from 'ionicons/icons';
+import {
+  searchOutline,
+  notificationsOutline,
+  shieldCheckmarkOutline,
+  medicalSharp,
+  trendingUpOutline,
+  trendingDownOutline,
+  walletOutline,
+  receiptOutline,
+  addCircleOutline,
+  cashOutline,
+  chevronBackOutline,
+  chevronForwardOutline
+} from 'ionicons/icons';
 import { NotificationsComponent } from '../../components/notificaciones/noti.components';
 import { HeaderComponent } from '../../components/header/header.component';
-
-export interface Transaccion {
-  id: string;
-  fecha: string;
-  concepto: string;
-  categoria: string;
-  entidad: string;
-  metodoPago: string;
-  tipo: 'INGRESO' | 'GASTO';
-  estado: 'Completado' | 'Pendiente';
-  monto: number;
-}
+import { FinanzasService, Transaccion } from '../../../services/finanzas.service';
 
 @Component({
   selector: 'app-adm9',
@@ -26,75 +29,28 @@ export interface Transaccion {
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, NotificationsComponent, HeaderComponent]
 })
-export class Adm9Page {
+export class Adm9Page implements OnInit {
   private toastController = inject(ToastController);
+  private router = inject(Router);
+  private finanzasService = inject(FinanzasService);
 
-  public filtroTexto: string = '';
-  public filtroTipo: 'TODOS' | 'INGRESO' | 'GASTO' = 'TODOS';
+  // Signals de estado
+  public filtroTexto = signal<string>('');
+  public filtroTipo = signal<'TODOS' | 'INGRESO' | 'GASTO'>('TODOS');
+  public transacciones = signal<Transaccion[]>([]);
 
+  // Configuración de Paginación
+  public paginaActual = signal<number>(1);
+  public registrosPorPagina = 8; // Muestra hasta 8 registros por vista
+
+  // KPIs
   public kpis = {
-    ingresos: 42850.00,
-    gastos: 18400.00,
-    pendientes: 3200.00
+    ingresos: 0,
+    gastos: 0,
+    balance: 0,
+    pendientesMonto: 0,
+    pendientesCantidad: 0
   };
-
-  public transacciones: Transaccion[] = [
-    {
-      id: 'TRX-101',
-      fecha: '21/07/2026',
-      concepto: 'Tratamiento de Ortodoncia',
-      categoria: 'Procedimiento Clínico',
-      entidad: 'Carlos Mendoza',
-      metodoPago: 'Tarjeta de Débito',
-      tipo: 'INGRESO',
-      estado: 'Completado',
-      monto: 1200.00
-    },
-    {
-      id: 'TRX-102',
-      fecha: '21/07/2026',
-      concepto: 'Compra de Insumos Dentales',
-      categoria: 'Materiales e Insumos',
-      entidad: 'Depósito Dental S.A.',
-      metodoPago: 'Transferencia',
-      tipo: 'GASTO',
-      estado: 'Completado',
-      monto: 3450.00
-    },
-    {
-      id: 'TRX-103',
-      fecha: '20/07/2026',
-      concepto: 'Limpieza Dental Profunda',
-      categoria: 'Consulta General',
-      entidad: 'Alice Thompson',
-      metodoPago: 'Efectivo',
-      tipo: 'INGRESO',
-      estado: 'Completado',
-      monto: 350.00
-    },
-    {
-      id: 'TRX-104',
-      fecha: '19/07/2026',
-      concepto: 'Endodoncia Pieza 24',
-      categoria: 'Especialidad',
-      entidad: 'Mark Johnson',
-      metodoPago: 'Tarjeta de Crédito',
-      tipo: 'INGRESO',
-      estado: 'Pendiente',
-      monto: 1800.00
-    },
-    {
-      id: 'TRX-105',
-      fecha: '18/07/2026',
-      concepto: 'Mantenimiento de Unidades Odontológicas',
-      categoria: 'Mantenimiento',
-      entidad: 'TechDental Servicios',
-      metodoPago: 'Transferencia',
-      tipo: 'GASTO',
-      estado: 'Completado',
-      monto: 850.00
-    }
-  ];
 
   constructor() {
     addIcons({
@@ -108,33 +64,105 @@ export class Adm9Page {
       receiptOutline,
       addCircleOutline,
       cashOutline,
-      cardOutline
+      chevronBackOutline,
+      chevronForwardOutline
     });
+  }
+
+  ngOnInit() {
+    this.finanzasService.transacciones$.subscribe((datos: Transaccion[]) => {
+      this.transacciones.set(datos);
+      this.calcularKPIs();
+    });
+  }
+
+  private calcularKPIs() {
+    let ingresos = 0;
+    let gastos = 0;
+    let pendientesMonto = 0;
+    let pendientesCantidad = 0;
+
+    this.transacciones().forEach(t => {
+      const monto = Number(t.monto) || 0;
+
+      if (t.tipo === 'INGRESO') {
+        ingresos += monto;
+      } else if (t.tipo === 'GASTO') {
+        gastos += monto;
+      }
+
+      if (t.estado === 'Pendiente') {
+        pendientesMonto += monto;
+        pendientesCantidad++;
+      }
+    });
+
+    this.kpis = {
+      ingresos,
+      gastos,
+      balance: ingresos - gastos,
+      pendientesMonto,
+      pendientesCantidad
+    };
   }
 
   public setFiltroTipo(tipo: 'TODOS' | 'INGRESO' | 'GASTO') {
-    this.filtroTipo = tipo;
+    this.filtroTipo.set(tipo);
+    this.paginaActual.set(1);
   }
 
-  public transaccionesFiltradas(): Transaccion[] {
-    return this.transacciones.filter(t => {
-      const coincideTipo = this.filtroTipo === 'TODOS' || t.tipo === this.filtroTipo;
+  public actualizarBusqueda(evento: any) {
+    const texto = typeof evento === 'string' ? evento : evento?.target?.value || '';
+    this.filtroTexto.set(texto);
+    this.paginaActual.set(1);
+  }
+
+  public transaccionesFiltradas = computed(() => {
+    return this.transacciones().filter(t => {
+      const coincideTipo = this.filtroTipo() === 'TODOS' || t.tipo === this.filtroTipo();
       const coincideBusqueda =
-        t.concepto.toLowerCase().includes(this.filtroTexto.toLowerCase()) ||
-        t.entidad.toLowerCase().includes(this.filtroTexto.toLowerCase()) ||
-        t.categoria.toLowerCase().includes(this.filtroTexto.toLowerCase());
+        t.concepto.toLowerCase().includes(this.filtroTexto().toLowerCase()) ||
+        t.entidad.toLowerCase().includes(this.filtroTexto().toLowerCase()) ||
+        t.categoria.toLowerCase().includes(this.filtroTexto().toLowerCase()) ||
+        t.id.toLowerCase().includes(this.filtroTexto().toLowerCase());
 
       return coincideTipo && coincideBusqueda;
     });
+  });
+
+  public transaccionesPaginadas = computed(() => {
+    const inicio = (this.paginaActual() - 1) * this.registrosPorPagina;
+    return this.transaccionesFiltradas().slice(inicio, inicio + this.registrosPorPagina);
+  });
+
+  public totalRegistrosFiltrados = computed(() => this.transaccionesFiltradas().length);
+
+  public totalPaginas = computed(() => {
+    const paginas = Math.ceil(this.totalRegistrosFiltrados() / this.registrosPorPagina);
+    return paginas > 0 ? paginas : 1;
+  });
+
+  public totalPaginasArray = computed(() => {
+    return Array.from({ length: this.totalPaginas() }, (_, i) => i + 1);
+  });
+
+  public registroInicio = computed(() => {
+    if (this.totalRegistrosFiltrados() === 0) return 0;
+    return (this.paginaActual() - 1) * this.registrosPorPagina + 1;
+  });
+
+  public registroFin = computed(() => {
+    const finEstimado = this.paginaActual() * this.registrosPorPagina;
+    return finEstimado > this.totalRegistrosFiltrados() ? this.totalRegistrosFiltrados() : finEstimado;
+  });
+
+  public irAPagina(pagina: number) {
+    if (pagina >= 1 && pagina <= this.totalPaginas()) {
+      this.paginaActual.set(pagina);
+    }
   }
 
-  public async registrarIngresoGasto() {
-    const toast = await this.toastController.create({
-      message: 'Función para registrar nueva transacción activada.',
-      duration: 2500,
-      color: 'primary',
-      position: 'bottom'
-    });
-    await toast.present();
+  public abrirAdm10() {
+    this.router.navigate(['/admin/adm10']);
   }
 }

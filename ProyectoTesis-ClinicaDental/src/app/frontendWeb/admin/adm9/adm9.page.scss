@@ -5,7 +5,7 @@
 }
 
 .finanzas-content {
-  --background: #f8fafc;
+  --background: #f1f5f9;
 }
 
 .dashboard-viewport {
@@ -13,7 +13,7 @@
   width: 100%;
   height: 100vh;
   overflow: hidden;
-  background-color: #f8fafc;
+  background-color: #f1f5f9;
 }
 
 .main-workspace {
@@ -25,46 +25,47 @@
 }
 
 /* ==========================================================================
-   2. WORKSPACE DE FINANZAS Y CONTENEDOR PRINCIPAL
+   1. WORKSPACE DE FINANZAS
    ========================================================================== */
 .finanzas-workspace-content {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 12px 24px 24px 24px;
-  gap: 20px;
-  overflow-y: auto;
+  overflow: hidden; /* Mismo comportamiento que ADM4 */
+  padding: 16px 24px 20px 24px;
 }
 
 /* ==========================================================================
-   3. TARJETAS DE MÉTRICAS CLAVE (KPIS)
+   2. TARJETAS DE MÉTRICAS CLAVE (KPIS)
    ========================================================================== */
 .kpi-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
+  flex-shrink: 0;
+  margin-bottom: 16px;
 
   .kpi-card {
     background: #ffffff;
-    border-radius: 14px;
+    border-radius: 8px;
     border: 1px solid #e2e8f0;
-    padding: 18px;
+    padding: 16px 18px;
     display: flex;
     align-items: center;
     gap: 16px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
 
     .kpi-icon {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
       flex-shrink: 0;
 
       ion-icon {
-        font-size: 24px;
+        font-size: 22px;
       }
     }
 
@@ -101,6 +102,11 @@
         padding: 2px 8px;
         border-radius: 10px;
         width: fit-content;
+
+        &.negativo {
+          background-color: #fee2e2;
+          color: #dc2626;
+        }
       }
 
       .kpi-subtext {
@@ -117,58 +123,52 @@
 }
 
 /* ==========================================================================
-   4. TABLA CONTENEDORA Y HISTÓRICO DE TRANSACCIONES
+   3. TABLA CONTENEDORA (IDÉNTICO A ADM4)
    ========================================================================== */
 .table-card {
-  background: #ffffff;
-  border-radius: 16px;
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 8px;
   border: 1px solid #e2e8f0;
-  padding: 20px 24px;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
 
-  .table-header-box {
+  .table-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 14px 16px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #e2e8f0;
 
-    .table-title {
+    .title-group {
       h2 {
         margin: 0;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 800;
         color: #0f172a;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-
-        ion-icon {
-          color: #0c8599;
-          font-size: 18px;
-        }
       }
 
       p {
-        margin: 2px 0 0 0;
+        margin: 1px 0 0 0;
         font-size: 11px;
         color: #64748b;
       }
     }
 
-    .table-filters {
+    .filter-pills {
       display: flex;
       gap: 6px;
 
-      .filter-chip {
+      .pill-btn {
         background: #f8fafc;
         border: 1px solid #cbd5e1;
         color: #64748b;
         font-size: 11px;
         font-weight: 700;
-        padding: 6px 14px;
-        border-radius: 20px;
+        padding: 5px 12px;
+        border-radius: 16px;
         cursor: pointer;
         transition: all 0.2s ease;
 
@@ -186,97 +186,162 @@
   }
 
   .table-responsive {
+    width: 100%;
     overflow-x: auto;
   }
 
-  .data-table {
+  .custom-table {
     width: 100%;
     border-collapse: collapse;
+    text-align: left;
+    font-size: 13px;
 
     th {
-      text-align: left;
+      position: sticky;
+      top: 0;
+      background-color: #f8fafc;
+      padding: 12px 16px;
+      font-weight: 600;
+      color: #475569;
+      text-transform: uppercase;
       font-size: 10px;
-      font-weight: 800;
-      color: #94a3b8;
-      letter-spacing: 0.5px;
-      padding: 10px 12px;
       border-bottom: 1px solid #e2e8f0;
+      z-index: 10;
     }
 
     td {
-      padding: 12px;
-      font-size: 12px;
-      color: #334155;
+      padding: 10px 16px;
       border-bottom: 1px solid #f1f5f9;
+      color: #334155;
+      vertical-align: middle;
     }
 
-    .date-cell {
-      font-weight: 600;
-      color: #64748b;
+    tr:hover td {
+      background-color: #f8fafc;
     }
 
-    .concept-cell {
-      display: flex;
-      flex-direction: column;
+    .font-bold { font-weight: 700; }
+    .font-medium { font-weight: 600; }
+    .text-muted { color: #64748b; }
+    .text-green { color: #16a34a; }
+    .text-red { color: #dc2626; }
+    .text-right { text-align: right; }
 
-      strong {
-        color: #0f172a;
-        font-weight: 700;
-      }
-
-      small {
-        color: #94a3b8;
-        font-size: 10px;
-      }
-    }
-
-    .pay-method {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      color: #64748b;
-
-      ion-icon {
-        font-size: 14px;
-      }
-    }
-
-    .type-badge {
+    .category-tag {
       font-size: 10px;
-      font-weight: 800;
+      font-weight: 600;
+      background-color: #f1f5f9;
+      color: #475569;
       padding: 3px 8px;
       border-radius: 6px;
-
-      &.ingreso { background-color: #dcfce7; color: #15803d; }
-      &.gasto { background-color: #fee2e2; color: #b91c1c; }
     }
 
-    .status-badge {
+    .badge-type {
       font-size: 10px;
       font-weight: 700;
       padding: 3px 8px;
-      border-radius: 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
 
-      &.completado { background-color: #f1f5f9; color: #475569; }
-      &.pendiente { background-color: #fef3c7; color: #b45309; }
+      &.ingreso {
+        background-color: #dcfce7;
+        color: #15803d;
+      }
+
+      &.gasto {
+        background-color: #fee2e2;
+        color: #b91c1c;
+      }
     }
 
-    .amount-cell {
-      font-weight: 800;
+    .status-dot-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
 
-      &.positive { color: #16a34a; }
-      &.negative { color: #dc2626; }
-    }
+      .dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+      }
 
-    .text-right {
-      text-align: right;
+      &.completado {
+        color: #16a34a;
+        .dot { background-color: #16a34a; }
+      }
+
+      &.pendiente {
+        color: #d97706;
+        .dot { background-color: #d97706; }
+      }
     }
 
     .empty-row {
       text-align: center;
-      padding: 24px;
-      color: #94a3b8;
-      font-style: italic;
+      padding: 3rem !important;
+      color: #64748b;
+      font-weight: 500;
+    }
+  }
+}
+
+/* ==========================================================================
+   4. FOOTER Y PAGINACIÓN (IDÉNTICO A ADM4)
+   ========================================================================== */
+.directorio-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  margin-top: 14px;
+  flex-shrink: 0;
+
+  .pagination-info {
+    font-size: 12px;
+    color: #64748b;
+  }
+
+  .pagination-buttons {
+    display: flex;
+    gap: 4px;
+
+    .btn-pager {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+      background: #ffffff;
+      font-size: 12px;
+      font-weight: 600;
+      color: #475569;
+      cursor: pointer;
+
+      ion-icon {
+        font-size: 14px;
+      }
+
+      &:hover:not([disabled]) {
+        background-color: #f8fafc;
+      }
+
+      &.active {
+        background-color: #0c8599;
+        color: #ffffff;
+        border-color: #0c8599;
+      }
+
+      &[disabled] {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
     }
   }
 }

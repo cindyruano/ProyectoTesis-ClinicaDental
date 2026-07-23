@@ -2,13 +2,13 @@
   <div class="dashboard-viewport">
     <main class="main-workspace">
 
-      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE (SIN BARRA DE BÚSQUEDA) -->
       <app-header
         [titulo]="'ODONTOLOGÍA INCLUSIVA'"
         [subtitulo]="'Odontólogos Sociales y Comunitarios'"
         [tag3]="'REGISTRO DE PERSONAL CLÍNICO — ALTA DE MÉDICOS Y AUXILIARES'"
         [icono]="'medical-sharp'"
-        [placeholderBuscador]="'Buscar usuario...'"
+        [mostrarBuscador]="false"
         [mostrarBotonVolver]="true"
         [textoVolver]="'Volver al Directorio'"
         (volverClick)="regresar()">

@@ -1,0 +1,135 @@
+<ion-content [fullscreen]="true" class="perfil-content">
+  <div class="dashboard-viewport">
+    <main class="main-workspace">
+
+      <!-- HEADER CENTRALIZADO Y REUTILIZABLE -->
+      <app-header
+        [titulo]="'ODONTOLOGÍA INCLUSIVA'"
+        [subtitulo]="'Odontólogos Sociales y Comunitarios'"
+        [tag3]="'PERFIL DE ADMINISTRADOR — GESTIÓN DE CUENTA Y SEGURIDAD'"
+        [icono]="'medical-sharp'"
+        [mostrarBuscador]="false">
+      </app-header>
+
+      <!-- WORKSPACE DEL PERFIL -->
+      <div class="perfil-workspace-content">
+        <main class="form-card">
+
+          <input
+            type="file"
+            #fileInput
+            (change)="onFotoSeleccionada($event)"
+            accept="image/*"
+            style="display: none;" />
+
+          <!-- CABECERA DE USUARIO / AVATAR -->
+          <div class="profile-header-box">
+            <div class="avatar-large">
+              <img *ngIf="fotoUrl()" [src]="fotoUrl()" alt="Foto de perfil" class="avatar-img" />
+              <span *ngIf="!fotoUrl()">{{ obtenerIniciales() }}</span>
+
+              <button
+                type="button"
+                class="btn-change-avatar"
+                [class.disabled]="!modoEdicion()"
+                (click)="abrirExploradorArchivos(fileInput)"
+                title="Cambiar foto">
+                <ion-icon name="camera-outline"></ion-icon>
+              </button>
+            </div>
+
+            <div class="user-meta">
+              <h2>{{ perfil.nombre }}</h2>
+              <span class="role-badge">
+                <ion-icon name="shield-checkmark-outline"></ion-icon>
+                {{ perfil.rol }}
+              </span>
+            </div>
+          </div>
+
+          <form (ngSubmit)="guardarPerfil()" class="perfil-form">
+
+            <!-- SECCIÓN 1: DATOS PERSONALES -->
+            <div class="form-section">
+              <h3>
+                <ion-icon name="person-outline"></ion-icon>
+                Información del Administrador
+              </h3>
+
+              <div class="grid-2-cols">
+                <div class="field-group">
+                  <label>Nombre Completo *</label>
+                  <input type="text" [(ngModel)]="perfil.nombre" name="nombre" [disabled]="!modoEdicion()" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Correo Electrónico *</label>
+                  <input type="email" [(ngModel)]="perfil.email" name="email" [disabled]="!modoEdicion()" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Teléfono de Contacto *</label>
+                  <input type="tel" [(ngModel)]="perfil.telefono" name="telefono" [disabled]="!modoEdicion()" required />
+                </div>
+
+                <div class="field-group">
+                  <label>Cargo / Puesto *</label>
+                  <input type="text" [(ngModel)]="perfil.cargo" name="cargo" [disabled]="!modoEdicion()" required />
+                </div>
+              </div>
+            </div>
+
+            <!-- SECCIÓN 2: SEGURIDAD (CAMBIO DE CONTRASEÑA) -->
+            <div class="form-section">
+              <h3>
+                <ion-icon name="lock-closed-outline"></ion-icon>
+                Seguridad de la Cuenta
+              </h3>
+
+              <div class="grid-2-cols">
+                <div class="field-group">
+                  <label>Contraseña Actual</label>
+                  <input type="password" [(ngModel)]="seguridad.passwordActual" name="passwordActual" [disabled]="!modoEdicion()" placeholder="••••••••" />
+                </div>
+
+                <div class="field-group">
+                  <label>Nueva Contraseña</label>
+                  <input type="password" [(ngModel)]="seguridad.passwordNueva" name="passwordNueva" [disabled]="!modoEdicion()" placeholder="Dejar en blanco para mantener" />
+                </div>
+              </div>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN (EDITAR / GUARDAR / CANCELAR) -->
+            <div class="form-actions">
+
+              <button
+                *ngIf="!modoEdicion()"
+                type="button"
+                class="btn-edit"
+                (click)="activarEdicion()">
+                <ion-icon name="create-outline"></ion-icon>
+                Editar Perfil
+              </button>
+
+              <button
+                *ngIf="modoEdicion()"
+                type="button"
+                class="btn-cancel"
+                (click)="cancelarEdicion()">
+                Cancelar
+              </button>
+
+              <button
+                *ngIf="modoEdicion()"
+                type="submit"
+                class="btn-submit">
+                <ion-icon name="save-outline"></ion-icon>
+                Guardar Cambios
+              </button>
+            </div>
+          </form>
+        </main>
+      </div>
+    </main>
+  </div>
+</ion-content>

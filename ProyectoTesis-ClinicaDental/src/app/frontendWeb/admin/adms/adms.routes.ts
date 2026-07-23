@@ -59,6 +59,14 @@ export const routes: Routes = [
         loadComponent: () => import('../adm11/adm11.page').then((m) => m.Adm11Page),
       },
       {
+        path: 'adm12',
+        loadComponent: () => import('../adm12/adm12.page').then((m) => m.Adm12Page),
+      },
+      {
+        path: 'adm13',
+        loadComponent: () => import('../adm13/adm13.page').then((m) => m.Adm13Page),
+      },
+      {
         path: '',
         redirectTo: 'adm1',
         pathMatch: 'full',
