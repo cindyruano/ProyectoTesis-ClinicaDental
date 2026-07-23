@@ -11,15 +11,20 @@ El perfil de Administrador cuenta con acceso global y de auditoría para supervi
 
 | Carpeta | Nombre                      | Funcionalidad Clínica / Administrativa                        |
 |---------|-----------------------------|---------------------------------------------------------------|
-| Adm1    | Tablero                     | Vista panorámica de la clínica.                               | 
+| Adm1    | Tablero                     | Vista panorámica de la clínica.                               | editarlo 
 | Adm2    | Agenda                      | Vista del calendarión global.                                 |
-| Adm3    | Agendar Citas               | Agendar cita para paciente.                                   |
-| Adm4    | Pacientes                   | Base de datos general de pacientes.                           | 
-| Adm5    | Ficha clínica               | Acceso de supervisión a los expedientes médicos del paciente. |
-| Amd6    | Visualizar usuarios         | Módulo de gestión del personal.                               |
-| Adm7    | Registrar usuario           | Registrar doctores o auxiliares.                              |
-| Adm8    | Perfil usuario              | Visualización y edición de perfiles de usuarios.              |
-| Adm8    | Tratamientos y presupuestos | Seguimientos financieros.                                     |
-| Adm9    | Recetario                   | Registro y auditoría de recetas emitidas por la clínica.      | 
-| Adm10   | Perfil                      | Edición de datos personales del administrador.                |
+| Adm3    | Agendar Citas               | Agendar cita para paciente.                                   | quitar botón cancelar
+| Adm4    | Pacientes                   | Base de datos general de pacientes.                           | en acciones activar el historial financiero, arreglar mensaje de eliminar 
+| Adm5    | Ficha clínica               | Acceso de supervisión a los expedientes médicos del paciente. | habilitar seleccion de botones de dientes y cargar fotos 
+| Amd6    | Usuarios                    | Módulo de gestión del personal.                               | sincronizar la capacidad operativa 
+| Adm7    | Registrar usuario           | Registrar doctores o auxiliares.                              | no permitir ingresar usuario sin agregar datos 
+| Adm8    | Perfil usuario              | Visualización y edición de perfiles de usuarios.              | esto falta
+| Adm9    | Finanzas                    | Seguimientos financieros.                                     |
+| Adm10   | Registrar finanza           | Registrar moviemiendo de alguna finanza.                      |
+| Adm11   | Inventario                  | Registro y auditoría de recetas emitidas por la clínica.      | 
+| Adm12   | Registro inventario         | Agregar productos al inventario                               |
+| Adm13   | Perfil                      | Edición de datos personales del administrador.                |
 | Adms    | Barra lateral               | Gestor del menú lateral.                                      |
+
+
+EN TODOS MEJORAR EL MENSAJE DE "SE AGREGÓ EXITOSAMENTE" Y "COMPLETAR LOS CAMPOS" 

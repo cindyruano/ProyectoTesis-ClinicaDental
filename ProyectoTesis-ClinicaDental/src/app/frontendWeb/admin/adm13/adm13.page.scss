@@ -1,0 +1,299 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.perfil-content {
+  --background: #f8fafc;
+}
+
+.dashboard-viewport {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f8fafc;
+}
+
+.main-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   2. WORKSPACE DE PERFIL Y TARJETA CONTENEDORA
+   ========================================================================== */
+.perfil-workspace-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 12px 24px 24px 24px;
+  overflow-y: auto;
+}
+
+.form-card {
+  background: #ffffff;
+  border-radius: 16px;
+  border: 1px solid #e2e8f0;
+  padding: 24px 32px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   3. AVATAR Y BOTÓN DE CÁMARA
+   ========================================================================== */
+.profile-header-box {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #f1f5f9;
+
+  .avatar-large {
+    position: relative;
+    width: 68px;
+    height: 68px;
+    border-radius: 50%;
+    background-color: #0c8599;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 800;
+    overflow: visible;
+
+    .avatar-img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+
+    .btn-change-avatar {
+      position: absolute;
+      bottom: -2px;
+      right: -2px;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background-color: #ffffff;
+      border: 1px solid #cbd5e1;
+      color: #0c8599;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      ion-icon {
+        font-size: 15px;
+      }
+
+      &:hover:not(.disabled) {
+        background-color: #e0f2fe;
+        border-color: #0c8599;
+      }
+
+      &.disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        background-color: #f1f5f9;
+        color: #94a3b8;
+      }
+    }
+  }
+
+  .user-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    h2 {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .role-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      color: #0c8599;
+      background-color: #e0f2fe;
+      padding: 4px 10px;
+      border-radius: 12px;
+      width: fit-content;
+
+      ion-icon {
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. FORMULARIO Y CAMPOS DE ENTRADA
+   ========================================================================== */
+.perfil-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f1f5f9;
+
+    ion-icon {
+      color: #0c8599;
+      font-size: 16px;
+    }
+  }
+}
+
+.grid-2-cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px 20px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+
+  label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  input {
+    width: 100%;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 0 14px;
+    font-size: 12px;
+    color: #0f172a;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    outline: none;
+    transition: all 0.2s ease;
+
+    &:focus {
+      border-color: #0c8599;
+      box-shadow: 0 0 0 3px rgba(12, 133, 153, 0.1);
+    }
+
+    &:disabled {
+      background-color: #f8fafc;
+      color: #64748b;
+      border-color: #e2e8f0;
+      cursor: not-allowed;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. BOTONES DE ACCIÓN
+   ========================================================================== */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 12px;
+  padding-top: 14px;
+  border-top: 1px solid #f1f5f9;
+
+  .btn-edit {
+    background-color: #0c8599;
+    color: #ffffff;
+    border: none;
+    height: 38px;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    ion-icon {
+      font-size: 16px;
+    }
+
+    &:hover {
+      background-color: #096a7a;
+    }
+  }
+
+  .btn-cancel {
+    background: transparent;
+    border: 1px solid #cbd5e1;
+    color: #64748b;
+    height: 38px;
+    padding: 0 20px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+      background-color: #f1f5f9;
+    }
+  }
+
+  .btn-submit {
+    background-color: #0c8599;
+    color: #ffffff;
+    border: none;
+    height: 38px;
+    padding: 0 24px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+
+    ion-icon {
+      font-size: 16px;
+    }
+
+    &:hover {
+      background-color: #096a7a;
+    }
+  }
+}

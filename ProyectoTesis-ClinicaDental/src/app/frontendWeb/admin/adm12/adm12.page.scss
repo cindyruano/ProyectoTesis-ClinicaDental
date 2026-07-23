@@ -1,0 +1,214 @@
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.registro-content {
+  --background: #f1f5f9;
+}
+
+.dashboard-viewport {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #f1f5f9;
+}
+
+.main-workspace {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+
+/* ==========================================================================
+   2. CONTENEDOR PRINCIPAL DEL FORMULARIO (COMPACTO Y CENTRADO)
+   ========================================================================== */
+.registro-workspace-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 12px 24px;
+  overflow: hidden; /* Evita que aparezca la barra de scroll */
+}
+
+.form-card {
+  background: #ffffff;
+  border-radius: 24px;
+  border: 1px solid #e2e8f0;
+  padding: 20px 32px; /* Padding reducido para acortar altura */
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+}
+
+/* ==========================================================================
+   3. SELECTOR TIPO DE CATEGORÍA (4 PILLS RÁPIDAS)
+   ========================================================================== */
+.role-selector-box {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 800;
+    color: #94a3b8;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  .role-toggle {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+
+    .toggle-btn {
+      height: 38px;
+      border-radius: 8px;
+      border: 1.5px solid #e2e8f0;
+      background: #f8fafc;
+      color: #64748b;
+      font-size: 12px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+
+      ion-icon {
+        font-size: 16px;
+      }
+
+      &.active {
+        background-color: #e0f2fe;
+        border-color: #0c8599;
+        color: #0c8599;
+      }
+
+      &:hover:not(.active) {
+        background-color: #ffffff;
+        color: #334155;
+      }
+    }
+  }
+}
+
+/* ==========================================================================
+   4. ESTRUCTURA Y CAMPOS DEL FORMULARIO
+   ========================================================================== */
+.registro-form {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  h3 {
+    margin: 0;
+    font-size: 13px;
+    font-weight: 800;
+    color: #0f172a;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #f1f5f9;
+
+    ion-icon {
+      color: #0c8599;
+      font-size: 17px;
+    }
+  }
+}
+
+.grid-2-cols {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px 16px;
+}
+
+.field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+
+  label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #475569;
+  }
+
+  input, select {
+    width: 100%;
+    height: 38px;
+    border-radius: 8px;
+    border: 1px solid #cbd5e1;
+    padding: 0 12px;
+    font-size: 12px;
+    color: #0f172a;
+    background-color: #ffffff;
+    box-sizing: border-box;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #0c8599;
+      box-shadow: 0 0 0 3px rgba(12, 133, 153, 0.1);
+    }
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+}
+
+/* ==========================================================================
+   5. BOTÓN DE ACCIÓN
+   ========================================================================== */
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  padding-top: 8px;
+  border-top: 1px solid #f1f5f9;
+
+  .btn-submit {
+    background-color: #0c8599;
+    color: #ffffff;
+    border: none;
+    height: 40px;
+    padding: 0 26px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    box-shadow: 0 2px 4px rgba(12, 133, 153, 0.2);
+
+    ion-icon {
+      font-size: 18px;
+    }
+
+    &:hover {
+      background-color: #096a7a;
+    }
+  }
+}

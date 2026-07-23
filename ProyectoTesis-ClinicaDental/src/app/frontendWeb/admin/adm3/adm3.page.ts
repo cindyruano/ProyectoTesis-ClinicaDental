@@ -106,7 +106,7 @@ export class Adm3Page implements OnInit {
   }
 
   public cancelar() {
-    this.router.navigate(['/admin/adm4']);
+    this.router.navigate(['/admin/adm2']);
   }
 
   private async mostrarToast(mensaje: string, color: 'success' | 'warning' | 'danger') {
